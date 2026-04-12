@@ -8,5 +8,5 @@ Driver=bridge
 Subnet=10.89.0.0/24
 Gateway=10.89.0.1
 DNS=1.1.1.1
-# Keep the network persistent to avoid race conditions on restart
+# Keep the network persistent in Quadlet to manage lifecycle manually in the pod
 NetworkDeleteOnStop=false

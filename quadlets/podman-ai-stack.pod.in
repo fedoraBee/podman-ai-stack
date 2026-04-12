@@ -11,5 +11,7 @@ PublishPort=@OPEN_WEBUI_PORT@:8080
 Network=podman-ai-stack.network
 
 [Service]
-# Ensure the network is fully ready before starting the pod
-ExecStartPre=/usr/bin/sleep 1
+# Ensure the network is created before the pod starts
+ExecStartPre=/usr/bin/podman network create --ignore --driver bridge --dns 1.1.1.1 --subnet 10.89.0.0/24 --gateway 10.89.0.1 --label app=podman-ai-stack podman-ai-stack
+# Ensure the network is removed after the pod stops
+ExecStopPost=/usr/bin/podman network rm --force podman-ai-stack
