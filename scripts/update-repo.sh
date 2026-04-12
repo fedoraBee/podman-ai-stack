@@ -3,7 +3,7 @@
 
 set -e
 
-REPO_DIR=${1:-"repo"}
+REPO_DIR=${1:-"rpmbuild/RPMS/noarch/"}
 GPG_KEY_ID=${2}
 
 if [ ! -d "$REPO_DIR" ]; then

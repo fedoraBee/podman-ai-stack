@@ -5,7 +5,7 @@ To build the RPM package:
 ```bash
 make rpm
 ```
-This generates the following packages in `rpms/noarch/`:
+This generates the following packages in `rpmbuild/RPMS/noarch/`:
 - `podman-ai-stack`: Core configuration.
 - `podman-ai-stack-user`: Rootless deployment.
 - `podman-ai-stack-root`: Rootfull deployment.
@@ -33,12 +33,12 @@ make repo GPG_KEY_ID=YOUR_KEY_ID
 ```
 
 This will:
-1. Run `createrepo_c --update` on the `rpms/noarch` directory.
+1. Run `createrepo_c --update` on the `rpmbuild/RPMS/noarch` directory.
 2. Generate a signed `repomd.xml.asc` if a GPG key is provided.
 
 ### Hosting on GitHub
 To host this as a DNF repository on GitHub:
-1. Push the `rpms/` directory to a specific branch (e.g., `gh-pages`) or include it in a release.
+1. Push the `RPMS/` directory to a specific branch (e.g., `gh-pages`) or include it in a release.
 2. Users can then add the repository by creating a `.repo` file pointing to the raw GitHub content URL.
 
 ## Customizing at Build Time

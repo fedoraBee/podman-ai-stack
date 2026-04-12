@@ -43,16 +43,17 @@ install-root:
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
 rpm:
-	tar -czf $(NAME)-$(VERSION).tar.gz --exclude=.git --transform 's|^|$(NAME)-$(VERSION)/|' *
-	rpmbuild -ba rpm/$(NAME).spec --define "_sourcedir $(PWD)" --define "_rpmdir $(PWD)/rpms"
-	rm $(NAME)-$(VERSION).tar.gz
+	mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+	tar -czf rpmbuild/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --transform 's|^|$(NAME)-$(VERSION)/|' *
+	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
+	@echo "RPMs built in rpmbuild/RPMS/noarch/"
 
 sign:
 	@if [ -z "$(GPG_KEY_ID)" ]; then echo "GPG_KEY_ID is not set. Use: make sign GPG_KEY_ID=<your-key-id>"; exit 1; fi
-	rpmsign --addsign rpms/*/*.rpm --define "_gpg_name $(GPG_KEY_ID)"
+	rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm --define "_gpg_name $(GPG_KEY_ID)"
 
 repo:
-	./scripts/update-repo.sh rpms/noarch $(GPG_KEY_ID)
+	./scripts/update-repo.sh rpmbuild/RPMS/noarch $(GPG_KEY_ID)
 
 clean:
-	rm -rf $(NAME)-$(VERSION).tar.gz rpms/
+	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/
