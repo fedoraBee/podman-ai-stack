@@ -83,6 +83,13 @@ getent group podman-ai >/dev/null || groupadd -r podman-ai
 getent passwd podman-ai >/dev/null || \
     useradd -r -g podman-ai -d /var/lib/podman-ai -s /sbin/nologin \
     -c "Podman AI Stack User" podman-ai
+
+# Ensure the home directory exists and has correct permissions
+# The useradd command should create it, but this adds robustness for reinstallation scenarios
+if ! [ -d "/var/lib/podman-ai" ]; then
+    mkdir -p /var/lib/podman-ai
+fi
+chown podman-ai:podman-ai /var/lib/podman-ai
 exit 0
 
 %post user
@@ -124,6 +131,7 @@ systemctl daemon-reload
 
 %changelog
 * Sun Apr 12 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+- Ensured explicit home directory creation and ownership for podman-ai user
 - Re-added base package dependency to podman-ai-stack-user for automatic installation
 - Marked all Quadlet files as config(noreplace) to preserve user modifications
 - Refined automated cleanup of user-level pods to use runuser and XDG_RUNTIME_DIR

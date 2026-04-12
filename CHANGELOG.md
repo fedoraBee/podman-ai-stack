@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `README.md` with comprehensive project description and DNF repository integration steps.
 
 ### Added
+- Ensured explicit home directory creation and ownership for `podman-ai` user.
 - Re-added base package dependency to `podman-ai-stack-user` for automatic installation of necessary files.
 - Marked all Quadlet files as `%config(noreplace)` to preserve user modifications during updates.
 - Refined automated cleanup of user-level pods to use runuser and XDG_RUNTIME_DIR.
