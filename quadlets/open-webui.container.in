@@ -9,7 +9,7 @@ Pod=podman-ai-stack.pod
 Label=app=podman-ai-stack
 Environment=OLLAMA_BASE_URL=http://localhost:11434
 EnvironmentFile=/etc/sysconfig/podman-ai-stack
-EnvironmentFile=-%h/.config/podman-ai-stack.env
+#EnvironmentFile=-%h/.config/podman-ai-stack.env
 Volume=open-webui:/app/backend/data:Z
 HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:8080 || exit 1
 HealthStartPeriod=60s
@@ -18,7 +18,7 @@ HealthTimeout=10s
 HealthRetries=3
 
 [Service]
-Restart=never
+Restart=on-failure
 
 [Install]
 WantedBy=default.target
