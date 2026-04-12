@@ -1,0 +1,6 @@
+content_version: 1.0.0
+project_lifecycle:
+  status: active
+security_contacts:
+  - "https://github.com/fedoraBee/podman-ai-stack/security/advisories/new"
+vulnerability_disclosure_policy: "https://github.com/fedoraBee/podman-ai-stack//blob/main/SECURITY.md"

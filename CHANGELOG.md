@@ -1,0 +1,24 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.0-1] - 2026-04-11
+
+### Changed
+- Clarified rootless Quadlet installation paths and configuration mechanisms in `README.md`.
+- Added "Advanced Customization (Masking)" documentation for users who need total control over the Quadlet definitions.
+- Improved `/etc/sysconfig/podman-ai-stack` with documented default variables and reference links.
+- Updated `README.md` with comprehensive project description and DNF repository integration steps.
+
+### Added
+- Initial release of the Podman AI Stack.
+- Podman Quadlet templates for Ollama and Open WebUI.
+- Rootless and Rootfull deployment support via RPM subpackages.
+- Configurable build-time variables for ports, images, and resource limits.
+- `/etc/sysconfig/podman-ai-stack` for runtime environment variable configuration.
+- GPG signing support for RPM builds.
+- Integrated `createrepo_c` support for DNF repository management.
+- Comprehensive documentation and contribution guidelines.

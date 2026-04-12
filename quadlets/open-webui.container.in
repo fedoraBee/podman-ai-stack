@@ -1,0 +1,23 @@
+[Unit]
+Description=Open WebUI Application Container
+
+[Container]
+Image=@OPEN_WEBUI_IMAGE@
+AutoUpdate=registry
+ContainerName=open-webui
+Pod=podman-ai-stack.pod
+Label=app=podman-ai-stack
+Environment=OLLAMA_BASE_URL=http://localhost:11434
+EnvironmentFile=/etc/sysconfig/podman-ai-stack
+Volume=open-webui:/app/backend/data:Z
+HealthCmd=wget --no-verbose --tries=1 --spider http://localhost:8080 || exit 1
+HealthStartPeriod=60s
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
+
+[Service]
+Restart=never
+
+[Install]
+WantedBy=default.target

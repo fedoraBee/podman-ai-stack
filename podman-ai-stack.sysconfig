@@ -1,0 +1,15 @@
+# Configuration for Podman AI Stack
+# This file is used as an EnvironmentFile in the Quadlet containers.
+# You can set any environment variables here that you want to pass to the containers.
+
+# --- Open WebUI Configuration ---
+# See: https://docs.openwebui.com/reference/env-configuration
+
+# Connection to Ollama (default: http://localhost:11434)
+# OLLAMA_BASE_URL=http://localhost:11434
+
+# --- Ollama Configuration ---
+# See: https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-using-environment-variables
+
+# Host address Ollama binds to (default: 0.0.0.0)
+# OLLAMA_HOST=0.0.0.0

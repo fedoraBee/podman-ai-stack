@@ -1,0 +1,8 @@
+[Unit]
+Description=Open WebUI Data Volume
+After=local-fs.target
+
+[Volume]
+VolumeName=open-webui
+Label=app=podman-ai-stack
+Driver=local

@@ -1,0 +1,8 @@
+[Unit]
+Description=Ollama Data Volume
+After=local-fs.target
+
+[Volume]
+VolumeName=ollama
+Label=app=ollama
+Driver=local

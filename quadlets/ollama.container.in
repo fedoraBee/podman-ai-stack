@@ -1,0 +1,23 @@
+[Unit]
+Description=Ollama Application Container
+
+[Container]
+Image=@OLLAMA_IMAGE@
+AutoUpdate=registry
+ContainerName=ollama
+Pod=podman-ai-stack.pod
+Label=app=ollama
+Volume=ollama:/root/.ollama
+AddDevice=nvidia.com/gpu=all
+SecurityLabelDisable=true
+Environment=OLLAMA_HOST=0.0.0.0
+EnvironmentFile=/etc/sysconfig/podman-ai-stack
+PodmanArgs=--memory=@OLLAMA_MEMORY@ --cpus=@OLLAMA_CPUS@
+HealthCmd=ollama list || exit 1
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=90s
+
+[Service]
+Restart=always

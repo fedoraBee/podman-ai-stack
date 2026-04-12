@@ -1,0 +1,9 @@
+[Unit]
+Description=Podman AI StackPod
+
+[Pod]
+Label=app=podman-ai-stack
+PodName=podman-ai-stack
+PublishPort=@OPEN_WEBUI_PORT@:8080
+# Uses the Quadlet network configuration `podman-ai-stack.network`
+Network=podman-ai-stack.network
