@@ -2,13 +2,13 @@
 
 NAME := podman-ai-stack
 VERSION := 0.1.0
-PREFIX ?= /usr
-DATADIR ?= $(PREFIX)/share
-SYSCONFDIR ?= /etc
+PREFIX ?= /etc
+DATADIR ?= $(PREFIX)/containers/systemd
+SYSCONFDIR ?= $(PREFIX)/sysconfig
 
 # Quadlet directories
-USER_QUADLET_DIR ?= $(DATADIR)/containers/systemd/users
-SYSTEM_QUADLET_DIR ?= $(DATADIR)/containers/systemd
+USER_QUADLET_DIR ?= $(DATADIR)/users
+SYSTEM_QUADLET_DIR ?= $(DATADIR)
 
 # Default configuration for substitution
 OPEN_WEBUI_PORT ?= 3000
@@ -31,8 +31,8 @@ all:
 install: install-base install-user
 
 install-base:
-	mkdir -p $(DESTDIR)$(SYSCONFDIR)/sysconfig
-	install -p -m 644 podman-ai-stack.sysconfig $(DESTDIR)$(SYSCONFDIR)/sysconfig/podman-ai-stack
+	mkdir -p $(DESTDIR)$(SYSCONFDIR)
+	install -p -m 644 podman-ai-stack.sysconfig $(DESTDIR)$(SYSCONFDIR)/podman-ai-stack
 
 install-user:
 	mkdir -p $(DESTDIR)$(USER_QUADLET_DIR)
