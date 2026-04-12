@@ -108,5 +108,8 @@ systemctl daemon-reload
 
 %changelog
 * Sat Apr 11 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
-- Moved rootless Quadlets to base package for easier manual use
-- Refactored -user package to handle only provisioning
+- Initial release of the Podman AI Stack (0.1.0-1)
+- Added optional user-specific configuration via ~/.config/podman-ai-stack.env
+- Added support for optional built-in Ollama service
+- Refactored Quadlet templates for improved rootless compatibility
+- Documentation improvements for DNF repository and network configuration
