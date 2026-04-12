@@ -101,8 +101,8 @@ if [ $1 -eq 0 ]; then
 fi
 
 %post root
-%systemd_post podman-ai-stack-pod
 systemctl daemon-reload
+%systemd_post podman-ai-stack-pod
 
 %preun root
 %systemd_preun podman-ai-stack-pod
@@ -131,6 +131,7 @@ systemctl daemon-reload
 
 %changelog
 * Sun Apr 12 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+- Adjusted systemctl daemon-reload timing in %post root to resolve preset unit warnings
 - Ensured explicit home directory creation and ownership for podman-ai user
 - Re-added base package dependency to podman-ai-stack-user for automatic installation
 - Marked all Quadlet files as config(noreplace) to preserve user modifications

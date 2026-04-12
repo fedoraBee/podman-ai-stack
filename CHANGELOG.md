@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `README.md` with comprehensive project description and DNF repository integration steps.
 
 ### Added
+- Adjusted `systemctl daemon-reload` timing in `%post root` to resolve preset unit warnings.
 - Ensured explicit home directory creation and ownership for `podman-ai` user.
 - Re-added base package dependency to `podman-ai-stack-user` for automatic installation of necessary files.
 - Marked all Quadlet files as `%config(noreplace)` to preserve user modifications during updates.
