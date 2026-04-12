@@ -88,6 +88,29 @@ User-specific files in **`~/.config/containers/systemd/`** will mask (override) 
    systemctl --user restart open-webui
    ```
 
+### Disabling the Dedicated Network
+By default, the stack creates a dedicated bridge network (`podman-ai-stack.network`). If you prefer to use the default Podman network:
+
+1. Copy the Pod template to your local config:
+   ```bash
+   mkdir -p ~/.config/containers/systemd/
+   cp /usr/share/containers/systemd/users/podman-ai-stack.pod ~/.config/containers/systemd/
+   ```
+2. Edit `~/.config/containers/systemd/podman-ai-stack.pod` and comment out or remove the `Network=` line:
+   ```ini
+   [Pod]
+   # Network=podman-ai-stack.network
+   ```
+3. Reload and restart:
+   ```bash
+   systemctl --user daemon-reload
+   systemctl --user restart open-webui
+   ```
+4. (Optional) Stop the now-unused network service:
+   ```bash
+   systemctl --user stop podman-ai-stack-network.service
+   ```
+
 After modifying the configuration, restart the services:
 ```bash
 # For rootless (current user)

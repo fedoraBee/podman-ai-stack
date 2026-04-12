@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Clarified rootless Quadlet installation paths and configuration mechanisms in `README.md`.
 - Added support for optional user-specific configuration via `~/.config/podman-ai-stack.env`.
+- Added documentation for disabling the dedicated bridge network in `README.md`.
 - Added "Advanced Customization (Masking)" documentation for users who need total control over the Quadlet definitions.
 - Improved `/etc/sysconfig/podman-ai-stack` with documented default variables and reference links.
 - Updated `README.md` with comprehensive project description and DNF repository integration steps.
