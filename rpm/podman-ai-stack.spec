@@ -124,6 +124,7 @@ systemctl daemon-reload
 
 %changelog
 * Sun Apr 12 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+- Re-added base package dependency to podman-ai-stack-user for automatic installation
 - Marked all Quadlet files as config(noreplace) to preserve user modifications
 - Refined automated cleanup of user-level pods to use runuser and XDG_RUNTIME_DIR
 - Added automated cleanup of user-level pods during uninstallation
