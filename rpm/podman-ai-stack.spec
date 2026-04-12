@@ -62,6 +62,15 @@ systemctl daemon-reload
 %postun
 systemctl daemon-reload
 
+%preun
+# Stop user-level services for all active users who might be running the stack
+# This is a best-effort cleanup for rootless deployments
+if [ $1 -eq 0 ]; then
+    for uid in $(loginctl list-users --no-legend | awk '{print $1}'); do
+        XDG_RUNTIME_DIR=/run/user/$uid systemctl --user -M $uid stop podman-ai-stack-pod.service || :
+    done
+fi
+
 %pre user
 getent group podman-ai >/dev/null || groupadd -r podman-ai
 getent passwd podman-ai >/dev/null || \
@@ -107,7 +116,8 @@ systemctl daemon-reload
 %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
-* Sat Apr 11 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+* Sun Apr 12 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+- Added automated cleanup of user-level pods during uninstallation
 - Initial release of the Podman AI Stack (0.1.0-1)
 - Added optional user-specific configuration via ~/.config/podman-ai-stack.env
 - Added support for optional built-in Ollama service
