@@ -33,7 +33,7 @@ sudo dnf makecache
 The stack is split into a base package and deployment-specific subpackages. **By default, only the Open WebUI service is started.**
 
 ### Option 1: Rootless (Current User)
-Ideal for personal workstations. Installs templates to the system-wide rootless Quadlet directory (`/usr/share/containers/systemd/users/`).
+Ideal for personal workstations. Installs templates to the system-wide rootless Quadlet directory (`/etc/containers/systemd/users/`).
 ```bash
 sudo dnf install podman-ai-stack
 systemctl --user daemon-reload
@@ -41,14 +41,14 @@ systemctl --user start podman-ai-stack-pod
 ```
 
 ### Option 2: Rootless (Dedicated System User)
-Recommended for server-like deployments. Installs templates to `/usr/share/containers/systemd/users/`, creates a dedicated `podman-ai` user, and enables systemd lingering.
+Recommended for server-like deployments. Installs templates to `/etc/containers/systemd/users/`, creates a dedicated `podman-ai` user, and enables systemd lingering.
 ```bash
 sudo dnf install podman-ai-stack-user
 sudo -u podman-ai systemctl --user start podman-ai-stack-pod
 ```
 
 ### Option 3: Rootfull (System-wide)
-Runs as a standard root system service. Installs templates to the system-wide Quadlet directory (`/usr/share/containers/systemd/`).
+Runs as a standard root system service. Installs templates to the system-wide Quadlet directory (`/etc/containers/systemd/`).
 ```bash
 sudo dnf install podman-ai-stack-root
 sudo systemctl start podman-ai-stack-pod
@@ -94,13 +94,13 @@ Some parameters (like host ports, memory limits, and image versions) are "baked 
 ## Advanced Customization (Masking)
 Podman Quadlets support a priority-based override mechanism. You can completely customize any part of the stack by placing a modified copy of a Quadlet file in your user-specific configuration directory.
 
-User-specific files in **`~/.config/containers/systemd/`** will mask (override) the system-provided versions in `/usr/share/containers/systemd/users/`.
+User-specific files in **`~/.config/containers/systemd/`** will mask (override) the system-provided versions in `/etc/containers/systemd/users/`.
 
 **Example: Customizing the Open WebUI container**
 1. Copy the system template to your local config:
    ```bash
    mkdir -p ~/.config/containers/systemd/
-   cp /usr/share/containers/systemd/users/open-webui.container ~/.config/containers/systemd/
+   cp /etc/containers/systemd/users/open-webui.container ~/.config/containers/systemd/
    ```
 2. Edit your local copy as needed.
 3. Apply changes:
@@ -115,7 +115,7 @@ By default, the stack creates a dedicated bridge network (`podman-ai-stack.netwo
 1. Copy the Pod template to your local config:
    ```bash
    mkdir -p ~/.config/containers/systemd/
-   cp /usr/share/containers/systemd/users/podman-ai-stack.pod ~/.config/containers/systemd/
+   cp /etc/containers/systemd/users/podman-ai-stack.pod ~/.config/containers/systemd/
    ```
 2. Edit `~/.config/containers/systemd/podman-ai-stack.pod` and comment out or remove the `Network=` line:
    ```ini
