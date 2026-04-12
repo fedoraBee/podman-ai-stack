@@ -78,33 +78,33 @@ if [ $1 -eq 0 ]; then
 fi
 
 %post root
-%systemd_post open-webui.service ollama.service
+%systemd_post podman-ai-stack-pod
 systemctl daemon-reload
 
 %preun root
-%systemd_preun open-webui.service ollama.service
+%systemd_preun podman-ai-stack-pod
 
 %postun root
-%systemd_postun_with_restart open-webui.service ollama.service
+%systemd_postun_with_restart podman-ai-stack-pod
 systemctl daemon-reload
 
 %files
 %license LICENSE
 %doc README.md DEVELOPMENT.md
 %config(noreplace) %{_sysconfdir}/sysconfig/podman-ai-stack
-%{_datadir}/containers/systemd/users/*.container
-%{_datadir}/containers/systemd/users/*.volume
-%{_datadir}/containers/systemd/users/*.network
-%{_datadir}/containers/systemd/users/*.pod
+%{_sysconfdir}/containers/systemd/users/*.container
+%{_sysconfdir}/containers/systemd/users/*.volume
+%{_sysconfdir}/containers/systemd/users/*.network
+%{_sysconfdir}/containers/systemd/users/*.pod
 
 %files user
 # This package only manages the user and lingering
 
 %files root
-%{_datadir}/containers/systemd/*.container
-%{_datadir}/containers/systemd/*.volume
-%{_datadir}/containers/systemd/*.network
-%{_datadir}/containers/systemd/*.pod
+%{_sysconfdir}/containers/systemd/*.container
+%{_sysconfdir}/containers/systemd/*.volume
+%{_sysconfdir}/containers/systemd/*.network
+%{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
 * Sat Apr 11 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1

@@ -2,13 +2,13 @@
 
 NAME := podman-ai-stack
 VERSION := 0.1.0
-PREFIX ?= /etc
-DATADIR ?= $(PREFIX)/containers/systemd
-SYSCONFDIR ?= $(PREFIX)/sysconfig
+PREFIX ?= /usr
+SYSCONFDIR ?= /etc
+DATADIR ?= $(SYSCONFDIR)
 
 # Quadlet directories
-USER_QUADLET_DIR ?= $(DATADIR)/users
-SYSTEM_QUADLET_DIR ?= $(DATADIR)
+SYSTEM_QUADLET_DIR ?= $(DATADIR)/containers/systemd
+USER_QUADLET_DIR ?= $(SYSTEM_QUADLET_DIR)/users
 
 # Default configuration for substitution
 OPEN_WEBUI_PORT ?= 3000
@@ -31,8 +31,8 @@ all:
 install: install-base install-user
 
 install-base:
-	mkdir -p $(DESTDIR)$(SYSCONFDIR)
-	install -p -m 644 podman-ai-stack.sysconfig $(DESTDIR)$(SYSCONFDIR)/podman-ai-stack
+	mkdir -p $(DESTDIR)$(SYSCONFDIR)/sysconfig
+	install -p -m 644 podman-ai-stack.sysconfig $(DESTDIR)$(SYSCONFDIR)/sysconfig/podman-ai-stack
 
 install-user:
 	mkdir -p $(DESTDIR)$(USER_QUADLET_DIR)
@@ -43,6 +43,7 @@ install-root:
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
 rpm:
+	@echo "Building RPM packages... $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename quadlets/*.in))"
 	mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 	tar -czf rpmbuild/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --transform 's|^|$(NAME)-$(VERSION)/|' *
 	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
