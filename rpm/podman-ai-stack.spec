@@ -70,7 +70,10 @@ if [ $1 -eq 0 ]; then
         uid=$(echo $user_info | cut -d: -f1)
         user=$(echo $user_info | cut -d: -f2)
         if [ -d "/run/user/$uid" ]; then
-            runuser -u "$user" -- XDG_RUNTIME_DIR="/run/user/$uid" systemctl --user stop podman-ai-stack-pod.service || :
+            # Check if the service is loaded before trying to stop it
+            if runuser -u "$user" -- env XDG_RUNTIME_DIR="/run/user/$uid" systemctl --user list-units --all | grep -q "podman-ai-stack-pod.service"; then
+                runuser -u "$user" -- env XDG_RUNTIME_DIR="/run/user/$uid" systemctl --user stop podman-ai-stack-pod.service || :
+            fi
         fi
     done
 fi
