@@ -66,8 +66,12 @@ systemctl daemon-reload
 # Stop user-level services for all active users who might be running the stack
 # This is a best-effort cleanup for rootless deployments
 if [ $1 -eq 0 ]; then
-    for uid in $(loginctl list-users --no-legend | awk '{print $1}'); do
-        XDG_RUNTIME_DIR=/run/user/$uid systemctl --user -M $uid stop podman-ai-stack-pod.service || :
+    for user_info in $(loginctl list-users --no-legend | awk '{print $1":"$2}'); do
+        uid=$(echo $user_info | cut -d: -f1)
+        user=$(echo $user_info | cut -d: -f2)
+        if [ -d "/run/user/$uid" ]; then
+            runuser -u "$user" -- XDG_RUNTIME_DIR="/run/user/$uid" systemctl --user stop podman-ai-stack-pod.service || :
+        fi
     done
 fi
 
@@ -117,6 +121,7 @@ systemctl daemon-reload
 
 %changelog
 * Sun Apr 12 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+- Refined automated cleanup of user-level pods to use runuser and XDG_RUNTIME_DIR
 - Added automated cleanup of user-level pods during uninstallation
 - Initial release of the Podman AI Stack (0.1.0-1)
 - Added optional user-specific configuration via ~/.config/podman-ai-stack.env

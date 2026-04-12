@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `README.md` with comprehensive project description and DNF repository integration steps.
 
 ### Added
+- Refined automated cleanup of user-level pods to use runuser and XDG_RUNTIME_DIR.
 - Automated cleanup of user-level pods during uninstallation.
 - Initial release of the Podman AI Stack.
 - Podman Quadlet templates for Ollama and Open WebUI.
