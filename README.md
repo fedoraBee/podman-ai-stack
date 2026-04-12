@@ -37,21 +37,21 @@ Ideal for personal workstations. Installs templates to the system-wide rootless 
 ```bash
 sudo dnf install podman-ai-stack
 systemctl --user daemon-reload
-systemctl --user start open-webui
+systemctl --user start podman-ai-stack-pod
 ```
 
 ### Option 2: Rootless (Dedicated System User)
 Recommended for server-like deployments. Installs templates to `/usr/share/containers/systemd/users/`, creates a dedicated `podman-ai` user, and enables systemd lingering.
 ```bash
 sudo dnf install podman-ai-stack-user
-sudo -u podman-ai systemctl --user start open-webui
+sudo -u podman-ai systemctl --user start podman-ai-stack-pod
 ```
 
 ### Option 3: Rootfull (System-wide)
 Runs as a standard root system service. Installs templates to the system-wide Quadlet directory (`/usr/share/containers/systemd/`).
 ```bash
 sudo dnf install podman-ai-stack-root
-sudo systemctl start open-webui
+sudo systemctl start podman-ai-stack-pod
 ```
 
 ## Using Ollama
@@ -125,7 +125,7 @@ By default, the stack creates a dedicated bridge network (`podman-ai-stack.netwo
 3. Reload and restart:
    ```bash
    systemctl --user daemon-reload
-   systemctl --user restart open-webui
+   systemctl --user restart podman-ai-stack-pod
    ```
 4. (Optional) Stop the now-unused network service:
    ```bash
@@ -135,11 +135,11 @@ By default, the stack creates a dedicated bridge network (`podman-ai-stack.netwo
 After modifying the configuration, restart the services:
 ```bash
 # For rootless (current user)
-systemctl --user restart open-webui
+systemctl --user restart podman-ai-stack-pod
 
 # For dedicated user
-sudo -u podman-ai systemctl --user restart open-webui
+sudo -u podman-ai systemctl --user restart podman-ai-stack-pod
 
 # For rootfull
-sudo systemctl restart open-webui
+sudo systemctl restart podman-ai-stack-pod
 ```
