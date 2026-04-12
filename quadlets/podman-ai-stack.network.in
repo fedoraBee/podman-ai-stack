@@ -8,4 +8,5 @@ Driver=bridge
 Subnet=10.89.0.0/24
 Gateway=10.89.0.1
 DNS=1.1.1.1
-NetworkDeleteOnStop=true
+# Keep the network persistent to avoid race conditions on restart
+NetworkDeleteOnStop=false

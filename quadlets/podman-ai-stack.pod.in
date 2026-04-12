@@ -1,6 +1,6 @@
 [Unit]
 Description=Podman AI Stack Pod
-Requires=podman-ai-stack-network.service
+BindsTo=podman-ai-stack-network.service
 After=podman-ai-stack-network.service
 
 [Pod]
@@ -9,3 +9,7 @@ PodName=podman-ai-stack
 PublishPort=@OPEN_WEBUI_PORT@:8080
 # Uses the Quadlet network configuration `podman-ai-stack.network`
 Network=podman-ai-stack.network
+
+[Service]
+# Ensure the network is fully ready before starting the pod
+ExecStartPre=/usr/bin/sleep 1
