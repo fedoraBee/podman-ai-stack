@@ -12,6 +12,7 @@ AddDevice=nvidia.com/gpu=all
 SecurityLabelDisable=true
 Environment=OLLAMA_HOST=0.0.0.0
 EnvironmentFile=/etc/sysconfig/podman-ai-stack
+EnvironmentFile=-%h/.config/podman-ai-stack.env
 PodmanArgs=--memory=@OLLAMA_MEMORY@ --cpus=@OLLAMA_CPUS@
 HealthCmd=ollama list || exit 1
 HealthInterval=30s

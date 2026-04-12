@@ -58,7 +58,10 @@ sudo systemctl start open-webui
 The stack supports two types of configuration:
 
 ### 1. Runtime Configuration (Environment Variables)
-Most settings can be customized by editing `/etc/sysconfig/podman-ai-stack`. This file is passed to all containers via the `EnvironmentFile` parameter.
+Most settings can be customized by editing the environment files. The stack loads them in the following order (later files override earlier ones):
+
+1.  **Global Configuration**: `/etc/sysconfig/podman-ai-stack` (Mandatory, managed by the package).
+2.  **User-specific Configuration**: `~/.config/podman-ai-stack.env` (Optional, allows user overrides without root).
 
 Common options:
 - `OLLAMA_BASE_URL`: The URL used by Open WebUI to connect to Ollama (default: `http://localhost:11434`).
