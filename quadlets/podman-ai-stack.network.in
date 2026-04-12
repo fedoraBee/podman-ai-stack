@@ -1,5 +1,5 @@
 [Unit]
-Description=Podman AI StackNetwork
+Description=Podman AI Stack Network
 
 [Network]
 NetworkName=podman-ai-stack
@@ -8,4 +8,4 @@ Driver=bridge
 Subnet=10.89.0.0/24
 Gateway=10.89.0.1
 DNS=1.1.1.1
-# Internal=true  # Uncomment if no external access needed
+NetworkDeleteOnStop=true

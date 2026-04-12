@@ -1,5 +1,7 @@
 [Unit]
-Description=Podman AI StackPod
+Description=Podman AI Stack Pod
+Requires=podman-ai-stack-network.service
+After=podman-ai-stack-network.service
 
 [Pod]
 Label=app=podman-ai-stack
