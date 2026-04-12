@@ -108,22 +108,23 @@ systemctl daemon-reload
 %license LICENSE
 %doc README.md DEVELOPMENT.md
 %config(noreplace) %{_sysconfdir}/sysconfig/podman-ai-stack
-%{_sysconfdir}/containers/systemd/users/*.container
-%{_sysconfdir}/containers/systemd/users/*.volume
-%{_sysconfdir}/containers/systemd/users/*.network
-%{_sysconfdir}/containers/systemd/users/*.pod
+%config(noreplace) %{_sysconfdir}/containers/systemd/users/*.container
+%config(noreplace) %{_sysconfdir}/containers/systemd/users/*.volume
+%config(noreplace) %{_sysconfdir}/containers/systemd/users/*.network
+%config(noreplace) %{_sysconfdir}/containers/systemd/users/*.pod
 
 %files user
 # This package only manages the user and lingering
 
 %files root
-%{_sysconfdir}/containers/systemd/*.container
-%{_sysconfdir}/containers/systemd/*.volume
-%{_sysconfdir}/containers/systemd/*.network
-%{_sysconfdir}/containers/systemd/*.pod
+%config(noreplace) %{_sysconfdir}/containers/systemd/*.container
+%config(noreplace) %{_sysconfdir}/containers/systemd/*.volume
+%config(noreplace) %{_sysconfdir}/containers/systemd/*.network
+%config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
 * Sun Apr 12 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-1
+- Marked all Quadlet files as config(noreplace) to preserve user modifications
 - Refined automated cleanup of user-level pods to use runuser and XDG_RUNTIME_DIR
 - Added automated cleanup of user-level pods during uninstallation
 - Initial release of the Podman AI Stack (0.1.0-1)
