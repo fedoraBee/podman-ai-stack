@@ -30,7 +30,7 @@ sudo dnf makecache
 ```
 
 ## Installation
-The stack is split into a base package and deployment-specific subpackages.
+The stack is split into a base package and deployment-specific subpackages. **By default, only the Open WebUI service is started.**
 
 ### Option 1: Rootless (Current User)
 Ideal for personal workstations. Installs templates to the system-wide rootless Quadlet directory (`/usr/share/containers/systemd/users/`).
@@ -53,6 +53,27 @@ Runs as a standard root system service. Installs templates to the system-wide Qu
 sudo dnf install podman-ai-stack-root
 sudo systemctl start open-webui
 ```
+
+## Using Ollama
+The stack includes an optional Ollama service. By default, Open WebUI is configured to connect to a local Ollama instance at `http://localhost:11434`.
+
+### Using the Built-in Ollama Container
+If you want to run Ollama as part of the stack, you must start the service explicitly:
+```bash
+# For rootless (current user)
+systemctl --user start ollama
+
+# For dedicated user
+sudo -u podman-ai systemctl --user start ollama
+
+# For rootfull
+sudo systemctl start ollama
+```
+
+### Using an External Ollama Server
+If you already have an Ollama server running elsewhere (e.g., on a different host or as a standalone service), you can point Open WebUI to it by setting the `OLLAMA_BASE_URL` in your configuration file.
+
+See the [Configuration](#configuration) section for details on how to set this variable.
 
 ## Configuration
 The stack supports two types of configuration:

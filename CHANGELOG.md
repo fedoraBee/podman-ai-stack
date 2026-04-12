@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0-1] - 2026-04-11
 
 ### Changed
+- Clarified that the `ollama` container is optional and not started by default.
+- Added documentation for using the built-in Ollama service or an external server.
 - Clarified rootless Quadlet installation paths and configuration mechanisms in `README.md`.
 - Added support for optional user-specific configuration via `~/.config/podman-ai-stack.env`.
 - Added documentation for disabling the dedicated bridge network in `README.md`.
