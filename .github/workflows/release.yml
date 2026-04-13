@@ -42,7 +42,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: rpmbuild/RPMS/noarch
+          publish_dir: ./
           
       - name: Upload Repository Artifact
         uses: actions/upload-artifact@v4
