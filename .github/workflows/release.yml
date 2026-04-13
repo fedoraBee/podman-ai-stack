@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: dnf install -y make rpm-build createrepo_c gnupg2 rpm-sign
+        run: dnf install -y make rpm-build createrepo_c gnupg2 rpm-sign git
 
       - name: Build RPM
         run: make rpm
