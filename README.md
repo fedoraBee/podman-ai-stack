@@ -36,7 +36,7 @@ Packages in this repository are signed. During the first installation, DNF will 
 Fingerprint (recommended to verify manually):
 
 ```
-<INSERT-YOUR-GPG-FINGERPRINT-HERE>
+E81C 4B7D 4D79 AD20 4F50 D263 96B8 5BB0 3733 5FBB
 ```
 
 ---
