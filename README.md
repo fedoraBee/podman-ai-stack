@@ -36,7 +36,7 @@ Packages in this repository are signed. During the first installation, DNF will 
 Fingerprint (recommended to verify manually):
 
 ```
-E81C 4B7D 4D79 AD20 4F50 D263 96B8 5BB0 3733 5FBB
+8D12 D614 9E1E 5E83 29DD E6FD 9B99 A03F 6577 BF59
 ```
 
 ---
