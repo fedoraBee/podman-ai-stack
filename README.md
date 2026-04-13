@@ -31,7 +31,7 @@ name=Podman Ai Stack - Release Server
 baseurl=https://fedorabee.github.io/podman-ai-stack/
 enabled=1
 gpgcheck=1
-gpgkey=https://github.com/fedoraBee.gpg
+gpgkey=https://github.com/fedoraBee/podman-ai-stack/raw/gh-pages/gpg.key
 EOF
 ```
 
