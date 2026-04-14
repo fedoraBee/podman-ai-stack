@@ -59,13 +59,13 @@ sign:
 			if [ -n "$(GPG_KEY_ID)" ]; then \
 				rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)" || { \
 					echo "Conflict detected, removing old signature and re-signing..."; \
-					rpmsign --delsig "$$f"; \
+					rpmsign --delsign "$$f"; \
 					rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)"; \
 				}; \
 			elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
 				rpmsign --addsign "$$f" || { \
 					echo "Conflict detected, removing old signature and re-signing..."; \
-					rpmsign --delsig "$$f"; \
+					rpmsign --delsign "$$f"; \
 					rpmsign --addsign "$$f"; \
 				}; \
 			else \
@@ -76,7 +76,7 @@ sign:
 		fi; \
 	done
 
-CHANNEL ?= stable
+CHANNEL ?= $(or $(channel),stable)
 
 repo:
 	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
