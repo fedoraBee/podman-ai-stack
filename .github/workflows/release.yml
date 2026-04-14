@@ -10,7 +10,7 @@ permissions:
 jobs:
   build-rpm:
     runs-on: ubuntu-latest
-    environment: gh-pages
+    environment: github-pages
     container: fedora:latest
     steps:
       - uses: actions/checkout@v4
