@@ -47,7 +47,8 @@ jobs:
         run: |
           echo "%_signature gpg" > ~/.rpmmacros
           echo "%_gpg_name ${{ vars.GPG_KEY_ID }}" >> ~/.rpmmacros
-          echo "%__gpg_sign_cmd %{__gpg} gpg --batch --yes --pinentry-mode loopback -u \"%{_gpg_name}\" -sbo %{__signature_filename} %{__plaintext_filename}" >> ~/.rpmmacros
+          echo "%__gpg $(which gpg)" >> ~/.rpmmacros
+          echo "%__gpg_sign_cmd %{__gpg} --batch --no-armor --no-secmem-warning --yes --pinentry-mode loopback -u \"%{_gpg_name}\" -sbo %{__signature_filename} -- %{__plaintext_filename}" >> ~/.rpmmacros
 
       - name: Sign RPMs
         run: |
