@@ -1,6 +1,6 @@
 Name:           podman-ai-stack
 Version:        0.1.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
 License:        MIT
@@ -130,6 +130,12 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-5
+- Fixed GitHub workflow signing by correcting the %__gpg_sign_cmd macro
+- Added CI-safe GPG settings (loopback mode, batch, no-tty) to GitHub Actions
+- Added --pinentry-mode loopback to repository metadata signing for CI reliability
+- Exported GPG_TTY in workflow to suppress terminal-related warnings
+
 * Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-4
 - Added automatic signature cleanup (rpm --delsig) during signing to handle conflicts
 - Refactored Makefile for better maintainability with RPM_DIR variable

@@ -71,7 +71,7 @@ if [ -n "$GPG_KEY_ID" ]; then
     # --batch --yes for non-interactive signing; --local-user to specify the key
     # Use --armor for easier web transport
     rm -f "$VERSION_DIR/repodata/repomd.xml.asc" # Ensure fresh signature
-    gpg --detach-sign --armor --batch --yes --local-user "$GPG_KEY_ID" "$VERSION_DIR/repodata/repomd.xml"
+    gpg --detach-sign --armor --batch --yes --pinentry-mode loopback --local-user "$GPG_KEY_ID" "$VERSION_DIR/repodata/repomd.xml"
 else
     echo "Warning: No GPG key available. Repository metadata will not be signed."
 fi
