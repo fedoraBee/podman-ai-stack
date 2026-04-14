@@ -2,6 +2,7 @@
 
 NAME := podman-ai-stack
 VERSION := 0.1.0
+RPM_DIR := rpmbuild/RPMS/noarch
 PREFIX ?= /usr
 SYSCONFDIR ?= /etc
 DATADIR ?= $(SYSCONFDIR)
@@ -79,10 +80,6 @@ CHANNEL ?= stable
 
 repo:
 	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
-
-clean:
-	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/
-GPG_KEY_ID)"
 
 clean:
 	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/
