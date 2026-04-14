@@ -43,27 +43,46 @@ install-root:
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
 rpm:
-	@echo "Building RPM packages... $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename quadlets/*.in))"
+	@echo "Building RPM packages..."
+	rm -rf $(RPM_DIR)/*.rpm
 	mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 	tar -czf rpmbuild/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --transform 's|^|$(NAME)-$(VERSION)/|' *
 	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
-	@echo "RPMs built in rpmbuild/RPMS/noarch/"
+	@echo "RPMs built in $(RPM_DIR)"
 
 sign:
-	@if [ -n "$(GPG_KEY_ID)" ]; then \
-		rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm --define "_gpg_name $(GPG_KEY_ID)"; \
-	elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
-		rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm; \
-	else \
-		echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
-		echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
-		exit 1; \
-	fi
+	@echo "Signing RPM packages..."
+	@for f in $(RPM_DIR)/*.rpm; do \
+		if [ -f "$$f" ]; then \
+			echo "Signing $$f..."; \
+			if [ -n "$(GPG_KEY_ID)" ]; then \
+				rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)" || { \
+					echo "Conflict detected, removing old signature and re-signing..."; \
+					rpm --delsig "$$f"; \
+					rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)"; \
+				}; \
+			elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
+				rpmsign --addsign "$$f" || { \
+					echo "Conflict detected, removing old signature and re-signing..."; \
+					rpm --delsig "$$f"; \
+					rpmsign --addsign "$$f"; \
+				}; \
+			else \
+				echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
+				echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
+				exit 1; \
+			fi; \
+		fi; \
+	done
 
 CHANNEL ?= stable
 
 repo:
-	./scripts/update-repo.sh rpmbuild/RPMS/noarch $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
+	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
+
+clean:
+	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/
+GPG_KEY_ID)"
 
 clean:
 	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/

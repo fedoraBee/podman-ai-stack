@@ -6,12 +6,31 @@
 
 set -e
 
-# Configuration
+# --- Configuration ---
 RPM_SOURCE_DIR=${1:-"rpmbuild/RPMS/noarch"}
 VERSION=${2:-"0.1.0"}
 CHANNEL=${3:-"stable"}
 GPG_KEY_ID=${4}
 REPO_ROOT="rpmbuild/repo"
+
+# --- Functions ---
+usage() {
+    echo "Usage: $0 [rpm_source_dir] [version] [channel] [gpg_key_id]"
+    echo "Example: $0 rpmbuild/RPMS/noarch 0.1.0 stable 9B99A03F6577BF59"
+}
+
+check_dependencies() {
+    local deps=("createrepo_c" "gpg" "rpm")
+    for dep in "${deps[@]}"; do
+        if ! command -v "$dep" >/dev/null 2>&1; then
+            echo "Error: Required command '$dep' not found. Please install it."
+            exit 1
+        fi
+    done
+}
+
+# --- Execution ---
+check_dependencies
 
 # Attempt to discover GPG_KEY_ID from RPM macros if not provided as argument
 if [ -z "$GPG_KEY_ID" ]; then
@@ -50,6 +69,8 @@ createrepo_c --update "$VERSION_DIR"
 if [ -n "$GPG_KEY_ID" ]; then
     echo "Signing metadata in $VERSION_DIR with GPG key: $GPG_KEY_ID"
     # --batch --yes for non-interactive signing; --local-user to specify the key
+    # Use --armor for easier web transport
+    rm -f "$VERSION_DIR/repodata/repomd.xml.asc" # Ensure fresh signature
     gpg --detach-sign --armor --batch --yes --local-user "$GPG_KEY_ID" "$VERSION_DIR/repodata/repomd.xml"
 else
     echo "Warning: No GPG key available. Repository metadata will not be signed."
