@@ -12,8 +12,6 @@ jobs:
   build-rpm:
     runs-on: ubuntu-latest
     container: fedora:latest
-    env:
-      GPG_KEY_ID: ${{ secrets.GPG_KEY_ID || vars.GPG_KEY_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -24,12 +22,12 @@ jobs:
         run: make rpm
 
       - name: Import GPG Key
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
+        if: secrets.GPG_PRIVATE_KEY != '''
         run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
 
       - name: Sign RPM
-        if: env.GPG_KEY_ID != ''
-        run: make sign GPG_KEY_ID=${{ env.GPG_KEY_ID }}
+        if: vars.GPG_KEY_ID != ''
+        run: make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
 
       - name: Update Repository
         run: |
@@ -38,7 +36,7 @@ jobs:
             CHANNEL=testing
           fi
           echo "Deploying to channel: $CHANNEL"
-          make repo GPG_KEY_ID=${{ env.GPG_KEY_ID }} CHANNEL=$CHANNEL
+          make repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} CHANNEL=$CHANNEL
       
       - name: Prepare git environment
         run: |
