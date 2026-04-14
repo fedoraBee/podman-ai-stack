@@ -1,6 +1,6 @@
 Name:           podman-ai-stack
 Version:        0.1.0
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
 License:        MIT
@@ -130,6 +130,11 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-3
+- Improved GPG key discovery in Makefile and update-repo.sh to automatically use %_gpg_name
+- Made GPG_KEY_ID parameter optional for both RPM and repository metadata signing
+- Refactored update-repo.sh for better maintainability and professional practices
+
 * Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-2
 - Updated DNF repository structure to support versioned channels (vMAJOR.MINOR/channel)
 - Modified update-repo.sh to automatically organize RPMs and sync latest pointers

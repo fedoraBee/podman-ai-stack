@@ -63,7 +63,7 @@ sign:
 CHANNEL ?= stable
 
 repo:
-	./scripts/update-repo.sh rpmbuild/RPMS/noarch $(VERSION) $(CHANNEL) $(GPG_KEY_ID)
+	./scripts/update-repo.sh rpmbuild/RPMS/noarch $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
 
 clean:
 	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/
