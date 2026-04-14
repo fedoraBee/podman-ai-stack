@@ -1,6 +1,6 @@
 Name:           podman-ai-stack
 Version:        0.1.0
-Release:        5%{?dist}
+Release:        4%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
 License:        MIT
@@ -130,11 +130,6 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
-* Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-5
-- Added support for non-interactive RPM and repository metadata signing
-- Configured GPG loopback pinentry for CI environments (GitHub Actions)
-- Added GPG_PASSPHRASE support to Makefile and update-repo.sh
-
 * Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-4
 - Added automatic signature cleanup (rpm --delsig) during signing to handle conflicts
 - Refactored Makefile for better maintainability with RPM_DIR variable

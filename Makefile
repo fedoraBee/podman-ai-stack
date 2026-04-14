@@ -51,42 +51,35 @@ rpm:
 	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
 	@echo "RPMs built in $(RPM_DIR)"
 
-# GPG configuration
-GPG_KEY_ID ?= $(shell rpm --eval '%{?_gpg_name}' 2>/dev/null)
-GPG_PASSPHRASE ?=
-
-# GPG flags for non-interactive signing
-GPG_FLAGS := --batch --no-tty --pinentry-mode loopback --no-secmem-warning
-ifneq ($(GPG_PASSPHRASE),)
-    GPG_FLAGS += --passphrase $(GPG_PASSPHRASE)
-endif
-
 sign:
 	@echo "Signing RPM packages..."
-	@if [ -z "$(GPG_KEY_ID)" ]; then \
-		echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
-		echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
-		exit 1; \
-	fi
-	@echo "Creating temporary RPM macros for signing..."
-	@echo "%_gpg_name $(GPG_KEY_ID)" > .rpmmacros.sign
-	@echo "%__gpg_sign_command %{__gpg} $(GPG_FLAGS) --no-verbose --no-armor --sign --detach-sign --output %{__signature_filename} %{__plaintext_filename}" >> .rpmmacros.sign
 	@for f in $(RPM_DIR)/*.rpm; do \
 		if [ -f "$$f" ]; then \
 			echo "Signing $$f..."; \
-			rpmsign --macros=:/usr/lib/rpm/macros:/usr/lib/rpm/fedora/macros:/etc/rpm/macros:~/.rpmmacros:.rpmmacros.sign --addsign "$$f" || { \
-				echo "Conflict detected, removing old signature and re-signing..."; \
-				rpmsign --macros=:/usr/lib/rpm/macros:/usr/lib/rpm/fedora/macros:/etc/rpm/macros:~/.rpmmacros:.rpmmacros.sign --delsign "$$f"; \
-				rpmsign --macros=:/usr/lib/rpm/macros:/usr/lib/rpm/fedora/macros:/etc/rpm/macros:~/.rpmmacros:.rpmmacros.sign --addsign "$$f"; \
-			}; \
+			if [ -n "$(GPG_KEY_ID)" ]; then \
+				rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)" || { \
+					echo "Conflict detected, removing old signature and re-signing..."; \
+					rpmsign --delsign "$$f"; \
+					rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)"; \
+				}; \
+			elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
+				rpmsign --addsign "$$f" || { \
+					echo "Conflict detected, removing old signature and re-signing..."; \
+					rpmsign --delsign "$$f"; \
+					rpmsign --addsign "$$f"; \
+				}; \
+			else \
+				echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
+				echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
+				exit 1; \
+			fi; \
 		fi; \
 	done
-	@rm -f .rpmmacros.sign
 
 CHANNEL ?= $(or $(channel),stable)
 
 repo:
-	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)" "$(GPG_PASSPHRASE)"
+	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
 
 clean:
 	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/

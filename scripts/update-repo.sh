@@ -37,8 +37,6 @@ if [ -z "$GPG_KEY_ID" ]; then
     GPG_KEY_ID=$(rpm --eval '%{?_gpg_name}' 2>/dev/null || true)
 fi
 
-GPG_PASSPHRASE=${5}
-
 # Calculate versioned directory name (vMAJOR.MINOR)
 MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1,2)
 VERSION_DIR="$REPO_ROOT/v$MAJOR_MINOR/$CHANNEL"
@@ -72,15 +70,8 @@ if [ -n "$GPG_KEY_ID" ]; then
     echo "Signing metadata in $VERSION_DIR with GPG key: $GPG_KEY_ID"
     # --batch --yes for non-interactive signing; --local-user to specify the key
     # Use --armor for easier web transport
-    # --pinentry-mode loopback for CI environments
     rm -f "$VERSION_DIR/repodata/repomd.xml.asc" # Ensure fresh signature
-    
-    GPG_OPTS="--detach-sign --armor --batch --yes --pinentry-mode loopback --local-user $GPG_KEY_ID"
-    if [ -n "$GPG_PASSPHRASE" ]; then
-        gpg $GPG_OPTS --passphrase "$GPG_PASSPHRASE" "$VERSION_DIR/repodata/repomd.xml"
-    else
-        gpg $GPG_OPTS "$VERSION_DIR/repodata/repomd.xml"
-    fi
+    gpg --detach-sign --armor --batch --yes --local-user "$GPG_KEY_ID" "$VERSION_DIR/repodata/repomd.xml"
 else
     echo "Warning: No GPG key available. Repository metadata will not be signed."
 fi
