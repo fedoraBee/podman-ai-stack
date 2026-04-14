@@ -86,4 +86,10 @@ else
     cp -r "$VERSION_DIR/"* "$LATEST_DIR/"
 fi
 
+# Copy GPG public key if it exists in the root directory
+if [ -f "gpg.key" ]; then
+    echo "Copying gpg.key to repo root..."
+    cp "gpg.key" "$REPO_ROOT/"
+fi
+
 echo "Repository update complete in $REPO_ROOT"

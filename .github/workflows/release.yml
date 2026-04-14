@@ -34,7 +34,13 @@ jobs:
         run: make sign GPG_KEY_ID=${{ env.GPG_KEY_ID }}
 
       - name: Update Repository
-        run: make repo GPG_KEY_ID=${{ env.GPG_KEY_ID }} CHANNEL=stable
+        run: |
+          CHANNEL=stable
+          if [[ "${{ github.ref_name }}" == *"rc"* ]] || [[ "${{ github.ref_name }}" == *"beta"* ]] || [[ "${{ github.ref_name }}" == *"alpha"* ]] || [[ "${{ github.ref_name }}" == *"test"* ]]; then
+            CHANNEL=testing
+          fi
+          echo "Deploying to channel: $CHANNEL"
+          make repo GPG_KEY_ID=${{ env.GPG_KEY_ID }} CHANNEL=$CHANNEL
       
       - name: Prepare git environment
         run: |
