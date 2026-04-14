@@ -22,7 +22,7 @@ jobs:
         run: make rpm
 
       - name: Import GPG Key
-        if: secrets.GPG_PRIVATE_KEY != '''
+        if: secrets.GPG_PRIVATE_KEY != ''
         run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
 
       - name: Sign RPM
