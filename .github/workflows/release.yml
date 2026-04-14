@@ -34,7 +34,7 @@ jobs:
         run: make sign GPG_KEY_ID=${{ env.GPG_KEY_ID }}
 
       - name: Update Repository
-        run: make repo GPG_KEY_ID=${{ env.GPG_KEY_ID }}
+        run: make repo GPG_KEY_ID=${{ env.GPG_KEY_ID }} CHANNEL=stable
       
       - name: Prepare git environment
         run: |
@@ -43,20 +43,20 @@ jobs:
           git config --global --add safe.directory '*'
       
       - name: Debug repo contents
-        run: ls -R rpmbuild/RPMS/noarch
+        run: ls -R rpmbuild/repo
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: rpmbuild/RPMS/noarch
+          publish_dir: rpmbuild/repo
           
       - name: Upload Repository Artifact
         uses: actions/upload-artifact@v4
         with:
           name: dnf-repo
-          path: rpmbuild/RPMS/noarch/
+          path: rpmbuild/repo/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -64,4 +64,3 @@ jobs:
         with:
           files: |
             rpmbuild/RPMS/noarch/*.rpm
-            rpmbuild/RPMS/noarch/repodata/*

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0-2] - 2026-04-14
+
+### Changed
+- Updated DNF repository structure to support versioned channels (e.g., `v0.1/stable`, `latest/testing`).
+- Modified `scripts/update-repo.sh` to automatically organize RPMs and sync `latest` pointers.
+- Updated GitHub Actions workflow to deploy the new repository structure to GitHub Pages.
+- Improved documentation in `DEVELOPMENT.md` and `GEMINI.md` to reflect the new build process.
+
 ## [0.1.0-1] - 2026-04-11
 
 ### Changed

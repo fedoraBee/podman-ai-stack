@@ -53,8 +53,10 @@ sign:
 	@if [ -z "$(GPG_KEY_ID)" ]; then echo "GPG_KEY_ID is not set. Use: make sign GPG_KEY_ID=<your-key-id>"; exit 1; fi
 	rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm --define "_gpg_name $(GPG_KEY_ID)"
 
+CHANNEL ?= stable
+
 repo:
-	./scripts/update-repo.sh rpmbuild/RPMS/noarch $(GPG_KEY_ID)
+	./scripts/update-repo.sh rpmbuild/RPMS/noarch $(VERSION) $(CHANNEL) $(GPG_KEY_ID)
 
 clean:
 	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/

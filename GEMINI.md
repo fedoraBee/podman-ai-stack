@@ -33,10 +33,11 @@ The project is structured around a base RPM package with deployment-specific sub
 
 To deploy changes locally for testing:
 1.  **Build the RPM:** `make rpm`
-2.  **Update Local Repo:** `cp -r rpmbuild/RPMS/ ../dnf-repos/podman-ai-stack/`
-3.  **Install/Reinstall:** `sudo dnf reinstall -Cy ../dnf-repos/podman-ai-stack/RPMS/noarch/podman-ai-stack-0.1.0-1.fc43.noarch.rpm`
-4.  **Reload Systemd:** `systemctl daemon-reload --user`
-5.  **Restart Service:** `systemctl --user restart podman-ai-stack-pod`
+2.  **Generate Repo:** `make repo CHANNEL=testing`
+3.  **Update Local Repo:** `cp -r rpmbuild/repo/ ../dnf-repos/podman-ai-stack/`
+4.  **Install/Reinstall:** `sudo dnf reinstall -Cy ../dnf-repos/podman-ai-stack/latest/testing/podman-ai-stack-0.1.0-1.fc43.noarch.rpm`
+5.  **Reload Systemd:** `systemctl daemon-reload --user`
+6.  **Restart Service:** `systemctl --user restart podman-ai-stack-pod`
 
 ## 🤖 Gemini CLI Guidelines
 

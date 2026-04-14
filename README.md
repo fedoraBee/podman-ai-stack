@@ -27,11 +27,18 @@ Packages are distributed via a dedicated DNF repository hosted on GitHub Pages:
 ```bash
 sudo tee /etc/yum.repos.d/podman-ai-stack.repo <<'EOF'
 [podman-ai-stack]
-name=Podman AI Stack - Release Server
-baseurl=https://fedorabee.github.io/podman-ai-stack/
+name=Podman AI Stack - Stable
+baseurl=https://fedorabee.github.io/podman-ai-stack/stable/
 enabled=1
 gpgcheck=1
-gpgkey=https://github.com/fedoraBee/podman-ai-stack/gpg.key
+gpgkey=https://fedorabee.github.io/podman-ai-stack/gpg.key
+
+[podman-ai-stack-testing]
+name=Podman AI Stack - Testing
+baseurl=https://fedorabee.github.io/podman-ai-stack/testing/
+enabled=0
+gpgcheck=1
+gpgkey=https://fedorabee.github.io/podman-ai-stack/gpg.key
 EOF
 ```
 
