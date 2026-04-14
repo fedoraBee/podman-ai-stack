@@ -49,7 +49,9 @@ jobs:
           echo "%_gpg_name ${{ vars.GPG_KEY_ID }}" >> ~/.rpmmacros
           echo "%_gpgbin /usr/bin/gpg" >> ~/.rpmmacros
           echo "%__gpg $(which gpg)" >> ~/.rpmmacros
-          echo "%__gpg_sign_cmd %{__gpg} gpg --batch --no-armor --no-secmem-warning --pinentry-mode loopback --passphrase '' -u \"%{_gpg_name}\" -sbo %{__signature_filename} %{__plaintext_filename}" >> ~/.rpmmacros
+          echo "%__gpg_sign_cmd %{__gpg} gpg --no-verbose --no-armor --no-secmem-warning -u \"%{_gpg_name}\" -sbo %{__signature_filename} %{__plaintext_filename}" >> ~/.rpmmacros
+          echo "%_gpg_sign_cmd_extra_args --batch --pinentry-mode loopback --passphrase ''" >> ~/.rpmmacros
+              
       - name: Sign RPMs
         run: |
           export GPG_TTY=$(tty)
