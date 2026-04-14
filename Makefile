@@ -59,13 +59,13 @@ sign:
 			if [ -n "$(GPG_KEY_ID)" ]; then \
 				rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)" || { \
 					echo "Conflict detected, removing old signature and re-signing..."; \
-					rpm --delsig "$$f"; \
+					rpmsign --delsig "$$f"; \
 					rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)"; \
 				}; \
 			elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
 				rpmsign --addsign "$$f" || { \
 					echo "Conflict detected, removing old signature and re-signing..."; \
-					rpm --delsig "$$f"; \
+					rpmsign --delsig "$$f"; \
 					rpmsign --addsign "$$f"; \
 				}; \
 			else \
