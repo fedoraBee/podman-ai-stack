@@ -27,11 +27,11 @@ Packages are distributed via a dedicated DNF repository hosted on GitHub Pages:
 ```bash
 sudo tee /etc/yum.repos.d/podman-ai-stack.repo <<'EOF'
 [podman-ai-stack]
-name=Podman Ai Stack - Release Server
+name=Podman AI Stack - Release Server
 baseurl=https://fedorabee.github.io/podman-ai-stack/
 enabled=1
 gpgcheck=1
-gpgkey=https://github.com/fedoraBee/podman-ai-stack/raw/gh-pages/gpg.key
+gpgkey=https://github.com/fedoraBee/podman-ai-stack/gpg.key
 EOF
 ```
 
@@ -39,6 +39,18 @@ EOF
 
 ```bash
 sudo dnf makecache
+```
+
+---
+
+## 🔐 GPG Key
+
+Packages are signed. During first installation, DNF will prompt for key import.
+
+Fingerprint:
+
+```
+8D12 D614 9E1E 5E83 29DD E6FD 9B99 A03F 6577 BF59
 ```
 
 ---
@@ -60,7 +72,7 @@ systemctl --user daemon-reload
 systemctl --user start podman-ai-stack-pod
 ```
 
-Monitor some logs (example for Open WebUI):
+Monitor logs:
 
 ```bash
 journalctl --user -u open-webui.service -f
@@ -79,7 +91,7 @@ sudo -u podman-ai systemctl --user start podman-ai-stack-pod
 
 > ℹ️ Lingering is enabled automatically by the package.
 
-Monitor some logs (example for Ollama):
+Monitor logs:
 
 ```bash
 sudo -u podman-ai XDG_RUNTIME_DIR=/run/user/$(id -u podman-ai) \
@@ -95,7 +107,7 @@ sudo dnf install podman-ai-stack-root
 sudo systemctl start podman-ai-stack-pod
 ```
 
-Monitor some logs (example for Podman AI Stack):
+Monitor logs:
 
 ```bash
 sudo journalctl -u podman-ai-stack-pod.service -f
@@ -136,8 +148,6 @@ Set:
 OLLAMA_BASE_URL=<your-server>
 ```
 
-See [Configuration](#configuration).
-
 ---
 
 ## ⚙️ Configuration
@@ -166,13 +176,13 @@ See: `DEVELOPMENT.md`
 
 ## 🧩 Advanced Customization (Quadlet Overrides)
 
-You can override any component using user-level Quadlets:
+User-level Quadlets override system templates:
 
 ```
 ~/.config/containers/systemd/
 ```
 
-These override system templates in:
+Overrides:
 
 ```
 /etc/containers/systemd/users/
@@ -187,8 +197,6 @@ mkdir -p ~/.config/containers/systemd/
 cp /etc/containers/systemd/users/open-webui.container \
    ~/.config/containers/systemd/
 ```
-
-Then:
 
 ```bash
 systemctl --user daemon-reload
@@ -210,8 +218,6 @@ Edit:
 # Network=podman-ai-stack.network
 ```
 
-Then:
-
 ```bash
 systemctl --user daemon-reload
 systemctl --user restart podman-ai-stack-pod
@@ -231,6 +237,20 @@ sudo -u podman-ai systemctl --user restart podman-ai-stack-pod
 # Rootfull
 sudo systemctl restart podman-ai-stack-pod
 ```
+
+---
+
+## 📁 Repository Contents
+
+The package repository contains:
+
+* RPM packages:
+
+  * `podman-ai-stack`
+  * `podman-ai-stack-user`
+  * `podman-ai-stack-root`
+* Repository metadata (`repodata/`)
+* GPG signing key
 
 ---
 
