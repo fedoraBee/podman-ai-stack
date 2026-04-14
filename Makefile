@@ -51,35 +51,44 @@ rpm:
 	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
 	@echo "RPMs built in $(RPM_DIR)"
 
+# GPG configuration
+GPG_KEY_ID ?= $(shell rpm --eval '%{?_gpg_name}' 2>/dev/null)
+GPG_PASSPHRASE ?=
+
+# Base rpmsign command with GPG name
+RPMSIGN := rpmsign --addsign --define "_gpg_name $(GPG_KEY_ID)"
+
+# Add non-interactive GPG flags if in CI or if passphrase is provided
+# We use loopback pinentry to avoid 'No pinentry' errors in non-interactive environments
+GPG_FLAGS := --batch --no-tty --pinentry-mode loopback
+ifneq ($(GPG_PASSPHRASE),)
+    GPG_FLAGS += --passphrase $(GPG_PASSPHRASE)
+endif
+
+RPMSIGN += --define "__gpg_sign_command %{__gpg} gpg $(GPG_FLAGS) --no-verbose --no-armor --use-agent --no-secmem-warning --sign --detach-sign --output %{__signature_filename} %{__plaintext_filename}"
+
 sign:
 	@echo "Signing RPM packages..."
+	@if [ -z "$(GPG_KEY_ID)" ]; then \
+		echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
+		echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
+		exit 1; \
+	fi
 	@for f in $(RPM_DIR)/*.rpm; do \
 		if [ -f "$$f" ]; then \
 			echo "Signing $$f..."; \
-			if [ -n "$(GPG_KEY_ID)" ]; then \
-				rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)" || { \
-					echo "Conflict detected, removing old signature and re-signing..."; \
-					rpmsign --delsign "$$f"; \
-					rpmsign --addsign "$$f" --define "_gpg_name $(GPG_KEY_ID)"; \
-				}; \
-			elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
-				rpmsign --addsign "$$f" || { \
-					echo "Conflict detected, removing old signature and re-signing..."; \
-					rpmsign --delsign "$$f"; \
-					rpmsign --addsign "$$f"; \
-				}; \
-			else \
-				echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
-				echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
-				exit 1; \
-			fi; \
+			$(RPMSIGN) "$$f" || { \
+				echo "Conflict detected, removing old signature and re-signing..."; \
+				rpmsign --delsign "$$f"; \
+				$(RPMSIGN) "$$f"; \
+			}; \
 		fi; \
 	done
 
 CHANNEL ?= $(or $(channel),stable)
 
 repo:
-	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
+	./scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)" "$(GPG_PASSPHRASE)"
 
 clean:
 	rm -rf $(NAME)-$(VERSION).tar.gz rpmbuild/

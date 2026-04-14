@@ -24,9 +24,12 @@ jobs:
       - name: Import GPG Key
         run: |
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          mkdir -p ~/.gnupg
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          gpgconf --kill gpg-agent
 
       - name: Sign RPM
-        run: make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
+        run: make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }} GPG_PASSPHRASE="${{ secrets.GPG_PASSPHRASE }}"
 
       - name: Update Repository
         run: |
@@ -35,7 +38,7 @@ jobs:
             CHANNEL=testing
           fi
           echo "Deploying to channel: $CHANNEL"
-          make repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} CHANNEL=$CHANNEL
+          make repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} GPG_PASSPHRASE="${{ secrets.GPG_PASSPHRASE }}" CHANNEL=$CHANNEL
       
       - name: Prepare git environment
         run: |
