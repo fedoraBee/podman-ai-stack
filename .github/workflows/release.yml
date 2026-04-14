@@ -7,10 +7,10 @@ on:
 
 permissions:
   contents: write
-
 jobs:
   build-rpm:
     runs-on: ubuntu-latest
+    environment: gh-pages
     container: fedora:latest
     steps:
       - uses: actions/checkout@v4
@@ -22,11 +22,9 @@ jobs:
         run: make rpm
 
       - name: Import GPG Key
-        if: secrets.GPG_PRIVATE_KEY != ''
         run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
 
       - name: Sign RPM
-        if: vars.GPG_KEY_ID != ''
         run: make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
 
       - name: Update Repository
