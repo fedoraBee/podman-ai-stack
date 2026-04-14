@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0-5] - 2026-04-14
 
 ### Changed
-- Added support for non-interactive RPM and repository metadata signing.
-- Configured GPG loopback pinentry for CI environments (GitHub Actions) to fix "No pinentry" errors.
-- Added `GPG_PASSPHRASE` support to `Makefile` and `update-repo.sh` for secure automated signing.
+- Fixed GitHub workflow signing by correcting the `%__gpg_sign_cmd` macro (removed redundant `gpg` call).
+- Configured GPG loopback pinentry, batch mode, and no-tty for non-interactive CI environments.
+- Added `--pinentry-mode loopback` to repository metadata signing in `scripts/update-repo.sh`.
+- Exported `GPG_TTY` in GitHub workflow to suppress terminal-related warnings.
 
 ## [0.1.0-4] - 2026-04-14
 
