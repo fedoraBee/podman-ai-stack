@@ -55,17 +55,11 @@ rpm:
 GPG_KEY_ID ?= $(shell rpm --eval '%{?_gpg_name}' 2>/dev/null)
 GPG_PASSPHRASE ?=
 
-# Base rpmsign command with GPG name
-RPMSIGN := rpmsign --addsign --define "_gpg_name $(GPG_KEY_ID)"
-
-# Add non-interactive GPG flags if in CI or if passphrase is provided
-# We use loopback pinentry to avoid 'No pinentry' errors in non-interactive environments
-GPG_FLAGS := --batch --no-tty --pinentry-mode loopback
+# GPG flags for non-interactive signing
+GPG_FLAGS := --batch --no-tty --pinentry-mode loopback --no-secmem-warning
 ifneq ($(GPG_PASSPHRASE),)
     GPG_FLAGS += --passphrase $(GPG_PASSPHRASE)
 endif
-
-RPMSIGN += --define "__gpg_sign_command %{__gpg} gpg $(GPG_FLAGS) --no-verbose --no-armor --use-agent --no-secmem-warning --sign --detach-sign --output %{__signature_filename} %{__plaintext_filename}"
 
 sign:
 	@echo "Signing RPM packages..."
@@ -74,16 +68,20 @@ sign:
 		echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
 		exit 1; \
 	fi
+	@echo "Creating temporary RPM macros for signing..."
+	@echo "%_gpg_name $(GPG_KEY_ID)" > .rpmmacros.sign
+	@echo "%__gpg_sign_command %{__gpg} $(GPG_FLAGS) --no-verbose --no-armor --sign --detach-sign --output %{__signature_filename} %{__plaintext_filename}" >> .rpmmacros.sign
 	@for f in $(RPM_DIR)/*.rpm; do \
 		if [ -f "$$f" ]; then \
 			echo "Signing $$f..."; \
-			$(RPMSIGN) "$$f" || { \
+			rpmsign --macros=:/usr/lib/rpm/macros:/usr/lib/rpm/fedora/macros:/etc/rpm/macros:~/.rpmmacros:.rpmmacros.sign --addsign "$$f" || { \
 				echo "Conflict detected, removing old signature and re-signing..."; \
-				rpmsign --delsign "$$f"; \
-				$(RPMSIGN) "$$f"; \
+				rpmsign --macros=:/usr/lib/rpm/macros:/usr/lib/rpm/fedora/macros:/etc/rpm/macros:~/.rpmmacros:.rpmmacros.sign --delsign "$$f"; \
+				rpmsign --macros=:/usr/lib/rpm/macros:/usr/lib/rpm/fedora/macros:/etc/rpm/macros:~/.rpmmacros:.rpmmacros.sign --addsign "$$f"; \
 			}; \
 		fi; \
 	done
+	@rm -f .rpmmacros.sign
 
 CHANNEL ?= $(or $(channel),stable)
 
