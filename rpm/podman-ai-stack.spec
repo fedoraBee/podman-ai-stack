@@ -131,7 +131,7 @@ systemctl daemon-reload
 
 %changelog
 * Tue Apr 14 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.1.0-5
-- Fixed GitHub workflow signing by correcting the %__gpg_sign_cmd macro (using positional parameters %{2} and %{1})
+- Attempted fix for GitHub workflow RPM signing by escaping positional parameters (%%{1} and %%{2}) in the %__gpg_sign_cmd macro definition.
 - Added CI-safe GPG settings (loopback mode, batch, no-tty) to GitHub Actions
 - Added --pinentry-mode loopback to repository metadata signing for CI reliability
 - Exported GPG_TTY in workflow to suppress terminal-related warnings
