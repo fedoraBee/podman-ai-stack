@@ -50,8 +50,15 @@ rpm:
 	@echo "RPMs built in rpmbuild/RPMS/noarch/"
 
 sign:
-	@if [ -z "$(GPG_KEY_ID)" ]; then echo "GPG_KEY_ID is not set. Use: make sign GPG_KEY_ID=<your-key-id>"; exit 1; fi
-	rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm --define "_gpg_name $(GPG_KEY_ID)"
+	@if [ -n "$(GPG_KEY_ID)" ]; then \
+		rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm --define "_gpg_name $(GPG_KEY_ID)"; \
+	elif [ -n "$$(rpm --eval '%{?_gpg_name}')" ]; then \
+		rpmsign --addsign rpmbuild/RPMS/noarch/*.rpm; \
+	else \
+		echo "Error: GPG_KEY_ID is not set and %_gpg_name macro is not defined."; \
+		echo "Use: make sign GPG_KEY_ID=<your-key-id> or configure ~/.rpmmacros"; \
+		exit 1; \
+	fi
 
 CHANNEL ?= stable
 

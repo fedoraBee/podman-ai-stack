@@ -11,7 +11,13 @@ This generates the following packages in `rpmbuild/RPMS/noarch/`:
 - `podman-ai-stack-root`: Rootfull deployment.
 
 ## GPG Signing
-To sign the built RPMs, you need a GPG key. Ensure your `~/.rpmmacros` is configured or provide the key ID to make:
+To sign the built RPMs, you need a GPG key. If you have configured your `~/.rpmmacros` (as shown below), you can simply run:
+
+```bash
+make sign
+```
+
+Alternatively, you can provide the key ID directly:
 
 ```bash
 make sign GPG_KEY_ID=YOUR_KEY_ID
