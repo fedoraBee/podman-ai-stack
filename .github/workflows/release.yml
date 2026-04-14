@@ -22,7 +22,8 @@ jobs:
         run: make rpm
 
       - name: Import GPG Key
-        run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
 
       - name: Sign RPM
         run: make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
