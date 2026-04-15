@@ -143,6 +143,9 @@ systemctl daemon-reload
 - Add %%doc to subpackages to resolve no-documentation warnings
 - Fixed shellcheck SC2115 warning in scripts/update-repo.sh
 - Updated CONTRIBUTING.md with shellcheck and markdownlint-cli installation instructions
+- Switched markdownlint configuration to .jsonc and removed legacy YAML/JSON config files
+- Updated CI markdown linting to use markdownlint-cli2-action with repository-wide Markdown globs
+- Fixed markdown formatting issues in GitHub issue and pull request templates
 - Bumped version to 0.2.2
 
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.1-1

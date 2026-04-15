@@ -19,11 +19,19 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `no-documentation` warnings.
 - Updated `CONTRIBUTING.md` with instructions for installing `shellcheck` and
   `markdownlint-cli`.
+- Switched Markdown linting configuration from YAML/JSON to `.jsonc` and
+  standardized CI and local lint commands to use `.github/.markdownlint.jsonc`.
+- Updated the CI Markdown lint step to use `markdownlint-cli2-action` with
+  explicit Markdown globs for repository-wide checks.
+- Removed obsolete `.github/linters/ignore` and legacy
+  `.github/linters/markdownlint.yaml` configuration files.
 
 ### Fixed
 
 - Resolved `shellcheck` SC2115 warning in `scripts/update-repo.sh` by ensuring
   safe expansion of variables in `rm -rf`.
+- Corrected Markdown formatting issues in GitHub issue and pull request
+  templates to satisfy linting rules and avoid heading/line-length violations.
 
 ## [0.2.1] - 2026-04-15
 
