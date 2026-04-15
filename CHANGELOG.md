@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.8] - 2026-04-15
+
+### Changed
+
+- Updated the CI workflow to use Node.js 24-compatible action releases for
+  checkout, Markdown linting, and artifact handling, and removed the forced
+  Node.js 24 override from push and pull request jobs.
+- Updated checkout and artifact actions in the release workflow while keeping
+  the temporary Node.js 24 override there for the GitHub Pages deploy action.
+- Aligned project version references to `0.2.8` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.7] - 2026-04-15
 
 ### Changed

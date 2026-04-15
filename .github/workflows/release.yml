@@ -18,7 +18,7 @@ jobs:
     container: fedora:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
@@ -80,7 +80,7 @@ jobs:
           publish_dir: rpmbuild/repo
 
       - name: Upload Repository Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: dnf-repo
           path: rpmbuild/repo/
