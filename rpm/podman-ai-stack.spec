@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.2
+Version:        0.2.3
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -138,6 +138,10 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.3-1
+- Added systemd-rpm-macros to CI and release workflow dependency installation
+- Verified and aligned project version references to 0.2.3
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.2-1
 - Add rpmlint filters for non-standard uid/gid for podman-ai user
 - Add %%doc to subpackages to resolve no-documentation warnings
