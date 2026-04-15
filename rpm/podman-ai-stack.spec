@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.5
+Version:        0.2.6
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -68,17 +68,24 @@ make install-root DESTDIR=%{buildroot} %{make_vars}
 test -f %{buildroot}%{_sysconfdir}/sysconfig/podman-ai-stack
 test -d %{buildroot}/var/lib/podman-ai
 
+%global systemd_runtime_check [ -d /run/systemd/system ] && command -v systemctl >/dev/null 2>&1
+%global loginctl_runtime_check [ -d /run/systemd/system ] && command -v loginctl >/dev/null 2>&1
+
 %post
 # Reload for the generator to pick up new user-level Quadlets
-systemctl daemon-reload
+if %{systemd_runtime_check}; then
+    systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %postun
-systemctl daemon-reload
+if %{systemd_runtime_check}; then
+    systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %preun
 # Stop user-level services for all active users who might be running the stack
 # This is a best-effort cleanup for rootless deployments
-if [ $1 -eq 0 ]; then
+if [ $1 -eq 0 ] && %{loginctl_runtime_check}; then
     for user_info in $(loginctl list-users --no-legend | awk '{print $1":"$2}'); do
         uid=$(echo $user_info | cut -d: -f1)
         user=$(echo $user_info | cut -d: -f2)
@@ -99,23 +106,31 @@ getent passwd podman-ai >/dev/null || \
 exit 0
 
 %post user
-loginctl enable-linger podman-ai || :
+if %{loginctl_runtime_check}; then
+    loginctl enable-linger podman-ai >/dev/null 2>&1 || :
+fi
 
 %postun user
-if [ $1 -eq 0 ]; then
-    loginctl disable-linger podman-ai || :
+if [ $1 -eq 0 ] && %{loginctl_runtime_check}; then
+    loginctl disable-linger podman-ai >/dev/null 2>&1 || :
 fi
 
 %post root
-systemctl daemon-reload
-%systemd_post podman-ai-stack-pod
+if %{systemd_runtime_check}; then
+    systemctl daemon-reload >/dev/null 2>&1 || :
+    %systemd_post podman-ai-stack-pod
+fi
 
 %preun root
-%systemd_preun podman-ai-stack-pod
+if %{systemd_runtime_check}; then
+    %systemd_preun podman-ai-stack-pod
+fi
 
 %postun root
-%systemd_postun_with_restart podman-ai-stack-pod
-systemctl daemon-reload
+if %{systemd_runtime_check}; then
+    %systemd_postun_with_restart podman-ai-stack-pod
+    systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %files
 %license LICENSE
@@ -140,6 +155,14 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.6-1
+- Guarded systemctl and loginctl RPM scriptlets so installs succeed in CI
+  containers without systemd running as PID 1
+- Wrapped root subpackage systemd macros with the same runtime checks to avoid
+  transaction failures during smoke-test installs
+- Aligned project version references to 0.2.6 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.5-1
 - Added user(podman-ai) and group(podman-ai) provides to the user subpackage
   so DNF can resolve the dedicated service account during smoke-test installs

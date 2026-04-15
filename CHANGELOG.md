@@ -6,6 +6,17 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.6] - 2026-04-15
+
+### Fixed
+
+- Guarded `systemctl` and `loginctl` RPM scriptlets so package installation
+  succeeds in CI containers that do not run `systemd` as PID 1.
+- Wrapped the root subpackage systemd macros with the same runtime checks to
+  avoid smoke-test transaction failures.
+- Aligned project version references to `0.2.6` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.5] - 2026-04-15
 
 ### Fixed
