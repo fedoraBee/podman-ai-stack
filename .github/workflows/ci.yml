@@ -115,7 +115,7 @@ jobs:
           test -f /etc/sysconfig/podman-ai-stack
           test -f /etc/containers/systemd/users/open-webui.container
           test -f /etc/containers/systemd/users/ollama.container
-          test -f /etc/containers/systemd/users/podman-ai-stack-pod.pod
+          test -f /etc/containers/systemd/users/podman-ai-stack.pod
 
       - name: Verify rootless install path
         if: matrix.install_mode == 'rootless'
@@ -140,7 +140,7 @@ jobs:
         run: |
           test -f /etc/containers/systemd/open-webui.container
           test -f /etc/containers/systemd/ollama.container
-          test -f /etc/containers/systemd/podman-ai-stack-pod.pod
+          test -f /etc/containers/systemd/podman-ai-stack.pod
           ! getent passwd podman-ai
 
       - name: Dry-run Quadlet generator
