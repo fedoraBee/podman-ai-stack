@@ -42,7 +42,9 @@ jobs:
 
           gpg-connect-agent reloadagent /bye
 
-          $(find /usr/lib* -name gpg-preset-passphrase 2>/dev/null) --passphrase "${{ secrets.GPG_PASSPHRASE }}" --preset $(gpg --with-keygrip -K |  awk '/Keygrip =/ {print $3; exit}')
+          preset_passphrase_bin="$(find /usr/lib* -name gpg-preset-passphrase 2>/dev/null | head -n 1)"
+          keygrip="$(gpg --with-keygrip -K | awk '/Keygrip =/ {print $3; exit}')"
+          "$preset_passphrase_bin" --passphrase "${{ secrets.GPG_PASSPHRASE }}" --preset "$keygrip"
       - name: Configure RPM signing
         run: |
           echo "%_signature gpg" > ~/.rpmmacros
@@ -50,15 +52,19 @@ jobs:
           echo "%__gpg $(which gpg)" >> ~/.rpmmacros
       - name: Sign RPMs
         run: |
-          export GPG_TTY=$(tty || echo /dev/null)
+          GPG_TTY="$(tty || echo /dev/null)"
+          export GPG_TTY
           make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
 
       - name: Update Repository
         run: |
           CHANNEL=stable
-          if [[ "${{ github.ref_name }}" == *"rc"* ]] || [[ "${{ github.ref_name }}" == *"beta"* ]] || [[ "${{ github.ref_name }}" == *"alpha"* ]] || [[ "${{ github.ref_name }}" == *"test"* ]]; then
-            CHANNEL=testing
-          fi
+          ref_name="${{ github.ref_name }}"
+          case "$ref_name" in
+            *rc*|*beta*|*alpha*|*test*)
+              CHANNEL=testing
+              ;;
+          esac
 
           echo "Deploying to channel: $CHANNEL"
           make repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} CHANNEL=$CHANNEL

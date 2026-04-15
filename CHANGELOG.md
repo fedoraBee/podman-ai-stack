@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.15] - 2026-04-15
+
+### Fixed
+
+- Updated the CI workflow scripts to satisfy `actionlint` and ShellCheck by
+  replacing unsafe negation patterns with explicit conditionals.
+- Hardened the release workflow shell scripts by quoting command substitutions,
+  separating variable assignment from export, and switching prerelease channel
+  detection to a `case` statement.
+- Aligned project version references to `0.2.15` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.14] - 2026-04-15
 
 ### Changed

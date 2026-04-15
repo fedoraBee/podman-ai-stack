@@ -139,8 +139,14 @@ jobs:
         run: |
           test ! -f /etc/containers/systemd/open-webui.container
           test ! -f /etc/containers/systemd/ollama.container
-          ! getent passwd podman-ai
-          ! getent group podman-ai
+          if getent passwd podman-ai > /dev/null; then
+            echo "podman-ai user should not exist for current-user rootless installs"
+            exit 1
+          fi
+          if getent group podman-ai > /dev/null; then
+            echo "podman-ai group should not exist for current-user rootless installs"
+            exit 1
+          fi
 
       - name: Verify rootless service-user install path
         if: matrix.install_mode == 'rootless-service-user'
@@ -158,7 +164,10 @@ jobs:
           test -f /etc/containers/systemd/open-webui.container
           test -f /etc/containers/systemd/ollama.container
           test -f /etc/containers/systemd/podman-ai-stack.pod
-          ! getent passwd podman-ai
+          if getent passwd podman-ai > /dev/null; then
+            echo "podman-ai user should not exist for rootful installs"
+            exit 1
+          fi
 
       - name: Dry-run Quadlet generator
         run: |
