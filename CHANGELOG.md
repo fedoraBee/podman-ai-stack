@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.11] - 2026-04-15
+
+### Fixed
+
+- Configured GitHub Pages deployment to keep existing `gh-pages` branch
+  contents so prerelease publishes do not remove previously published
+  repository channels such as `latest/stable`.
+- Preserved multi-channel DNF repository layouts when publishing only a subset
+  of paths from `rpmbuild/repo` during release automation.
+- Aligned project version references to `0.2.11` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.10] - 2026-04-15
 
 ### Changed

@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.10
+Version:        0.2.11
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,15 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.11-1
+- Configured GitHub Pages deployment to keep existing branch contents so
+  prerelease publishes do not remove previously published repository channels
+  such as latest/stable
+- Preserved multi-channel DNF repository layouts when publishing only a subset
+  of paths from rpmbuild/repo during release automation
+- Aligned project version references to 0.2.11 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.10-1
 - Replaced the smoke-test download-artifact action with a direct GitHub Actions
   artifact API download to remove the final Node.js 20 deprecation warning in

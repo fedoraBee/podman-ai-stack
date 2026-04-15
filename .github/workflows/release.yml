@@ -78,6 +78,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: rpmbuild/repo
+          keep_files: true
 
       - name: Upload Repository Artifact
         uses: actions/upload-artifact@v6
