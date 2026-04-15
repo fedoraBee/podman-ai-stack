@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.8
+Version:        0.2.9
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,15 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.9-1
+- Scoped the Node.js 24 override to the smoke-test job so download-artifact can
+  run without deprecation warnings while the rest of CI stays on native
+  Node.js 24-compatible action versions
+- Kept the workaround limited to the job that still depends on a Node.js 20
+  targeted artifact download action
+- Aligned project version references to 0.2.9 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.8-1
 - Updated CI workflow actions to Node.js 24-compatible releases and removed
   the forced Node.js 24 override from push and pull request jobs
