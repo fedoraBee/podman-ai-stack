@@ -76,7 +76,7 @@ jobs:
         run: dnf install -y systemd podman make
 
       - name: Install RPMs
-        run: dnf install -y rpms/*.rpm
+        run: dnf install -y rpms/podman-ai-stack-[0-9].*.noarch.rpm rpms/podman-ai-stack-user-*.noarch.rpm rpms/podman-ai-stack-root-*.noarch.rpm
 
       - name: Verify file installation
         run: |

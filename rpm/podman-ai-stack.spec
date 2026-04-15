@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.3
+Version:        0.2.4
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -138,6 +138,11 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.4-1
+- Fixed dnf install command in CI workflow to avoid broken dependency ci issue
+- Aligned project version references to 0.2.4 across the `Makefile`, RPM spec
+  metadata, and changelog entries.
+  
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.3-1
 - Added systemd-rpm-macros to CI and release workflow dependency installation
 - Verified and aligned project version references to 0.2.3
