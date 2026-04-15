@@ -6,6 +6,19 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.12] - 2026-04-15
+
+### Changed
+
+- Expanded the GitHub Actions install smoke test into a Fedora matrix covering
+  Fedora 40, 41, and 42.
+- Split install validation into current-user rootless, service-user rootless,
+  and rootfull package paths so each deployment mode is verified explicitly.
+- Added a release workflow status badge and documented the expanded CI coverage
+  in the `README.md`.
+- Aligned project version references to `0.2.12` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.11] - 2026-04-15
 
 ### Fixed

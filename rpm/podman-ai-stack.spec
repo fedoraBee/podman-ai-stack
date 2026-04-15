@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.11
+Version:        0.2.12
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,15 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.12-1
+- Expanded the GitHub Actions smoke-test job into a Fedora 40/41/42 matrix
+  covering current-user rootless, service-user rootless, and root-full
+  installation paths
+- Added release workflow status badges and documented the broader CI coverage
+  in the README
+- Aligned project version references to 0.2.12 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.11-1
 - Configured GitHub Pages deployment to keep existing branch contents so
   prerelease publishes do not remove previously published repository channels

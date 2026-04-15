@@ -64,14 +64,20 @@ jobs:
   smoke-test:
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        fedora_version: [40, 41, 42]
+        install_mode: [rootless, rootless-service-user, rootful]
     container:
-      image: fedora:latest
+      image: fedora:${{ matrix.fedora_version }}
       options: --privileged
+    name: Fedora ${{ matrix.fedora_version }} / ${{ matrix.install_mode }}
     steps:
       - uses: actions/checkout@v5
 
       - name: Install dependencies
-        run: dnf install -y curl unzip systemd podman make
+        run: dnf install -y curl unzip systemd podman shadow-utils util-linux
 
       - name: Download RPMs
         env:
@@ -85,24 +91,58 @@ jobs:
             "${{ github.api_url }}/repos/${{ github.repository }}/actions/artifacts/${{ needs.build.outputs.rpm_artifact_id }}/zip"
           unzip -o rpms/rpms.zip -d rpms
 
-      - name: Install RPMs
-        run: dnf install -y rpms/podman-ai-stack-[0-9].*.noarch.rpm rpms/podman-ai-stack-user-*.noarch.rpm rpms/podman-ai-stack-root-*.noarch.rpm
-
-      - name: Verify file installation
+      - name: Install rootless RPMs
+        if: matrix.install_mode == 'rootless'
         run: |
-          ls -l /etc/sysconfig/podman-ai-stack
-          ls -l /etc/containers/systemd/users/open-webui.container
-          ls -l /usr/share/containers/systemd/users/open-webui.container || echo "Fallback: check /etc/containers/systemd/users/"
-          # The spec file installs to /etc/containers/systemd/users/ via Makefile defaults in BuildRoot
-          # Wait, let's check where the spec file actually puts them.
+          dnf install -y rpms/podman-ai-stack-[0-9].*.noarch.rpm
 
-      - name: Verify system user (podman-ai-stack-user)
+      - name: Install rootless service-user RPMs
+        if: matrix.install_mode == 'rootless-service-user'
         run: |
+          dnf install -y \
+            rpms/podman-ai-stack-[0-9].*.noarch.rpm \
+            rpms/podman-ai-stack-user-*.noarch.rpm
+
+      - name: Install rootful RPMs
+        if: matrix.install_mode == 'rootful'
+        run: |
+          dnf install -y \
+            rpms/podman-ai-stack-[0-9].*.noarch.rpm \
+            rpms/podman-ai-stack-root-*.noarch.rpm
+
+      - name: Verify shared package files
+        run: |
+          test -f /etc/sysconfig/podman-ai-stack
+          test -f /etc/containers/systemd/users/open-webui.container
+          test -f /etc/containers/systemd/users/ollama.container
+          test -f /etc/containers/systemd/users/podman-ai-stack-pod.pod
+
+      - name: Verify rootless install path
+        if: matrix.install_mode == 'rootless'
+        run: |
+          test ! -f /etc/containers/systemd/open-webui.container
+          test ! -f /etc/containers/systemd/ollama.container
+          ! getent passwd podman-ai
+          ! getent group podman-ai
+
+      - name: Verify rootless service-user install path
+        if: matrix.install_mode == 'rootless-service-user'
+        run: |
+          test ! -f /etc/containers/systemd/open-webui.container
+          test ! -f /etc/containers/systemd/ollama.container
           getent passwd podman-ai
-          loginctl user-status podman-ai || echo "Linger might not be fully visible in container without full systemd"
+          getent group podman-ai
+          test -d /var/lib/podman-ai
+          loginctl user-status podman-ai || echo "loginctl output is limited without full systemd"
+
+      - name: Verify rootful install path
+        if: matrix.install_mode == 'rootful'
+        run: |
+          test -f /etc/containers/systemd/open-webui.container
+          test -f /etc/containers/systemd/ollama.container
+          test -f /etc/containers/systemd/podman-ai-stack-pod.pod
+          ! getent passwd podman-ai
 
       - name: Dry-run Quadlet generator
         run: |
-          # Check if systemd-run can see the generated units
-          # In a container, this is limited, but we can check if the generator produces output
-          /usr/lib/systemd/system-generators/podman-system-generator --dry-run || echo "Generator dry-run failed (expected in some containers)"
+          /usr/lib/systemd/system-generators/podman-system-generator --dry-run || echo "Generator dry-run can fail in CI containers without full systemd"
