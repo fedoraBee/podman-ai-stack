@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.6
+Version:        0.2.7
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,14 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.7-1
+- Opted GitHub Actions workflows into Node.js 24 to remove deprecation
+  warnings for JavaScript-based actions on GitHub runners
+- Applied the Node.js 24 runtime setting to both CI and release workflows for
+  consistent behavior across automation jobs
+- Aligned project version references to 0.2.7 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.6-1
 - Guarded systemctl and loginctl RPM scriptlets so installs succeed in CI
   containers without systemd running as PID 1

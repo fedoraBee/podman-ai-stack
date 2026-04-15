@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7] - 2026-04-15
+
+### Changed
+
+- Opted GitHub Actions workflows into Node.js 24 with
+  `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` to remove deprecation warnings for
+  JavaScript-based actions on GitHub runners.
+- Applied the Node.js 24 runtime setting to both CI and release workflows for
+  consistent automation behavior.
+- Aligned project version references to `0.2.7` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.6] - 2026-04-15
 
 ### Fixed
