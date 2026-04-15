@@ -36,7 +36,7 @@ lint-shell:
 
 lint-md:
 	@if command -v markdownlint > /dev/null; then \
-		markdownlint --config .github/linters/markdownlint.yaml *.md .github/**/*.md; \
+		markdownlint --config .github/.markdownlint.jsonc *.md .github/**/*.md; \
 	else \
 		echo "Warning: markdownlint not found. Skipping markdown lint."; \
 	fi

@@ -24,7 +24,7 @@ jobs:
       - name: Run markdownlint
         uses: DavidAnson/markdownlint-cli2-action@v22
         with:
-          config: .github/linters/markdownlint.yaml
+          config: .github/.markdownlint.jsonc
           globs: "**/*.md"
 
   rpm-lint:
