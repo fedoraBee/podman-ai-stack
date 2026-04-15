@@ -6,14 +6,24 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2026-04-15
+
+### Fixed
+
+- Added `user(podman-ai)` and `group(podman-ai)` virtual provides to the
+  `podman-ai-stack-user` RPM so DNF can resolve the dedicated service account
+  during smoke-test installs.
+- Aligned project version references to `0.2.5` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.4] - 2026-04-15
 
 ### Fixed
 
-- Fixed dnf install command in CI workflow to avoid broken dependency ci issue
+- Fixed dnf install command in CI workflow to avoid broken dependency CI issue.
 - Aligned project version references to `0.2.4` across the `Makefile`, RPM spec
   metadata, and changelog entries.
-    
+
 ## [0.2.3] - 2026-04-15
 
 ### Changed

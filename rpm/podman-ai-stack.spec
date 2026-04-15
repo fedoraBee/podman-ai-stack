@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.4
+Version:        0.2.5
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -27,6 +27,8 @@ control command (user mode). Configuration is managed via
 Summary:        Dedicated service user for Podman AI Stack
 Requires:       %{name} = %{version}-%{release}
 Requires(pre):  shadow-utils
+Provides:       user(podman-ai)
+Provides:       group(podman-ai)
 
 %description user
 Creates a dedicated 'podman-ai' user and enables lingering. This allows
@@ -138,11 +140,17 @@ systemctl daemon-reload
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.5-1
+- Added user(podman-ai) and group(podman-ai) provides to the user subpackage
+  so DNF can resolve the dedicated service account during smoke-test installs
+- Aligned project version references to 0.2.5 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.4-1
-- Fixed dnf install command in CI workflow to avoid broken dependency ci issue
-- Aligned project version references to 0.2.4 across the `Makefile`, RPM spec
-  metadata, and changelog entries.
-  
+- Fixed dnf install command in CI workflow to avoid broken dependency CI issue
+- Aligned project version references to 0.2.4 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.3-1
 - Added systemd-rpm-macros to CI and release workflow dependency installation
 - Verified and aligned project version references to 0.2.3
