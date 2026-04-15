@@ -82,7 +82,7 @@ if command -v rsync >/dev/null 2>&1; then
     rsync -av --delete "$VERSION_DIR/" "$LATEST_DIR/"
 else
     # Fallback to rm/cp if rsync is not available
-    rm -rf "$LATEST_DIR"/*
+    rm -rf "${LATEST_DIR:?}"/*
     cp -r "$VERSION_DIR/"* "$LATEST_DIR/"
 fi
 

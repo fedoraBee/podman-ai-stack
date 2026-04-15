@@ -1,7 +1,7 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.1.0
+VERSION := 0.2.2
 RPM_DIR := rpmbuild/RPMS/noarch
 PREFIX ?= /usr
 SYSCONFDIR ?= /etc
@@ -24,10 +24,28 @@ SED_ARGS := -e 's|@OPEN_WEBUI_PORT@|$(OPEN_WEBUI_PORT)|g' \
            -e 's|@OLLAMA_MEMORY@|$(OLLAMA_MEMORY)|g' \
            -e 's|@OLLAMA_CPUS@|$(OLLAMA_CPUS)|g'
 
-.PHONY: all install install-base install-user install-root clean rpm sign repo
+.PHONY: all install install-base install-user install-root clean rpm sign repo lint lint-shell lint-md lint-rpm verify-rpm
 
 all:
 	@echo "Nothing to build. Use 'make install' or 'make rpm'."
+
+lint: lint-shell lint-md lint-rpm
+
+lint-shell:
+	shellcheck scripts/*.sh
+
+lint-md:
+	@if command -v markdownlint > /dev/null; then \
+		markdownlint --config .github/linters/markdownlint.yaml *.md .github/**/*.md; \
+	else \
+		echo "Warning: markdownlint not found. Skipping markdown lint."; \
+	fi
+
+lint-rpm:
+	rpmlint --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
+
+verify-rpm: rpm
+	rpmlint -r $(CURDIR)/rpm/podman-ai-stack.rpmlintrc --ignore-unused-rpmlintrc $(RPM_DIR)/*.rpm
 
 install: install-base install-user
 
@@ -37,6 +55,7 @@ install-base:
 
 install-user:
 	mkdir -p $(DESTDIR)$(USER_QUADLET_DIR)
+	mkdir -p $(DESTDIR)/var/lib/podman-ai
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(USER_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
 install-root:
@@ -47,7 +66,7 @@ rpm:
 	@echo "Building RPM packages..."
 	rm -rf $(RPM_DIR)/*.rpm
 	mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-	tar -czf rpmbuild/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --transform 's|^|$(NAME)-$(VERSION)/|' *
+	tar -czf rpmbuild/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --exclude=rpmbuild --transform 's|^|$(NAME)-$(VERSION)/|' *
 	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
 	@echo "RPMs built in $(RPM_DIR)"
 

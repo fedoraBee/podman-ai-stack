@@ -8,13 +8,15 @@ labels: bug
 **Description**
 A clear and concise description of what the bug is.
 
-**Environment**
+## Environment
+
 - OS Version: (e.g., Fedora 41)
 - Package Version: (e.g., podman-ai-stack-0.1.0-1)
 - Deployment Type: Rootless (dedicated user) / Rootless (current user) / Rootfull
 - Podman Version: `podman --version`
 
-**Steps to Reproduce**
+## Steps to Reproduce
+
 1. Run '...'
 2. See error '...'
 

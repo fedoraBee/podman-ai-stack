@@ -1,0 +1,7 @@
+# Default markdownlint configuration
+default: true
+
+MD024:
+  siblings_only: true
+no-duplicate-heading:
+  siblings_only: true
