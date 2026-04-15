@@ -1,7 +1,7 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.2.15
+VERSION := 0.3.0
 RPM_DIR := rpmbuild/RPMS/noarch
 PREFIX ?= /usr
 SYSCONFDIR ?= /etc
@@ -55,7 +55,9 @@ install-base:
 
 install-user:
 	mkdir -p $(DESTDIR)$(USER_QUADLET_DIR)
+	mkdir -p $(DESTDIR)$(PREFIX)/lib/sysusers.d
 	mkdir -p $(DESTDIR)/var/lib/podman-ai
+	install -p -m 644 podman-ai-stack.sysusers.conf $(DESTDIR)$(PREFIX)/lib/sysusers.d/podman-ai-stack.conf
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(USER_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
 install-root:

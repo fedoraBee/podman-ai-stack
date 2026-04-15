@@ -1,11 +1,7 @@
 Name:           podman-ai-stack
-Version:        0.2.15
+Version:        0.3.0
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
-
-# rpmlint filters for expected warnings/errors
-# The 'podman-ai' user is a system user, but rpmlint can flag it as non-standard.
-# It's intentional and safe in this context.
 
 License:        MIT
 URL:            https://github.com/fedoraBee/podman-ai-stack
@@ -26,9 +22,6 @@ control command (user mode). Configuration is managed via
 %package user
 Summary:        Dedicated service user for Podman AI Stack
 Requires:       %{name} = %{version}-%{release}
-Requires(pre):  shadow-utils
-Provides:       user(podman-ai)
-Provides:       group(podman-ai)
 
 %description user
 Creates a dedicated 'podman-ai' user and enables lingering. This allows
@@ -66,6 +59,7 @@ make install-root DESTDIR=%{buildroot} %{make_vars}
 %check
 # Basic verification of installed files in BuildRoot
 test -f %{buildroot}%{_sysconfdir}/sysconfig/podman-ai-stack
+test -f %{buildroot}%{_prefix}/lib/sysusers.d/podman-ai-stack.conf
 test -d %{buildroot}/var/lib/podman-ai
 
 %global systemd_runtime_check [ -d /run/systemd/system ] && command -v systemctl >/dev/null 2>&1
@@ -97,13 +91,6 @@ if [ $1 -eq 0 ] && %{loginctl_runtime_check}; then
         fi
     done
 fi
-
-%pre user
-getent group podman-ai >/dev/null || groupadd -r podman-ai
-getent passwd podman-ai >/dev/null || \
-    useradd -r -g podman-ai -d /var/lib/podman-ai -s /sbin/nologin \
-    -c "Podman AI Stack User" podman-ai
-exit 0
 
 %post user
 if %{loginctl_runtime_check}; then
@@ -144,6 +131,7 @@ fi
 %files user
 %license LICENSE
 %doc %{_docdir}/%{name}/README.md
+%{_prefix}/lib/sysusers.d/podman-ai-stack.conf
 %dir %attr(0755, podman-ai, podman-ai) /var/lib/podman-ai
 
 %files root
@@ -155,6 +143,14 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.0-1
+- Migrated the service account packaging to a shipped sysusers.d definition
+  instead of manual useradd/groupadd scriptlets
+- Removed explicit user(podman-ai) and group(podman-ai) provides, fixing the
+  rpmlint "W: unversioned-explicit-provides" warning
+- Aligned project version references to 0.3.0 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.15-1
 - Updated the CI workflow scripts to satisfy actionlint and ShellCheck
 - Hardened the release workflow shell scripts for safer command handling and

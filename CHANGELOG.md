@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-04-15
+
+### Changed
+
+- Replaced the manual `%pre` service account creation with a shipped
+  `sysusers.d` definition for the `podman-ai` user and group.
+- Removed the explicit `user(podman-ai)` and `group(podman-ai)` virtual
+  provides, fixing the `rpmlint` warning
+  `W: unversioned-explicit-provides`.
+- Aligned project version references to `0.3.0` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.15] - 2026-04-15
 
 ### Fixed
