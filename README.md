@@ -1,7 +1,7 @@
 # Podman AI Stack
 
-![CI](https://github.com/fedoraBee/podman-ai-stack/actions/workflows/ci.yml/badge.svg)
-![Release](https://github.com/fedoraBee/podman-ai-stack/actions/workflows/release.yml/badge.svg)
+[![CI](https://github.com/fedoraBee/podman-ai-stack/actions/workflows/ci.yml/badge.svg)](https://github.com/fedoraBee/podman-ai-stack/actions/workflows/ci.yml)
+[![Release](https://github.com/fedoraBee/podman-ai-stack/actions/workflows/release.yml/badge.svg)](https://github.com/fedoraBee/podman-ai-stack/actions/workflows/release.yml)
 
 The Podman AI Stack provides a secure, configurable, and systemd-native
 orchestration stack for deploying containerized AI environments (Open WebUI and
@@ -11,9 +11,9 @@ It leverages Podman Quadlets to integrate seamlessly with systemd and supports
 both **rootless** and **rootfull** deployments on Fedora and other RPM-based
 distributions.
 
-Pull requests are validated with shell, Markdown, and RPM checks plus install
-smoke tests across Fedora 40, 41, and 42 for current-user rootless,
-service-user rootless, and rootfull package paths.
+Pull requests are validated with ShellCheck, `actionlint`, Markdown, and RPM
+checks plus install smoke tests across Fedora 40, 41, and 42 for current-user
+rootless, service-user rootless, and rootfull package paths.
 
 ## ✨ Features
 

@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.2.13
+Version:        0.2.14
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,13 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.14-1
+- Pinned ludeeus/action-shellcheck in CI to the stable 2.0.0 release tag
+- Added actionlint workflow linting to the GitHub Actions pipeline
+- Made the README status badges clickable links to their workflow pages
+- Aligned project version references to 0.2.14 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.2.13-1
 - Corrected the CI smoke-test file assertions to check for
   podman-ai-stack.pod, matching the installed Quadlet filename

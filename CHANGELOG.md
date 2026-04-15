@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.14] - 2026-04-15
+
+### Changed
+
+- Pinned `ludeeus/action-shellcheck` in CI to the stable `2.0.0` release tag
+  instead of tracking `master`.
+- Added `actionlint` workflow linting to the GitHub Actions pipeline.
+- Made the top README status badges clickable links to their corresponding
+  GitHub Actions workflow pages.
+- Aligned project version references to `0.2.14` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.13] - 2026-04-15
 
 ### Fixed
