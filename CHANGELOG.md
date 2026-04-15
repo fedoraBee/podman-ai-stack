@@ -6,6 +6,18 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.10] - 2026-04-15
+
+### Changed
+
+- Replaced `actions/download-artifact` in the `smoke-test` job with a direct
+  GitHub Actions artifact API download to remove the final Node.js 20
+  deprecation warning from push CI runs.
+- Added `actions: read` permission and passed the uploaded RPM artifact ID
+  between CI jobs for API-based artifact retrieval.
+- Aligned project version references to `0.2.10` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.2.9] - 2026-04-15
 
 ### Changed

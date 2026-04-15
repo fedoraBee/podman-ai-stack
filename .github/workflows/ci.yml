@@ -7,6 +7,7 @@ on:
     branches: [ main ]
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
@@ -42,6 +43,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: fedora:latest
+    outputs:
+      rpm_artifact_id: ${{ steps.upload_rpms.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v5
 
@@ -52,6 +55,7 @@ jobs:
         run: make rpm
 
       - name: Upload RPMs
+        id: upload_rpms
         uses: actions/upload-artifact@v6
         with:
           name: rpms
@@ -60,22 +64,26 @@ jobs:
   smoke-test:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     container:
       image: fedora:latest
       options: --privileged
     steps:
       - uses: actions/checkout@v5
 
-      - name: Download RPMs
-        uses: actions/download-artifact@v6
-        with:
-          name: rpms
-          path: rpms
-
       - name: Install dependencies
-        run: dnf install -y systemd podman make
+        run: dnf install -y curl unzip systemd podman make
+
+      - name: Download RPMs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p rpms
+          curl -fsSL \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -o rpms/rpms.zip \
+            "${{ github.api_url }}/repos/${{ github.repository }}/actions/artifacts/${{ needs.build.outputs.rpm_artifact_id }}/zip"
+          unzip -o rpms/rpms.zip -d rpms
 
       - name: Install RPMs
         run: dnf install -y rpms/podman-ai-stack-[0-9].*.noarch.rpm rpms/podman-ai-stack-user-*.noarch.rpm rpms/podman-ai-stack-root-*.noarch.rpm
