@@ -10,8 +10,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Updated `rpm/podman-ai-stack.rpmlintrc` to filter `W: only-non-binary-in-usr-lib` warnings.
-- Commented out `Provides: user(podman-ai)` in `rpm/podman-ai-stack.spec` to address `rpmlint` warnings.
+- Updated `rpm/podman-ai-stack.rpmlintrc` to filter
+  `W: only-non-binary-in-usr-lib` warnings.
+- Commented out `Provides: user(podman-ai)` in `rpm/podman-ai-stack.spec` to
+  address `rpmlint` warnings.
 - Fixed typos in changelog entries for version `0.3.1`.
 
 ## [0.3.2] - 2026-04-16
