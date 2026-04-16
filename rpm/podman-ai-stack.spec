@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.3.2
+Version:        0.3.3
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -23,7 +23,7 @@ control command (user mode). Configuration is managed via
 Summary:        Dedicated service user for Podman AI Stack
 Requires:       %{name} = %{version}-%{release}
 Requires(pre):  shadow-utils
-Provides:       user(podman-ai)
+#Provides:       user(podman-ai)
 Provides:       group(podman-ai)
 
 %description user
@@ -155,6 +155,11 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.3-1
+- Updated rpmlintrc to filter W: only-non-binary-in-usr-lib warnings.
+- Commented out Provides: user(podman-ai) to address rpmlint warnings.
+- Fixed typos in changelog entries for version 0.3.1.
+
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.2-1
 - Updated CONTRIBUTING.md and DEVELOPMENT.md to document the mandatory
   GitOps PR workflow and scripts/gitops-pr-cli-tool.sh usage
@@ -163,7 +168,7 @@ fi
   and changelog entries
 
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.1-1
-- Restored manual %pre user creation as a fallback to support Fedora 41+ 
+- Restored manual pre user creation as a fallback to support Fedora 41+ 
   environments where sysusers.d triggers might be delayed
 - Re-added explicit user(podman-ai) and group(podman-ai) virtual provides
 - Aligned project version references to 0.3.1 across the Makefile, RPM spec,

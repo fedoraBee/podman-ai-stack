@@ -84,8 +84,8 @@ echo "📦 Detected version: v$VERSION"
 # -----------------------------
 # Git safety checks
 # -----------------------------
-echo "Fetching base branch..."
-git fetch origin "$BASE_BRANCH"
+#echo "Fetching base branch..."
+#git fetch origin "$BASE_BRANCH"
 
 # Ensure repo is clean
 if [[ -n "$(git status --porcelain)" ]]; then
@@ -101,7 +101,7 @@ if git show-ref --verify --quiet "refs/heads/$HEAD_BRANCH"; then
     git switch "$HEAD_BRANCH"
 else
     echo "🌱 Creating branch: $HEAD_BRANCH"
-    git switch -c "$HEAD_BRANCH" "origin/$BASE_BRANCH"
+    git switch -c "$HEAD_BRANCH"
 fi
 
 # -----------------------------

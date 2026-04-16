@@ -6,6 +6,16 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 2026-04-16
+
+### Changed
+
+- Updated `rpm/podman-ai-stack.rpmlintrc` to filter
+  `W: only-non-binary-in-usr-lib` warnings.
+- Commented out `Provides: user(podman-ai)` in `rpm/podman-ai-stack.spec` to
+  address `rpmlint` warnings.
+- Fixed typos in changelog entries for version `0.3.1`.
+
 ## [0.3.2] - 2026-04-16
 
 ### Added
@@ -16,8 +26,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Aligned project version references to `0.3.2` across the RPM spec metadata
-  and changelog entries.
+- Aligned project version references to `0.3.2` across the RPM spec metadata and
+  changelog entries.
 
 ## [0.3.1] - 2026-04-16
 
@@ -26,13 +36,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Restored manual `%pre` service account creation as a fallback to support
   Fedora 41+ environments where `sysusers.d` triggers might be delayed or
   unavailable during the RPM transaction.
-- Re-added explicit `user(podman-ai)` and `group(podman-ai)` virtual provides
-  to assist DNF in dependency resolution during automated installs.
+- Re-added explicit `user(podman-ai)` and `group(podman-ai)` virtual provides to
+  assist DNF in dependency resolution during automated installs.
 
 ### Changed
 
-- Aligned project version references to `0.3.1` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.3.1` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.3.0] - 2026-04-15
 
@@ -41,10 +51,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Replaced the manual `%pre` service account creation with a shipped
   `sysusers.d` definition for the `podman-ai` user and group.
 - Removed the explicit `user(podman-ai)` and `group(podman-ai)` virtual
-  provides, fixing the `rpmlint` warning
-  `W: unversioned-explicit-provides`.
-- Aligned project version references to `0.3.0` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+  provides, fixing the `rpmlint` warning `W: unversioned-explicit-provides`.
+- Aligned project version references to `0.3.0` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.15] - 2026-04-15
 
@@ -55,8 +64,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Hardened the release workflow shell scripts by quoting command substitutions,
   separating variable assignment from export, and switching prerelease channel
   detection to a `case` statement.
-- Aligned project version references to `0.2.15` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.15` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.14] - 2026-04-15
 
@@ -67,8 +76,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added `actionlint` workflow linting to the GitHub Actions pipeline.
 - Made the top README status badges clickable links to their corresponding
   GitHub Actions workflow pages.
-- Aligned project version references to `0.2.14` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.14` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.13] - 2026-04-15
 
@@ -76,8 +85,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Corrected the CI smoke-test file assertions to check for
   `podman-ai-stack.pod`, matching the actual installed Quadlet filename.
-- Aligned project version references to `0.2.13` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.13` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.12] - 2026-04-15
 
@@ -89,20 +98,20 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   and rootfull package paths so each deployment mode is verified explicitly.
 - Added a release workflow status badge and documented the expanded CI coverage
   in the `README.md`.
-- Aligned project version references to `0.2.12` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.12` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.11] - 2026-04-15
 
 ### Fixed
 
-- Configured GitHub Pages deployment to keep existing `gh-pages` branch
-  contents so prerelease publishes do not remove previously published
-  repository channels such as `latest/stable`.
+- Configured GitHub Pages deployment to keep existing `gh-pages` branch contents
+  so prerelease publishes do not remove previously published repository channels
+  such as `latest/stable`.
 - Preserved multi-channel DNF repository layouts when publishing only a subset
   of paths from `rpmbuild/repo` during release automation.
-- Aligned project version references to `0.2.11` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.11` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.10] - 2026-04-15
 
@@ -113,8 +122,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   deprecation warning from push CI runs.
 - Added `actions: read` permission and passed the uploaded RPM artifact ID
   between CI jobs for API-based artifact retrieval.
-- Aligned project version references to `0.2.10` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.10` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.9] - 2026-04-15
 
@@ -125,8 +134,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   rest of CI continues using native Node.js 24-compatible action versions.
 - Kept the workaround limited to the job that still depends on a Node.js 20
   targeted artifact download action.
-- Aligned project version references to `0.2.9` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.9` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.8] - 2026-04-15
 
@@ -137,8 +146,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Node.js 24 override from push and pull request jobs.
 - Updated checkout and artifact actions in the release workflow while keeping
   the temporary Node.js 24 override there for the GitHub Pages deploy action.
-- Aligned project version references to `0.2.8` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.8` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.7] - 2026-04-15
 
@@ -149,8 +158,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   JavaScript-based actions on GitHub runners.
 - Applied the Node.js 24 runtime setting to both CI and release workflows for
   consistent automation behavior.
-- Aligned project version references to `0.2.7` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.7` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.6] - 2026-04-15
 
@@ -160,8 +169,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   succeeds in CI containers that do not run `systemd` as PID 1.
 - Wrapped the root subpackage systemd macros with the same runtime checks to
   avoid smoke-test transaction failures.
-- Aligned project version references to `0.2.6` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.6` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.5] - 2026-04-15
 
@@ -170,8 +179,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added `user(podman-ai)` and `group(podman-ai)` virtual provides to the
   `podman-ai-stack-user` RPM so DNF can resolve the dedicated service account
   during smoke-test installs.
-- Aligned project version references to `0.2.5` across the `Makefile`, RPM
-  spec metadata, and changelog entries.
+- Aligned project version references to `0.2.5` across the `Makefile`, RPM spec
+  metadata, and changelog entries.
 
 ## [0.2.4] - 2026-04-15
 
