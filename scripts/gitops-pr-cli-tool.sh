@@ -103,8 +103,8 @@ echo "📦 Detected version: v$VERSION"
 # -----------------------------
 # Git safety checks
 # -----------------------------
-#echo "Fetching base branch..."
-#git fetch origin "$BASE_BRANCH"
+echo "Fetching base branch..."
+git fetch origin "$BASE_BRANCH"
 
 # Ensure repo is clean
 if [[ -n "$(git status --porcelain)" ]]; then
