@@ -6,6 +6,21 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-04-16
+
+### Added
+
+- Restored manual `%pre` service account creation as a fallback to support
+  Fedora 41+ environments where `sysusers.d` triggers might be delayed or
+  unavailable during the RPM transaction.
+- Re-added explicit `user(podman-ai)` and `group(podman-ai)` virtual provides
+  to assist DNF in dependency resolution during automated installs.
+
+### Changed
+
+- Aligned project version references to `0.3.1` across the `Makefile`, RPM
+  spec metadata, and changelog entries.
+
 ## [0.3.0] - 2026-04-15
 
 ### Changed

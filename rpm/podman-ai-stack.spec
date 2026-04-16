@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.3.0
+Version:        0.3.1
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -22,6 +22,9 @@ control command (user mode). Configuration is managed via
 %package user
 Summary:        Dedicated service user for Podman AI Stack
 Requires:       %{name} = %{version}-%{release}
+Requires(pre):  shadow-utils
+Provides:       user(podman-ai)
+Provides:       group(podman-ai)
 
 %description user
 Creates a dedicated 'podman-ai' user and enables lingering. This allows
@@ -92,6 +95,15 @@ if [ $1 -eq 0 ] && %{loginctl_runtime_check}; then
     done
 fi
 
+%pre user
+# Fallback user creation for systems where sysusers.d might not be 
+# processed early enough or supported (robustness for Fedora 41+)
+getent group podman-ai >/dev/null || groupadd -r podman-ai
+getent passwd podman-ai >/dev/null || \
+    useradd -r -g podman-ai -d /var/lib/podman-ai -s /sbin/nologin \
+    -c "Podman AI Stack User" podman-ai
+exit 0
+
 %post user
 if %{loginctl_runtime_check}; then
     loginctl enable-linger podman-ai >/dev/null 2>&1 || :
@@ -143,6 +155,13 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.1-1
+- Restored manual %pre user creation as a fallback to support Fedora 41+ 
+  environments where sysusers.d triggers might be delayed
+- Re-added explicit user(podman-ai) and group(podman-ai) virtual provides
+- Aligned project version references to 0.3.1 across the Makefile, RPM spec,
+  and changelog entries
+
 * Wed Apr 15 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.0-1
 - Migrated the service account packaging to a shipped sysusers.d definition
   instead of manual useradd/groupadd scriptlets

@@ -12,8 +12,8 @@ both **rootless** and **rootfull** deployments on Fedora and other RPM-based
 distributions.
 
 Pull requests are validated with ShellCheck, `actionlint`, Markdown, and RPM
-checks plus install smoke tests across Fedora 40, 41, and 42 for current-user
-rootless, service-user rootless, and rootfull package paths.
+checks plus install smoke tests across Fedora 40, 41, 42, and Rawhide for
+current-user rootless, service-user rootless, and rootfull package paths.
 
 ## ✨ Features
 
