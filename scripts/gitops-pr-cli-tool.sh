@@ -101,7 +101,7 @@ if git show-ref --verify --quiet "refs/heads/$HEAD_BRANCH"; then
     git switch "$HEAD_BRANCH"
 else
     echo "🌱 Creating branch: $HEAD_BRANCH"
-    git switch -c "$HEAD_BRANCH" "origin/$BASE_BRANCH"
+    git switch -c "$HEAD_BRANCH"
 fi
 
 # -----------------------------
