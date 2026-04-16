@@ -6,6 +6,19 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2026-04-16
+
+### Added
+
+- Updated `CONTRIBUTING.md` and `DEVELOPMENT.md` to document the mandatory
+  GitOps PR workflow and `scripts/gitops-pr-cli-tool.sh` usage.
+- Enforced branch naming conventions: `<type>/v<version>-<description>`.
+
+### Changed
+
+- Aligned project version references to `0.3.2` across the RPM spec metadata
+  and changelog entries.
+
 ## [0.3.1] - 2026-04-16
 
 ### Added
