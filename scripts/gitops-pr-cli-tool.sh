@@ -213,7 +213,7 @@ if [[ "$BASE_BRANCH" == "main" ]]; then
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         git switch "$BASE_BRANCH"
-        git fetch origin "$BASE_BRANCH" || git pull origin "$BASE_BRANCH" --no-rebase
+        git pull origin "$BASE_BRANCH" --no-rebase
     else
         echo "⏭️  Merge skipped."
     fi
