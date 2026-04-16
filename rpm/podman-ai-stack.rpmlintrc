@@ -1,4 +1,3 @@
 
 addFilter(r"W: non-standard-[ug]id /var/lib/podman-ai podman-ai")
 addFilter(r"W: unversioned-explicit-provides (user|group)\(podman-ai\)")
-addFilter(r"W: only-non-binary-in-usr-lib")
