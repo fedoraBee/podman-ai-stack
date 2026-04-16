@@ -107,7 +107,8 @@ rpmbuild -ba rpm/podman-ai-stack.spec --define "OPEN_WEBUI_PORT 8080"
 
 ## GitOps PR CLI Tool
 
-The project includes a `scripts/gitops-pr-cli-tool.sh` to automate and enforce the Pull Request workflow. It performs the following checks:
+The project includes a `scripts/gitops-pr-cli-tool.sh` to automate and enforce
+the Pull Request workflow. It performs the following checks:
 
 - Branch naming validation.
 - Version extraction from branch name.
@@ -117,9 +118,11 @@ The project includes a `scripts/gitops-pr-cli-tool.sh` to automate and enforce t
 
 ### Prerequisites
 
-- **GitHub CLI (`gh`)**: The tool requires the GitHub CLI to be installed and authenticated.
+- **GitHub CLI (`gh`)**: The tool requires the GitHub CLI to be installed and
+  authenticated.
 
 Usage:
+
 ```bash
 ./scripts/gitops-pr-cli-tool.sh -b main -h <branch-name>
 ```

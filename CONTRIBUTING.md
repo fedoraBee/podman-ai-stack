@@ -74,15 +74,18 @@ provided `make` targets:
 
 ## 📬 Submitting a Pull Request
 
-This project enforces a specific workflow for all contributions to ensure consistency and automated release management.
+This project enforces a specific workflow for all contributions to ensure
+consistency and automated release management.
 
 ### 1. Branch Naming Convention
 
-All changes must be developed in a new branch. Branch names MUST follow this format:
+All changes must be developed in a new branch. Branch names MUST follow this
+format:
 
 `<type>/v<version>-<short-description>`
 
 Where:
+
 - `<type>`: `feat` | `fix` | `chore` | `refactor` | `docs` | `ci`
 - `<version>`: Target release version (e.g., `v0.4.0`)
 - `<short-description>`: Kebab-case description (e.g., `add-ollama-healthcheck`)
@@ -91,13 +94,15 @@ Example: `feat/v0.4.0-add-ollama-healthcheck`
 
 ### 2. Commit Guidelines
 
-- Use descriptive commit messages following [Conventional Commits](https://www.conventionalcommits.org/).
+- Use descriptive commit messages following
+  [Conventional Commits](https://www.conventionalcommits.org/).
 - Ensure commits are atomic and address a single concern.
 - Commits must not mix refactoring with functional changes.
 
 ### 3. Creating a Pull Request (Mandatory GitOps Tool)
 
-Contributors **MUST** use the provided GitOps PR CLI tool for PR creation. This tool validates branch names, versions, and changelog entries.
+Contributors **MUST** use the provided GitOps PR CLI tool for PR creation. This
+tool validates branch names, versions, and changelog entries.
 
 ```bash
 # Basic usage
@@ -107,7 +112,8 @@ Contributors **MUST** use the provided GitOps PR CLI tool for PR creation. This 
 ./scripts/gitops-pr-cli-tool.sh -b main -h feat/v0.4.0-new-feature
 ```
 
-Manual PR creation via the GitHub UI or `gh pr create` is discouraged as it bypasses critical project validations.
+Manual PR creation via the GitHub UI or `gh pr create` is discouraged as it
+bypasses critical project validations.
 
 ## ⚖️ License
 
