@@ -19,7 +19,7 @@ usage() {
 GitOps PR CLI Tool v2 (Release-aware)
 
 Usage:
-  $(basename "$0") -b BASE -h BRANCH [-t TITLE] [-m BODY] [-r REVIEWERS] [--dry-run]
+  $(basename "$0") -b BASE -h BRANCH [-t TITLE] [-m BODY] [-r REVIEWERS]
 
 Required:
   -b Base branch (e.g. main)
@@ -29,12 +29,9 @@ Optional:
   -t PR title (default: auto-generated from commits)
   -m PR body (default: auto-generated)
   -r Reviewers (comma-separated)
-  --dry-run Simulate actions without making changes
 
-Examples:
+Example:
   $(basename "$0") -b main -h feat/v0.2.0-login-fix
-  $(basename "$0") -b main -h feat/v0.2.0-login-fix -t "Fix login issue" -m "Detailed description"
-  $(basename "$0") -b main -h feat/v0.2.0-login-fix -r reviewer1,reviewer2 --dry-run
 EOF
 }
 
@@ -43,7 +40,6 @@ HEAD_BRANCH=""
 PR_TITLE=""
 PR_BODY=""
 REVIEWERS=""
-DRY_RUN=false
 
 # -----------------------------
 # Parse args
@@ -60,21 +56,6 @@ while getopts "b:h:t:m:r:" opt; do
 done
 
 # -----------------------------
-# Dry-run checks
-# -----------------------------
-if [[ "$DRY_RUN" == true ]]; then
-    echo "[DRY-RUN] Simulating actions..."
-    echo "Base branch: $BASE_BRANCH"
-    echo "Head branch: $HEAD_BRANCH"
-    echo "PR title: ${PR_TITLE:-auto-generated}"
-    echo "PR body: ${PR_BODY:-auto-generated}"
-    echo "Reviewers: ${REVIEWERS:-none}"
-    echo "Version: v$VERSION"
-    echo "[DRY-RUN] No changes will be made."
-    exit 0
-fi
-
-# -----------------------------
 # Validation
 # -----------------------------
 if [[ -z "$BASE_BRANCH" || -z "$HEAD_BRANCH" ]]; then
@@ -83,7 +64,7 @@ if [[ -z "$BASE_BRANCH" || -z "$HEAD_BRANCH" ]]; then
     exit 1
 fi
 
-# Branch naming enforcement
+# Branch naming enforcement (Gemini.md)
 if [[ ! "$HEAD_BRANCH" =~ ^(feat|fix|chore|refactor|docs|ci)/v[0-9]+\.[0-9]+\.[0-9]+- ]]; then
     echo "❌ Invalid branch name: $HEAD_BRANCH"
     echo "Expected: <type>/v<version>-<description>"
@@ -120,7 +101,7 @@ if git show-ref --verify --quiet "refs/heads/$HEAD_BRANCH"; then
     git switch "$HEAD_BRANCH"
 else
     echo "🌱 Creating branch: $HEAD_BRANCH"
-    git switch -c "$HEAD_BRANCH"
+    git switch -c "$HEAD_BRANCH" "origin/$BASE_BRANCH"
 fi
 
 # -----------------------------
@@ -206,5 +187,3 @@ echo "📬 Creating Pull Request..."
 "${CMD[@]}"
 
 echo "✅ GitOps PR created successfully (v$VERSION)"
-
-exit 0
