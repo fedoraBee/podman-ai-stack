@@ -83,7 +83,7 @@ if [[ -z "$BASE_BRANCH" || -z "$HEAD_BRANCH" ]]; then
     exit 1
 fi
 
-# Branch naming enforcement (Gemini.md)
+# Branch naming enforcement
 if [[ ! "$HEAD_BRANCH" =~ ^(feat|fix|chore|refactor|docs|ci)/v[0-9]+\.[0-9]+\.[0-9]+- ]]; then
     echo "❌ Invalid branch name: $HEAD_BRANCH"
     echo "Expected: <type>/v<version>-<description>"
@@ -206,37 +206,5 @@ echo "📬 Creating Pull Request..."
 "${CMD[@]}"
 
 echo "✅ GitOps PR created successfully (v$VERSION)"
-
-if [[ "$BASE_BRANCH" == "main" ]]; then
-    echo "🔀 Switch to $BASE_BRANCH?"
-    read -p "Confirm (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        git switch "$BASE_BRANCH"
-        # if ! git fetch origin "$BASE_BRANCH"; then
-        #     echo "❌ Failed to fetch origin/$BASE_BRANCH"
-        #     echo "Would you like to retry fetching? (y/N): "
-        #     read -n 1 -r
-        #     echo
-        #     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        #         if ! git fetch origin "$BASE_BRANCH"; then
-        #             echo "❌ Fetch failed again. Exiting."
-        #             exit 1
-        #         fi
-        #     else
-        #         echo "⏭️  Fetch skipped."
-        #         exit 1
-        #     fi
-        # fi
-        # # Optionally, update the local branch after fetching
-        # if ! git pull origin "$BASE_BRANCH" --no-rebase; then
-        #     echo "❌ Failed to pull latest changes for $BASE_BRANCH"
-        #     exit 1
-        # fi
-    else
-        echo "⏭️  Switch skipped."
-    fi
-fi
-
 
 exit 0
