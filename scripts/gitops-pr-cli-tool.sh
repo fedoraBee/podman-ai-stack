@@ -19,7 +19,7 @@ usage() {
 GitOps PR CLI Tool v2 (Release-aware)
 
 Usage:
-  $(basename "$0") -b BASE -h BRANCH [-t TITLE] [-m BODY] [-r REVIEWERS]
+  $(basename "$0") -b BASE -h BRANCH [-t TITLE] [-m BODY] [-r REVIEWERS] [--dry-run]
 
 Required:
   -b Base branch (e.g. main)
@@ -29,9 +29,12 @@ Optional:
   -t PR title (default: auto-generated from commits)
   -m PR body (default: auto-generated)
   -r Reviewers (comma-separated)
+  --dry-run Simulate actions without making changes
 
-Example:
+Examples:
   $(basename "$0") -b main -h feat/v0.2.0-login-fix
+  $(basename "$0") -b main -h feat/v0.2.0-login-fix -t "Fix login issue" -m "Detailed description"
+  $(basename "$0") -b main -h feat/v0.2.0-login-fix -r reviewer1,reviewer2 --dry-run
 EOF
 }
 
@@ -40,6 +43,7 @@ HEAD_BRANCH=""
 PR_TITLE=""
 PR_BODY=""
 REVIEWERS=""
+DRY_RUN=false
 
 # -----------------------------
 # Parse args
@@ -54,6 +58,21 @@ while getopts "b:h:t:m:r:" opt; do
         *) usage; exit 1 ;;
     esac
 done
+
+# -----------------------------
+# Dry-run checks
+# -----------------------------
+if [[ "$DRY_RUN" == true ]]; then
+  echo "[DRY-RUN] Simulating actions..."
+  echo "Base branch: $BASE_BRANCH"
+  echo "Head branch: $HEAD_BRANCH"
+  echo "PR title: ${PR_TITLE:-auto-generated}"
+  echo "PR body: ${PR_BODY:-auto-generated}"
+  echo "Reviewers: ${REVIEWERS:-none}"
+  echo "Version: v$VERSION"
+  echo "[DRY-RUN] No changes will be made."
+  exit 0
+fi
 
 # -----------------------------
 # Validation
@@ -187,3 +206,18 @@ echo "📬 Creating Pull Request..."
 "${CMD[@]}"
 
 echo "✅ GitOps PR created successfully (v$VERSION)"
+
+if [[ "$BASE_BRANCH" == "main" ]]; then
+    echo "🔀 Switch to $BASE_BRANCH and merge?"
+    read -p "Confirm (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        git switch "$BASE_BRANCH"
+        git pull origin "$BASE_BRANCH" --no-rebase
+    else
+        echo "⏭️  Merge skipped."
+    fi
+fi
+fi
+
+exit 0
