@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.3.3
+Version:        0.3.4
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,12 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.4-1
+- Added dry-run mode to GitOps PR CLI tool.
+- Expanded usage examples in GitOps PR CLI tool.
+- Simplified the end decision logic in the GitOps PR CLI tool to optionally
+  switch back to the main branch.
+
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.3-1
 - Updated rpmlintrc to filter W: only-non-binary-in-usr-lib warnings.
 - Commented out Provides: user(podman-ai) to address rpmlint warnings.
