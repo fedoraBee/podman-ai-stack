@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.3.1
+Version:        0.3.2
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,13 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.2-1
+- Updated CONTRIBUTING.md and DEVELOPMENT.md to document the mandatory
+  GitOps PR workflow and scripts/gitops-pr-cli-tool.sh usage
+- Enforced branch naming conventions: <type>/v<version>-<description>
+- Aligned project version references to 0.3.2 across the RPM spec metadata
+  and changelog entries
+
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.1-1
 - Restored manual %pre user creation as a fallback to support Fedora 41+ 
   environments where sysusers.d triggers might be delayed
