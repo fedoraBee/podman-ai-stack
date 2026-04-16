@@ -126,11 +126,11 @@ fi
 # -----------------------------
 # Sync with base (rebase safety)
 # -----------------------------
-echo "🔄 Rebasing on origin/$BASE_BRANCH..."
-git rebase "origin/$BASE_BRANCH" || {
-    echo "❌ Rebase failed. Resolve conflicts manually."
-    exit 1
-}
+# echo "🔄 Rebasing on origin/$BASE_BRANCH..."
+# git rebase "origin/$BASE_BRANCH" || {
+#     echo "❌ Rebase failed. Resolve conflicts manually."
+#     exit 1
+# }
 
 # -----------------------------
 # Validate CHANGELOG
@@ -208,14 +208,33 @@ echo "📬 Creating Pull Request..."
 echo "✅ GitOps PR created successfully (v$VERSION)"
 
 if [[ "$BASE_BRANCH" == "main" ]]; then
-    echo "🔀 Switch to $BASE_BRANCH and merge?"
+    echo "🔀 Switch to $BASE_BRANCH?"
     read -p "Confirm (y/N): " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         git switch "$BASE_BRANCH"
-        git pull origin "$BASE_BRANCH" --no-rebase
+        # if ! git fetch origin "$BASE_BRANCH"; then
+        #     echo "❌ Failed to fetch origin/$BASE_BRANCH"
+        #     echo "Would you like to retry fetching? (y/N): "
+        #     read -n 1 -r
+        #     echo
+        #     if [[ $REPLY =~ ^[Yy]$ ]]; then
+        #         if ! git fetch origin "$BASE_BRANCH"; then
+        #             echo "❌ Fetch failed again. Exiting."
+        #             exit 1
+        #         fi
+        #     else
+        #         echo "⏭️  Fetch skipped."
+        #         exit 1
+        #     fi
+        # fi
+        # # Optionally, update the local branch after fetching
+        # if ! git pull origin "$BASE_BRANCH" --no-rebase; then
+        #     echo "❌ Failed to pull latest changes for $BASE_BRANCH"
+        #     exit 1
+        # fi
     else
-        echo "⏭️  Merge skipped."
+        echo "⏭️  Switch skipped."
     fi
 fi
 fi
