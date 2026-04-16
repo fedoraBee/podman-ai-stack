@@ -10,7 +10,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Added dry-run mode to GitOps PR CLI tool.
+- Added dry-run mode and rebase safety to GitOps PR CLI tool.
 - Expanded usage examples in GitOps PR CLI tool.
 
 ## [0.3.3] - 2026-04-16
