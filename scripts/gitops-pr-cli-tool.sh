@@ -63,15 +63,15 @@ done
 # Dry-run checks
 # -----------------------------
 if [[ "$DRY_RUN" == true ]]; then
-  echo "[DRY-RUN] Simulating actions..."
-  echo "Base branch: $BASE_BRANCH"
-  echo "Head branch: $HEAD_BRANCH"
-  echo "PR title: ${PR_TITLE:-auto-generated}"
-  echo "PR body: ${PR_BODY:-auto-generated}"
-  echo "Reviewers: ${REVIEWERS:-none}"
-  echo "Version: v$VERSION"
-  echo "[DRY-RUN] No changes will be made."
-  exit 0
+    echo "[DRY-RUN] Simulating actions..."
+    echo "Base branch: $BASE_BRANCH"
+    echo "Head branch: $HEAD_BRANCH"
+    echo "PR title: ${PR_TITLE:-auto-generated}"
+    echo "PR body: ${PR_BODY:-auto-generated}"
+    echo "Reviewers: ${REVIEWERS:-none}"
+    echo "Version: v$VERSION"
+    echo "[DRY-RUN] No changes will be made."
+    exit 0
 fi
 
 # -----------------------------
@@ -237,6 +237,6 @@ if [[ "$BASE_BRANCH" == "main" ]]; then
         echo "⏭️  Switch skipped."
     fi
 fi
-fi
+
 
 exit 0
