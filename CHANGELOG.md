@@ -6,6 +6,14 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 2026-04-16
+
+### Changed
+
+- Updated `rpm/podman-ai-stack.rpmlintrc` to filter `W: only-non-binary-in-usr-lib` warnings.
+- Commented out `Provides: user(podman-ai)` in `rpm/podman-ai-stack.spec` to address `rpmlint` warnings.
+- Fixed typos in changelog entries for version `0.3.1`.
+
 ## [0.3.2] - 2026-04-16
 
 ### Added
