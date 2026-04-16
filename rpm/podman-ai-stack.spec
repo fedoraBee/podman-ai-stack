@@ -158,8 +158,7 @@ fi
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.4-1
 - Added dry-run mode to GitOps PR CLI tool.
 - Expanded usage examples in GitOps PR CLI tool.
-- Simplified the end decision logic in the GitOps PR CLI tool to optionally
-  switch back to the main branch.
+- Removed the end decision logic in the GitOps PR CLI tool.
 
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.3-1
 - Updated rpmlintrc to filter W: only-non-binary-in-usr-lib warnings.
