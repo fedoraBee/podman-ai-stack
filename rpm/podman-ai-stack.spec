@@ -23,7 +23,7 @@ control command (user mode). Configuration is managed via
 Summary:        Dedicated service user for Podman AI Stack
 Requires:       %{name} = %{version}-%{release}
 Requires(pre):  shadow-utils
-Provides:       user(podman-ai)
+#Provides:       user(podman-ai)
 Provides:       group(podman-ai)
 
 %description user
@@ -163,7 +163,7 @@ fi
   and changelog entries
 
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.1-1
-- Restored manual %pre user creation as a fallback to support Fedora 41+ 
+- Restored manual pre user creation as a fallback to support Fedora 41+ 
   environments where sysusers.d triggers might be delayed
 - Re-added explicit user(podman-ai) and group(podman-ai) virtual provides
 - Aligned project version references to 0.3.1 across the Makefile, RPM spec,
