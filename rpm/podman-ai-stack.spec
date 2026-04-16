@@ -156,7 +156,7 @@ fi
 
 %changelog
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.4-1
-- Added dry-run mode to GitOps PR CLI tool.
+- Added dry-run mode and rebase safety to GitOps PR CLI tool.
 - Expanded usage examples in GitOps PR CLI tool.
 - Simplified the end decision logic in the GitOps PR CLI tool to optionally
   switch back to the main branch.
