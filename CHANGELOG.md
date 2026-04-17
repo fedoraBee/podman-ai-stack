@@ -6,6 +6,23 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-04-17
+
+### Added
+
+- Added a GPG key section to the generated repository index page for better
+  security transparency.
+- Automated `index.html` generation for the DNF repository within the release
+  workflow.
+
+### Changed
+
+- Updated the release workflow to use an `rpms/` subfolder for the DNF
+  repository structure.
+- Refined the build destination directory in CI workflows for improved artifact
+  organization.
+- Re-added documentation links in `README.md`.
+
 ## [0.3.4] - 2026-04-16
 
 ### Changed
