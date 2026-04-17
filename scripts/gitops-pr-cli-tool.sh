@@ -181,8 +181,11 @@ echo "✅ RPM spec version matches"
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then
     echo "📝 Generating PR title from commits..."
-    PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
-    echo "DEBUG: Exit status of PR_TITLE command: $?"
+    __PR_TITLE_OUTPUT=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
+    __PR_TITLE_EXIT_STATUS=$?
+    echo "DEBUG: Raw PR_TITLE command output: \"${__PR_TITLE_OUTPUT}\""
+    echo "DEBUG: Raw PR_TITLE command exit status: ${__PR_TITLE_EXIT_STATUS}"
+    PR_TITLE="${__PR_TITLE_OUTPUT}"
 fi
 echo "DEBUG: After PR_TITLE assignment and before PR_BODY check"
 
