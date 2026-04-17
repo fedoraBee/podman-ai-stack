@@ -183,6 +183,7 @@ if [[ -z "$PR_TITLE" ]]; then
     echo "📝 Generating PR title from commits..."
     PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
 fi
+echo "DEBUG: After PR_TITLE assignment and before PR_BODY check"
 
 if [[ -z "$PR_BODY" ]]; then
     echo "📝 Generating PR body from commits..."
