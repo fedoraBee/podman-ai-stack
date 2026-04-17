@@ -21,7 +21,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   repository structure.
 - Refined the build destination directory in CI workflows for improved artifact
   organization.
-- Re-added documentation links in `README.md`.
+- Fixed repository and GPG key URLs in `README.md` to point to the new `/rpms/`
+  subfolder.
+- Updated supported versions in `.github/SECURITY.md`.
 
 ## [0.3.4] - 2026-04-16
 
