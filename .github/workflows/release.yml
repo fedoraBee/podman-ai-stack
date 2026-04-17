@@ -75,6 +75,10 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global --add safe.directory '*'
 
+      - name: Generate Static Index
+        run: |
+          chmod +x .github/scripts/generate-index.sh
+          .github/scripts/generate-index.sh
       - name: Debug repo contents
         run: ls -R rpmbuild/repo
 
