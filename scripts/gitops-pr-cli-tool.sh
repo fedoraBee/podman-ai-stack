@@ -63,14 +63,14 @@ done
 # Dry-run checks
 # -----------------------------
 if [[ "$DRY_RUN" == true ]]; then
-    echo "[DRY-RUN] Simulating actions..."
+    echo "🚨 [DRY-RUN] Simulating actions..."
     echo "Base branch: $BASE_BRANCH"
     echo "Head branch: $HEAD_BRANCH"
     echo "PR title: ${PR_TITLE:-auto-generated}"
     echo "PR body: ${PR_BODY:-auto-generated}"
     echo "Reviewers: ${REVIEWERS:-none}"
     echo "Version: v$VERSION"
-    echo "[DRY-RUN] No changes will be made."
+    echo "🚨 [DRY-RUN] ... no changes were made."
     exit 0
 fi
 
@@ -103,13 +103,22 @@ echo "📦 Detected version: v$VERSION"
 # -----------------------------
 # Git safety checks
 # -----------------------------
-echo "Fetching base branch..."
-git fetch origin "$BASE_BRANCH" || git fetch origin main || {
+# Check if we're in a git repo
+echo "🔍 Checking base branch ..."
+git ls-remote --exit-code --heads origin "$BASE_BRANCH" || {
+    echo "❌ Git branch '$BASE_BRANCH' does not exist in the remote repository."
+    exit 1
+}
+
+# Fetch latest from remote
+echo "🔍 Fetching base branch..."
+git fetch origin "$BASE_BRANCH" || {
     echo "❌ Failed to fetch base branch. Check your network and remote configuration."
     exit 1
 }
 
 # Ensure repo is clean
+echo "🔍 Checking for uncommitted changes..."
 if [[ -n "$(git status --porcelain)" ]]; then
     echo "❌ Working tree is not clean. Commit or stash changes first."
     exit 1
@@ -130,7 +139,7 @@ fi
 # Sync with base (rebase safety)
 # -----------------------------
 echo "🔄 Rebasing on origin/$BASE_BRANCH..."
-git rebase -Xtheirs "origin/$BASE_BRANCH" || git rebase -Xtheirs "origin/main" || {
+git rebase -Xtheirs "origin/$BASE_BRANCH" || {
     echo "❌ Rebase failed. Resolve conflicts manually."
     exit 1
 }
@@ -171,12 +180,12 @@ echo "✅ RPM spec version matches"
 # Commit analysis for PR body
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then
-    PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD || git log --pretty=format:"%s" origin/main..HEAD | head -n 1)
+    PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
 fi
 
 if [[ -z "$PR_BODY" ]]; then
     echo "📝 Generating PR body from commits..."
-    PR_BODY=$(git log --pretty=format:"- %s" origin/"$BASE_BRANCH"..HEAD || git log --pretty=format:"- %s" origin/main..HEAD)
+    PR_BODY=$(git log --pretty=format:"- %s" origin/"$BASE_BRANCH"..HEAD)
 fi
 
 PR_BODY_FULL="## Version
@@ -209,37 +218,5 @@ echo "📬 Creating Pull Request..."
 "${CMD[@]}"
 
 echo "✅ GitOps PR created successfully (v$VERSION)"
-
-if [[ "$BASE_BRANCH" == "main" ]]; then
-    echo "🔀 Switch to $BASE_BRANCH?"
-    read -p "Confirm (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        git switch "$BASE_BRANCH"
-        # if ! git fetch origin "$BASE_BRANCH"; then
-        #     echo "❌ Failed to fetch origin/$BASE_BRANCH"
-        #     echo "Would you like to retry fetching? (y/N): "
-        #     read -n 1 -r
-        #     echo
-        #     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        #         if ! git fetch origin "$BASE_BRANCH"; then
-        #             echo "❌ Fetch failed again. Exiting."
-        #             exit 1
-        #         fi
-        #     else
-        #         echo "⏭️  Fetch skipped."
-        #         exit 1
-        #     fi
-        # fi
-        # # Optionally, update the local branch after fetching
-        # if ! git pull origin "$BASE_BRANCH" --no-rebase; then
-        #     echo "❌ Failed to pull latest changes for $BASE_BRANCH"
-        #     exit 1
-        # fi
-    else
-        echo "⏭️  Switch skipped."
-    fi
-fi
-
 
 exit 0
