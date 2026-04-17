@@ -77,18 +77,27 @@ jobs:
 
       - name: Generate Static Index
         run: |
+          mkdir -p rpmbuild/deploy/rpms
+          # Move the repo structure into the 'rpms' subfolder of deployment
+          mv rpmbuild/repo/* rpmbuild/deploy/rpms/
+          
+          # Copy gpg.key to the root of deployment
+          cp gpg.key rpmbuild/deploy/
+          
           chmod +x .github/scripts/generate-index.sh
-          .github/scripts/generate-index.sh
-      - name: Debug repo contents
-        run: ls -R rpmbuild/repo
+          # Scan 'rpmbuild/deploy/rpms' but output index.html to 'rpmbuild/deploy/' (root)
+          .github/scripts/generate-index.sh rpmbuild/deploy/rpms rpmbuild/deploy
+          
+      - name: Debug deploy contents
+        run: ls -R rpmbuild/deploy
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: rpmbuild/repo
-          destination_dir: rpms
+          publish_dir: rpmbuild/deploy
+          destination_dir: .
           keep_files: true
 
       - name: Upload Repository Artifact

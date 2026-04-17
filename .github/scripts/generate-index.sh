@@ -1,11 +1,17 @@
 #!/bin/bash
 
-# Directory to scan (e.g., rpmbuild/repo or the destination directory)
-DEPLOY_DIR="rpmbuild/repo"
+# Directory to scan for repositories
+SCAN_DIR=${1:-"rpmbuild/repo"}
+# Output directory for index.html and where gpg.key should be
+DEST_DIR=${2:-"."}
 
-# Output file (place index.html in the repo directory)
-OUTPUT_FILE="$DEPLOY_DIR/index.html"
+# Output file
+OUTPUT_FILE="$DEST_DIR/index.html"
 GPG_KEY_FILE="gpg.key"
+
+echo "Generating index.html..."
+echo "  Scanning: $SCAN_DIR"
+echo "  Output:   $OUTPUT_FILE"
 
 # Start the HTML file
 cat <<EOF > "$OUTPUT_FILE"
@@ -15,21 +21,28 @@ cat <<EOF > "$OUTPUT_FILE"
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podman AI Stack Repository</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        pre { background: #f4f4f4; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
     <h1>Podman AI Stack Repository</h1>
-    <p>Browse the repository:</p>
+    <p>This is the official DNF repository for the Podman AI Stack.</p>
+    
+    <h2>Browse Repository</h2>
     <ul>
 EOF
 
-# Add links for each subdirectory
-# Note: Since this index.html will be inside 'rpms/' on the web server, 
-# and it scans 'rpmbuild/repo/' which is the same as 'rpms/', 
-# the links should be relative or absolute from root.
-for dir in "$DEPLOY_DIR"/*/; do
+# Add links for each subdirectory in the SCAN_DIR
+# Links must point to 'rpms/dir_name/' because DEST_DIR is the root
+for dir in "$SCAN_DIR"/*/; do
+    [ -d "$dir" ] || continue
     dir_name=$(basename "$dir")
     [ "$dir_name" == "repodata" ] && continue
-    echo "        <li><a href=\"$dir_name/\">$dir_name</a></li>" >> "$OUTPUT_FILE"
+    echo "        <li><a href=\"rpms/$dir_name/\">$dir_name</a></li>" >> "$OUTPUT_FILE"
 done
 
 # End the repository links section
