@@ -171,12 +171,12 @@ echo "✅ RPM spec version matches"
 # Commit analysis for PR body
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then
-    PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
+    PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD || git log --pretty=format:"%s" origin/main..HEAD | head -n 1)
 fi
 
 if [[ -z "$PR_BODY" ]]; then
     echo "📝 Generating PR body from commits..."
-    PR_BODY=$(git log --pretty=format:"- %s" origin/"$BASE_BRANCH"..HEAD)
+    PR_BODY=$(git log --pretty=format:"- %s" origin/"$BASE_BRANCH"..HEAD || git log --pretty=format:"- %s" origin/main..HEAD)
 fi
 
 PR_BODY_FULL="## Version
