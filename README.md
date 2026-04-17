@@ -28,7 +28,7 @@ current-user rootless, service-user rootless, and rootfull package paths.
 
 Packages are distributed via a dedicated DNF repository hosted on GitHub Pages:
 
-👉 <https://fedorabee.github.io/podman-ai-stack/>
+👉 <https://fedorabee.github.io/podman-ai-stack/rpms/>
 
 ### 1. Add the Repository
 
@@ -36,17 +36,17 @@ Packages are distributed via a dedicated DNF repository hosted on GitHub Pages:
 sudo tee /etc/yum.repos.d/podman-ai-stack.repo <<'EOF'
 [podman-ai-stack]
 name=Podman AI Stack - Stable
-baseurl=https://fedorabee.github.io/podman-ai-stack/latest/stable/
+baseurl=https://fedorabee.github.io/podman-ai-stack/rpms/latest/stable/
 enabled=1
 gpgcheck=1
-gpgkey=https://fedorabee.github.io/podman-ai-stack/gpg.key
+gpgkey=https://fedorabee.github.io/podman-ai-stack/rpms/gpg.key
 
 [podman-ai-stack-testing]
 name=Podman AI Stack - Testing
-baseurl=https://fedorabee.github.io/podman-ai-stack/latest/testing/
+baseurl=https://fedorabee.github.io/podman-ai-stack/rpms/latest/testing/
 enabled=0
 gpgcheck=1
-gpgkey=https://fedorabee.github.io/podman-ai-stack/gpg.key
+gpgkey=https://fedorabee.github.io/podman-ai-stack/rpms/gpg.key
 EOF
 ```
 
@@ -58,7 +58,8 @@ sudo dnf makecache
 
 ## 🔐 GPG Key
 
-Packages are signed. During first installation, DNF will prompt for key import.
+The GPG key is available at <https://fedorabee.github.io/podman-ai-stack/rpms/gpg.key>.
+
 
 Fingerprint:
 
@@ -241,7 +242,7 @@ The package repository contains:
 
 ## 🔗 Resources
 
-- 🌐 DNF Repository: <https://fedorabee.github.io/podman-ai-stack/>
+- 🌐 DNF Repository: <https://fedorabee.github.io/podman-ai-stack/rpms/>
 - 📦 Repo Source (gh-pages):
   <https://github.com/fedoraBee/podman-ai-stack/tree/gh-pages>
 - 💻 Development: <https://github.com/fedoraBee/podman-ai-stack>

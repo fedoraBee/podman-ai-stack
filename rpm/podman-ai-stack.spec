@@ -160,7 +160,8 @@ fi
 - Automated index.html generation for the DNF repository within the release workflow
 - Updated the release workflow to use an rpms/ subfolder for the DNF repository structure
 - Refined the build destination directory in CI workflows for improved artifact organization
-- Re-added documentation links in README.md
+- Fixed repository and GPG key URLs in README.md to point to the new /rpms/ subfolder
+- Updated supported versions in .github/SECURITY.md
 
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.4-1
 - Added dry-run mode and rebase safety to GitOps PR CLI tool.
