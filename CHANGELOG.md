@@ -17,12 +17,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Updated the release workflow to use an `rpms/` subfolder for the DNF
-  repository structure.
+- Reorganized the DNF repository layout on GitHub Pages: `index.html` and
+  `gpg.key` are now at the root, while the repository content remains in the
+  `/rpms/` subfolder.
+- Updated the release workflow to handle the new deployment structure.
 - Refined the build destination directory in CI workflows for improved artifact
   organization.
-- Fixed repository and GPG key URLs in `README.md` to point to the new `/rpms/`
-  subfolder.
+- Fixed repository and GPG key URLs in `README.md` to reflect the new layout.
 - Updated supported versions in `.github/SECURITY.md`.
 
 ## [0.3.4] - 2026-04-16

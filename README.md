@@ -39,14 +39,14 @@ name=Podman AI Stack - Stable
 baseurl=https://fedorabee.github.io/podman-ai-stack/rpms/latest/stable/
 enabled=1
 gpgcheck=1
-gpgkey=https://fedorabee.github.io/podman-ai-stack/rpms/gpg.key
+gpgkey=https://fedorabee.github.io/podman-ai-stack/gpg.key
 
 [podman-ai-stack-testing]
 name=Podman AI Stack - Testing
 baseurl=https://fedorabee.github.io/podman-ai-stack/rpms/latest/testing/
 enabled=0
 gpgcheck=1
-gpgkey=https://fedorabee.github.io/podman-ai-stack/rpms/gpg.key
+gpgkey=https://fedorabee.github.io/podman-ai-stack/gpg.key
 EOF
 ```
 
@@ -58,8 +58,8 @@ sudo dnf makecache
 
 ## 🔐 GPG Key
 
-The GPG key is available at
-<https://fedorabee.github.io/podman-ai-stack/rpms/gpg.key>.
+The GPG key is available at <https://fedorabee.github.io/podman-ai-stack/gpg.key>.
+
 
 Fingerprint:
 
