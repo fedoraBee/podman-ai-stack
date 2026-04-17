@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.4.0
+Version:        0.4.1
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
