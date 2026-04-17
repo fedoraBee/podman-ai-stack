@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.4.1
+Version:        0.4.2
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,9 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Fri Apr 17 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.2-1
+- Ensured the backup in scripts/git-clean-switch-tool.sh is consistently made from the base branch before reset.
+
 * Fri Apr 17 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.1-1
 - Introduced scripts/git-clean-switch-tool.sh for safe git branch resets and development environment syncing.
 - Corrected --dry-run parsing in scripts/gitops-pr-cli-tool.sh to properly simulate actions without making changes.
