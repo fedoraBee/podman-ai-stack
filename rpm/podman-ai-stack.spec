@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.3.4
+Version:        0.4.0
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,10 +155,18 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Fri Apr 17 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.0-1
+- Added a GPG key section to the generated repository index page for better security transparency
+- Automated index.html generation for the DNF repository within the release workflow
+- Updated the release workflow to use an rpms/ subfolder for the DNF repository structure
+- Refined the build destination directory in CI workflows for improved artifact organization
+- Re-added documentation links in README.md
+
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.4-1
 - Added dry-run mode to GitOps PR CLI tool.
 - Expanded usage examples in GitOps PR CLI tool.
 - Removed the end decision logic in the GitOps PR CLI tool.
+
 
 * Thu Apr 16 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.3.3-1
 - Updated rpmlintrc to filter W: only-non-binary-in-usr-lib warnings.
