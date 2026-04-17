@@ -179,6 +179,8 @@ echo "✅ RPM spec version matches"
 # -----------------------------
 # Commit analysis for PR body
 # -----------------------------
+# Temporarily disable pipefail due to git log | head -n 1 potentially causing SIGPIPE
+set +o pipefail
 if [[ -z "$PR_TITLE" ]]; then
     echo "📝 Generating PR title from commits..."
     __PR_TITLE_OUTPUT=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
@@ -191,8 +193,14 @@ echo "DEBUG: After PR_TITLE assignment and before PR_BODY check"
 
 if [[ -z "$PR_BODY" ]]; then
     echo "📝 Generating PR body from commits..."
-    PR_BODY=$(git log --pretty=format:"- %s" origin/"$BASE_BRANCH"..HEAD)
+    __PR_BODY_OUTPUT=$(git log --pretty=format:"- %s" origin/"$BASE_BRANCH"..HEAD)
+    __PR_BODY_EXIT_STATUS=$?
+    echo "DEBUG: Raw PR_BODY command output: \"${__PR_BODY_OUTPUT}\""
+    echo "DEBUG: Raw PR_BODY command exit status: ${__PR_BODY_EXIT_STATUS}"
+    PR_BODY="${__PR_BODY_OUTPUT}"
 fi
+# Re-enable pipefail
+set -o pipefail
 
 PR_BODY_FULL="## Version
 v$VERSION
