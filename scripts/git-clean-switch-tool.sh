@@ -9,40 +9,45 @@ set -euo pipefail
 
 # Default values
 REMOTE="origin"
-SOURCE_BRANCH="main"
+BASE_BRANCH="main"
 TARGET_BRANCH="dev"
 BACKUP_PREFIX="backup"
 BACKUP_BRANCH=""
+DRY_RUN=false
 
 usage() {
   cat <<EOF
+Git Clean & Switch Tool
+
 Usage: $(basename "$0") [options]
 
 Carefully resets the current branch to a remote source, cleans the worktree,
 and prepares a development branch.
 
 Options:
-  -s, --source BRANCH   Source branch to reset to (default: main)
+  -b, --base BRANCH     Source branch to reset to (default: main)
   -t, --target BRANCH   Target branch to checkout after reset (default: dev)
-  -b, --backup BRANCH   Specific backup branch name (default: backup-<SOURCE_BRANCH>-<TIMESTAMP>)
+  -B, --backup BRANCH   Specific backup branch name (default: backup-<BASE_BRANCH>-<TIMESTAMP>)
   -r, --remote REMOTE   Remote name (default: origin)
+  --dry-run             Simulate actions without making changes
   -h, --help            Show this help
 
 Example:
-  $(basename "$0") -s main -t feature-work
+  $(basename "$0") -b main -t feature-work
 EOF
 }
 
 # Parse args
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -s|--source) SOURCE_BRANCH="$2"; shift 2 ;;
-        -t|--target) TARGET_BRANCH="$2"; shift 2 ;;
-        -b|--backup) BACKUP_BRANCH="$2"; shift 2 ;;
-        -r|--remote) REMOTE="$2"; shift 2 ;;
-        -h|--help)   usage; exit 0 ;;
-        -*)          echo "Unknown option: $1"; usage; exit 1 ;;
-        *)           shift ;;
+        -b|--base)    BASE_BRANCH="$2"; shift 2 ;;
+        -t|--target)  TARGET_BRANCH="$2"; shift 2 ;;
+        -B|--backup)  BACKUP_BRANCH="$2"; shift 2 ;;
+        -r|--remote)  REMOTE="$2"; shift 2 ;;
+        --dry-run)    DRY_RUN=true; shift ;;
+        -h|--help)    usage; exit 0 ;;
+        -*)           echo "Unknown option: $1"; usage; exit 1 ;;
+        *)            shift ;;
     esac
 done
 
@@ -55,7 +60,20 @@ fi
 # Set default backup branch if not provided
 if [[ -z "$BACKUP_BRANCH" ]]; then
     TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-    BACKUP_BRANCH="${BACKUP_PREFIX}-${SOURCE_BRANCH}-${TIMESTAMP}"
+    BACKUP_BRANCH="${BACKUP_PREFIX}-${BASE_BRANCH}-${TIMESTAMP}"
+fi
+
+# -----------------------------
+# Dry-run checks
+# -----------------------------
+if [[ "$DRY_RUN" == true ]]; then
+    echo "🚨 [DRY-RUN] Simulating actions..."
+    echo "Remote: $REMOTE"
+    echo "Base branch: $BASE_BRANCH"
+    echo "Target branch: $TARGET_BRANCH"
+    echo "Backup branch: $BACKUP_BRANCH"
+    echo "🚨 [DRY-RUN] ... no changes were made."
+    exit 0
 fi
 
 echo "🔍 Starting git sync and reset sequence..."
@@ -72,9 +90,9 @@ git fetch "$REMOTE" || {
 }
 
 # 3. Reset to remote source
-echo "🔄 Resetting current branch to $REMOTE/$SOURCE_BRANCH..."
-git reset --hard "$REMOTE/$SOURCE_BRANCH" || {
-    echo "❌ Failed to reset to $REMOTE/$SOURCE_BRANCH."
+echo "🔄 Resetting current branch to $REMOTE/$BASE_BRANCH..."
+git reset --hard "$REMOTE/$BASE_BRANCH" || {
+    echo "❌ Failed to reset to $REMOTE/$BASE_BRANCH."
     exit 1
 }
 

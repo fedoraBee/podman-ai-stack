@@ -7,7 +7,7 @@ set -euo pipefail
 # -----------------------------
 
 if ! command -v gh &> /dev/null; then
-    echo "Error: GitHub CLI (gh) is not installed."
+    echo "❌ Error: GitHub CLI (gh) is not installed."
     exit 1
 fi
 
@@ -19,27 +19,28 @@ usage() {
 GitOps PR CLI Tool v2 (Release-aware)
 
 Usage:
-  $(basename "$0") -b BASE -h BRANCH [-t TITLE] [-m BODY] [-r REVIEWERS] [--dry-run]
+  $(basename "$0") [options]
 
 Required:
-  -b Base branch (e.g. main)
-  -h Head branch (feat/vX.Y.Z-description)
+  -b, --base BASE      Base branch (e.g. main)
+  -t, --target BRANCH  Target/Head branch (feat/vX.Y.Z-description)
 
 Optional:
-  -t PR title (default: auto-generated from commits)
-  -m PR body (default: auto-generated)
-  -r Reviewers (comma-separated)
-  --dry-run Simulate actions without making changes
+  -T, --title TITLE    PR title (default: auto-generated from commits)
+  -m, --message BODY   PR body (default: auto-generated)
+  -r, --reviewers USER Reviewers (comma-separated)
+  --dry-run            Simulate actions without making changes
+  -h, --help           Show this help
 
 Examples:
-  $(basename "$0") -b main -h feat/v0.2.0-login-fix
-  $(basename "$0") -b main -h feat/v0.2.0-login-fix -t "Fix login issue" -m "Detailed description"
-  $(basename "$0") -b main -h feat/v0.2.0-login-fix -r reviewer1,reviewer2 --dry-run
+  $(basename "$0") -b main -t feat/v0.2.0-login-fix
+  $(basename "$0") -b main -t feat/v0.2.0-login-fix -T "Fix login issue" -m "Detailed description"
+  $(basename "$0") -b main -t feat/v0.2.0-login-fix -r reviewer1,reviewer2 --dry-run
 EOF
 }
 
 BASE_BRANCH=""
-HEAD_BRANCH=""
+TARGET_BRANCH=""
 PR_TITLE=""
 PR_BODY=""
 REVIEWERS=""
@@ -50,35 +51,36 @@ DRY_RUN=false
 # -----------------------------
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -b) BASE_BRANCH="$2"; shift 2 ;;
-        -h) HEAD_BRANCH="$2"; shift 2 ;;
-        -t) PR_TITLE="$2"; shift 2 ;;
-        -m) PR_BODY="$2"; shift 2 ;;
-        -r) REVIEWERS="$2"; shift 2 ;;
-        --dry-run) DRY_RUN=true; shift ;;
-        -*) echo "Unknown option: $1"; usage; exit 1 ;;
-        *) shift ;;
+        -b|--base)      BASE_BRANCH="$2"; shift 2 ;;
+        -t|--target)    TARGET_BRANCH="$2"; shift 2 ;;
+        -T|--title)     PR_TITLE="$2"; shift 2 ;;
+        -m|--message)   PR_BODY="$2"; shift 2 ;;
+        -r|--reviewers) REVIEWERS="$2"; shift 2 ;;
+        --dry-run)      DRY_RUN=true; shift ;;
+        -h|--help)      usage; exit 0 ;;
+        -*)             echo "Unknown option: $1"; usage; exit 1 ;;
+        *)              shift ;;
     esac
 done
 
 # -----------------------------
 # Validation
 # -----------------------------
-if [[ -z "$BASE_BRANCH" || -z "$HEAD_BRANCH" ]]; then
-    echo "Error: Missing required arguments."
+if [[ -z "$BASE_BRANCH" || -z "$TARGET_BRANCH" ]]; then
+    echo "❌ Error: Missing required arguments."
     usage
     exit 1
 fi
 
 # Branch naming enforcement (Gemini.md)
-if [[ ! "$HEAD_BRANCH" =~ ^(feat|fix|chore|refactor|docs|ci)/v[0-9]+\.[0-9]+\.[0-9]+- ]]; then
-    echo "❌ Invalid branch name: $HEAD_BRANCH"
+if [[ ! "$TARGET_BRANCH" =~ ^(feat|fix|chore|refactor|docs|ci)/v[0-9]+\.[0-9]+\.[0-9]+- ]]; then
+    echo "❌ Invalid branch name: $TARGET_BRANCH"
     echo "Expected: <type>/v<version>-<description>"
     exit 1
 fi
 
 # Extract version
-if [[ "$HEAD_BRANCH" =~ v([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+if [[ "$TARGET_BRANCH" =~ v([0-9]+\.[0-9]+\.[0-9]+) ]]; then
     VERSION="${BASH_REMATCH[1]}"
 else
     echo "❌ Could not extract version from branch"
@@ -91,7 +93,7 @@ fi
 if [[ "$DRY_RUN" == true ]]; then
     echo "🚨 [DRY-RUN] Simulating actions..."
     echo "Base branch: $BASE_BRANCH"
-    echo "Head branch: $HEAD_BRANCH"
+    echo "Target branch: $TARGET_BRANCH"
     echo "PR title: ${PR_TITLE:-auto-generated}"
     echo "PR body: ${PR_BODY:-auto-generated}"
     echo "Reviewers: ${REVIEWERS:-none}"
@@ -129,12 +131,12 @@ fi
 # -----------------------------
 # Create / switch branch
 # -----------------------------
-if git show-ref --verify --quiet "refs/heads/$HEAD_BRANCH"; then
-    echo "🔀 Switching to existing branch: $HEAD_BRANCH"
-    git switch "$HEAD_BRANCH"
+if git show-ref --verify --quiet "refs/heads/$TARGET_BRANCH"; then
+    echo "🔀 Switching to existing branch: $TARGET_BRANCH"
+    git switch "$TARGET_BRANCH"
 else
-    echo "🌱 Creating branch: $HEAD_BRANCH"
-    git switch -c "$HEAD_BRANCH"
+    echo "🌱 Creating branch: $TARGET_BRANCH"
+    git switch -c "$TARGET_BRANCH"
 fi
 
 # -----------------------------
@@ -201,14 +203,14 @@ $PR_BODY"
 # Push branch
 # -----------------------------
 echo "🚀 Pushing branch..."
-git push -u origin "$HEAD_BRANCH"
+git push -u origin "$TARGET_BRANCH"
 
 # -----------------------------
 # Create PR
 # -----------------------------
 CMD=(gh pr create
     --base "$BASE_BRANCH"
-    --head "$HEAD_BRANCH"
+    --head "$TARGET_BRANCH"
     --title "$PR_TITLE"
     --body "$PR_BODY_FULL"
 )
@@ -221,6 +223,5 @@ echo "📬 Creating Pull Request..."
 "${CMD[@]}"
 
 echo "✅ GitOps PR created successfully (v$VERSION)"
-
 
 exit 0
