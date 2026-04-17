@@ -75,6 +75,10 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global --add safe.directory '*'
 
+      - name: Generate Static Index
+        run: |
+          chmod +x .github/scripts/generate-index.sh
+          .github/scripts/generate-index.sh
       - name: Debug repo contents
         run: ls -R rpmbuild/repo
 
@@ -84,6 +88,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: rpmbuild/repo
+          destination_dir: rpms
           keep_files: true
 
       - name: Upload Repository Artifact

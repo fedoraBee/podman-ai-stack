@@ -6,11 +6,30 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-04-17
+
+### Added
+
+- Added a GPG key section to the generated repository index page for better
+  security transparency.
+- Automated `index.html` generation for the DNF repository within the release
+  workflow.
+
+### Changed
+
+- Updated the release workflow to use an `rpms/` subfolder for the DNF
+  repository structure.
+- Refined the build destination directory in CI workflows for improved artifact
+  organization.
+- Fixed repository and GPG key URLs in `README.md` to point to the new `/rpms/`
+  subfolder.
+- Updated supported versions in `.github/SECURITY.md`.
+
 ## [0.3.4] - 2026-04-16
 
 ### Changed
 
-- Added dry-run mode to GitOps PR CLI tool.
+- Added dry-run mode and rebase safety to GitOps PR CLI tool.
 - Expanded usage examples in GitOps PR CLI tool.
 - Removed the end decision logic in the GitOps PR CLI tool.
 
