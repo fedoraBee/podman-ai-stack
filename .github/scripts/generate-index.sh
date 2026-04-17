@@ -5,6 +5,7 @@ DEPLOY_DIR="rpmbuild/repo"
 
 # Output file (place index.html in the root directory)
 OUTPUT_FILE="index.html"
+GPG_KEY_FILE="gpg.key"
 
 # Start the HTML file
 cat <<EOF > "$OUTPUT_FILE"
@@ -27,9 +28,22 @@ for dir in "$DEPLOY_DIR"/*/; do
     echo "        <li><a href=\"rpms/$dir_name/\">$dir_name</a></li>" >> "$OUTPUT_FILE"
 done
 
-# End the HTML file
+# End the repository links section
 cat <<EOF >> "$OUTPUT_FILE"
     </ul>
+EOF
+
+# Add GPG key content if the file exists
+if [ -f "$GPG_KEY_FILE" ]; then
+    echo "    <h2>GPG Key</h2>" >> "$OUTPUT_FILE"
+    echo "    <p>Download the GPG key: <a href=\"gpg.key\">gpg.key</a></p>" >> "$OUTPUT_FILE"
+    echo "    <pre>" >> "$OUTPUT_FILE"
+    cat "$GPG_KEY_FILE" >> "$OUTPUT_FILE"
+    echo "    </pre>" >> "$OUTPUT_FILE"
+fi
+
+# End the HTML file
+cat <<EOF >> "$OUTPUT_FILE"
 </body>
 </html>
 EOF
