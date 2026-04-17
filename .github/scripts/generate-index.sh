@@ -3,8 +3,8 @@
 # Directory to scan (e.g., rpmbuild/repo or the destination directory)
 DEPLOY_DIR="rpmbuild/repo"
 
-# Output file (place index.html in the root directory)
-OUTPUT_FILE="index.html"
+# Output file (place index.html in the repo directory)
+OUTPUT_FILE="$DEPLOY_DIR/index.html"
 GPG_KEY_FILE="gpg.key"
 
 # Start the HTML file
@@ -23,9 +23,13 @@ cat <<EOF > "$OUTPUT_FILE"
 EOF
 
 # Add links for each subdirectory
+# Note: Since this index.html will be inside 'rpms/' on the web server, 
+# and it scans 'rpmbuild/repo/' which is the same as 'rpms/', 
+# the links should be relative or absolute from root.
 for dir in "$DEPLOY_DIR"/*/; do
     dir_name=$(basename "$dir")
-    echo "        <li><a href=\"rpms/$dir_name/\">$dir_name</a></li>" >> "$OUTPUT_FILE"
+    [ "$dir_name" == "repodata" ] && continue
+    echo "        <li><a href=\"$dir_name/\">$dir_name</a></li>" >> "$OUTPUT_FILE"
 done
 
 # End the repository links section
