@@ -26,9 +26,8 @@ current-user rootless, service-user rootless, and rootfull package paths.
 
 ## 📦 Installation via DNF (Recommended)
 
-Packages are distributed via a dedicated DNF repository hosted on GitHub Pages:
-
-👉 <https://fedorabee.github.io/podman-ai-stack/>
+Packages are distributed via a dedicated DNF repository. Use the instructions
+below to add the repository to your system.
 
 ### 1. Add the Repository
 
