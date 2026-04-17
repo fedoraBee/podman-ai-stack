@@ -1,5 +1,5 @@
 Name:           podman-ai-stack
-Version:        0.4.0
+Version:        0.4.1
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -155,6 +155,14 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
+* Fri Apr 17 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.1-1
+- Introduced scripts/git-clean-switch-tool.sh for safe git branch resets and development environment syncing.
+- Corrected --dry-run parsing in scripts/gitops-pr-cli-tool.sh to properly simulate actions without making changes.
+- Standardized command-line parameters across scripts/gitops-pr-cli-tool.sh and scripts/git-clean-switch-tool.sh for consistency.
+- Made --base/-b parameter optional in scripts/gitops-pr-cli-tool.sh (defaults to main).
+- Renamed --reviewers to -R and added -r, --remote to scripts/gitops-pr-cli-tool.sh.
+- Improved logging and error handling in scripts/git-clean-switch-tool.sh.
+
 * Fri Apr 17 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.0-1
 - Added a GPG key section to the generated repository index page for better security transparency
 - Automated index.html generation for the DNF repository within the release workflow

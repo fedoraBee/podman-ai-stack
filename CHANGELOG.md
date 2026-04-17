@@ -6,6 +6,28 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2026-04-17
+
+### Added
+
+- Introduced `scripts/git-clean-switch-tool.sh` for safe git branch resets and
+  development environment syncing.
+
+### Fixed
+
+- Corrected `--dry-run` parsing in `scripts/gitops-pr-cli-tool.sh` to properly
+  simulate actions without making changes.
+
+### Changed
+
+- Standardized command-line parameters across `scripts/gitops-pr-cli-tool.sh`
+  and `scripts/git-clean-switch-tool.sh` for consistency.
+- Made `--base/-b` parameter optional in `scripts/gitops-pr-cli-tool.sh`
+  (defaults to `main`).
+- Renamed `--reviewers` to `-R` and added `-r, --remote` to
+  `scripts/gitops-pr-cli-tool.sh`.
+- Improved logging and error handling in `scripts/git-clean-switch-tool.sh`.
+
 ## [0.4.0] - 2026-04-17
 
 ### Added

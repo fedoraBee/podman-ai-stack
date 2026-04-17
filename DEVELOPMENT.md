@@ -124,5 +124,29 @@ the Pull Request workflow. It performs the following checks:
 Usage:
 
 ```bash
-./scripts/gitops-pr-cli-tool.sh -b main -h <branch-name>
+./scripts/gitops-pr-cli-tool.sh --target <branch-name> \
+  [--base main] \
+  [--title "PR Title"] \
+  [--message "PR Body"] \
+  [--reviewers user1,user2] \
+  [--remote origin] \
+  [--dry-run]
+```
+
+## Git Clean & Switch Tool
+
+A `scripts/git-clean-switch-tool.sh` is provided to safely reset the current Git
+branch to a remote source, clean the worktree, and prepare a development branch.
+This is useful for quickly synchronizing a development environment to a known
+good state.
+
+Usage:
+
+```bash
+./scripts/git-clean-switch-tool.sh \
+  [--base main] \
+  [--target dev] \
+  [--backup backup-main-timestamp] \
+  [--remote origin] \
+  [--dry-run]
 ```
