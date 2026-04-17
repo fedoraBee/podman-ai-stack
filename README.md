@@ -58,8 +58,8 @@ sudo dnf makecache
 
 ## 🔐 GPG Key
 
-The GPG key is available at <https://fedorabee.github.io/podman-ai-stack/gpg.key>.
-
+The GPG key is available at
+<https://fedorabee.github.io/podman-ai-stack/gpg.key>.
 
 Fingerprint:
 
