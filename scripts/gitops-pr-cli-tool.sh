@@ -127,7 +127,7 @@ fi
 # Sync with base (rebase safety)
 # -----------------------------
 echo "🔄 Rebasing on origin/$BASE_BRANCH..."
-git rebase "origin/$BASE_BRANCH" || {
+git rebase -Xtheirs "origin/$BASE_BRANCH" || {
     echo "❌ Rebase failed. Resolve conflicts manually."
     exit 1
 }
