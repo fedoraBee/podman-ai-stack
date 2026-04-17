@@ -57,8 +57,8 @@ if ! git rev-parse --is-inside-work-tree &>/dev/null; then
     exit 1
 fi
 
-# Store current branch before switching
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+# Store current branch before any operations that might change it
+CURRENT_SESSION_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Set default backup branch if not provided
 if [[ -z "$BACKUP_BRANCH" ]]; then
@@ -71,7 +71,7 @@ fi
 # -----------------------------
 if [[ "$DRY_RUN" == true ]]; then
     echo "🚨 [DRY-RUN] Simulating actions..."
-    echo "Current branch: $CURRENT_BRANCH"
+    echo "Initial branch: $CURRENT_SESSION_BRANCH"
     echo "Remote: $REMOTE"
     echo "Base branch: $BASE_BRANCH"
     echo "Target branch: $TARGET_BRANCH"
@@ -82,20 +82,21 @@ fi
 
 echo "🔍 Starting git sync and reset sequence..."
 
-# 1. Create backup of current state (of whatever branch we're on)
-echo "📦 Creating backup branch: $BACKUP_BRANCH from $CURRENT_BRANCH"
-git branch -f "$BACKUP_BRANCH" "$CURRENT_BRANCH" || {
-  echo "❌ Failed to create backup branch: $BACKUP_BRANCH."
-  exit 1
-}
-
-# 2. Switch to BASE branch and update it
+# 1. Switch to BASE branch to prepare for reset and backup
 echo "🔀 Switching to base branch: $BASE_BRANCH"
 git checkout "$BASE_BRANCH" || {
   echo "❌ Failed to checkout base branch: $BASE_BRANCH. Ensure it exists locally."
   exit 1
 }
 
+# 2. Create backup of BASE branch *before* it's reset
+echo "📦 Creating backup branch: $BACKUP_BRANCH from $BASE_BRANCH"
+git branch -f "$BACKUP_BRANCH" "$BASE_BRANCH" || {
+  echo "❌ Failed to create backup branch: $BACKUP_BRANCH."
+  exit 1
+}
+
+# 3. Fetch latest from remote and hard reset BASE branch
 echo "📡 Fetching from $REMOTE..."
 git fetch "$REMOTE" || {
   echo "❌ Failed to fetch from $REMOTE."
@@ -108,11 +109,11 @@ git reset --hard "$REMOTE/$BASE_BRANCH" || {
   exit 1
 }
 
-# 3. Clean untracked files in BASE branch
+# 4. Clean untracked files in BASE branch
 echo "🧹 Cleaning untracked files and directories in $BASE_BRANCH..."
 git clean -fd
 
-# 4. Switch to TARGET branch (creating it from the now updated BASE_BRANCH)
+# 5. Switch to TARGET branch (creating it from the now updated BASE_BRANCH)
 echo "🌱 Switching to target branch: $TARGET_BRANCH (from $BASE_BRANCH)"
 git checkout -B "$TARGET_BRANCH" || {
   echo "❌ Failed to checkout $TARGET_BRANCH."
@@ -121,4 +122,4 @@ git checkout -B "$TARGET_BRANCH" || {
 
 echo "✅ Git reset and dev setup complete."
 echo "   - Current branch: $TARGET_BRANCH"
-echo "   - Backup created: $BACKUP_BRANCH (from previous branch: $CURRENT_BRANCH)"
+echo "   - Backup created: $BACKUP_BRANCH (snapshot of $BASE_BRANCH before reset)"
