@@ -180,6 +180,7 @@ echo "✅ RPM spec version matches"
 # Commit analysis for PR body
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then
+    echo "📝 Generating PR title from commits..."
     PR_TITLE=$(git log --pretty=format:"%s" origin/"$BASE_BRANCH"..HEAD | head -n 1)
 fi
 
