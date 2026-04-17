@@ -104,7 +104,10 @@ echo "📦 Detected version: v$VERSION"
 # Git safety checks
 # -----------------------------
 echo "Fetching base branch..."
-git fetch origin "$BASE_BRANCH"
+git fetch origin "$BASE_BRANCH" || git fetch origin main || {
+    echo "❌ Failed to fetch base branch. Check your network and remote configuration."
+    exit 1
+}
 
 # Ensure repo is clean
 if [[ -n "$(git status --porcelain)" ]]; then
@@ -127,7 +130,7 @@ fi
 # Sync with base (rebase safety)
 # -----------------------------
 echo "🔄 Rebasing on origin/$BASE_BRANCH..."
-git rebase -Xtheirs "origin/$BASE_BRANCH" || {
+git rebase -Xtheirs "origin/$BASE_BRANCH" || git rebase -Xtheirs "origin/main" || {
     echo "❌ Rebase failed. Resolve conflicts manually."
     exit 1
 }
