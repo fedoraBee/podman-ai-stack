@@ -16,9 +16,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   from `Makefile`'s `VERSION` variable using `scripts/update-rpm-metadata.py`.
 - Updated `Makefile` to utilize `scripts/update-rpm-metadata.py` for both RPM
   changelog generation and spec file version synchronization.
-- Updated `GEMINI.md`, `CONTRIBUTING.md`, `DEVELOPMENT.md`, and `README.md` to
-  reflect the automated spec file versioning and to clarify version
-  synchronization guidelines.
+- Updated `CONTRIBUTING.md`, `DEVELOPMENT.md`, and `README.md` to reflect the
+  automated spec file versioning and to clarify version synchronization
+  guidelines.
 - Enhanced `scripts/gitops-pr-cli-tool.sh` to include validation for the
   `Makefile`'s `VERSION` variable.
 
@@ -392,8 +392,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `latest` pointers.
 - Updated GitHub Actions workflow to deploy the new repository structure to
   GitHub Pages.
-- Improved documentation in `DEVELOPMENT.md` and `GEMINI.md` to reflect the new
-  build process.
+- Improved documentation in `DEVELOPMENT.md` to reflect the new build process.
 
 ## [0.1.0-1] - 2026-04-11
 
