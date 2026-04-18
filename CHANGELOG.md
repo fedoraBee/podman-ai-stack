@@ -14,6 +14,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `scripts/changelog-to-rpm.py`.
 - Integrated changelog automation into the `Makefile` and RPM spec file via
   `%include`.
+- New Filter rule to `rpm/podman-ai-stack.rpmlintrc` to allow `%include` macro
+  in changelog section.
 
 ## [0.4.2] - 2026-04-17
 

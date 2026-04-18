@@ -1,6 +1,7 @@
 * Sat Apr 18 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.3-1
 - Automated RPM changelog generation from CHANGELOG.md using scripts/changelog-to-rpm.py.
 - Integrated changelog automation into the Makefile and RPM spec file via %include.
+- New Filter rule to rpm/podman-ai-stack.rpmlintrc to allow %include macro in changelog section.
 
 * Fri Apr 17 2026 fedoraBee <9395414+fedoraBee@users.noreply.github.com> - 0.4.2-1
 - Ensured the backup in scripts/git-clean-switch-tool.sh is consistently made from the base branch before reset.
