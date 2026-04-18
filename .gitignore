@@ -1,5 +1,6 @@
 rpmbuild/
-GEMINI.md
 .codex
-AGENTS.md
 .vscode/
+.geminiignore
+AGENTS.md
+GEMINI.md
