@@ -6,6 +6,22 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4] - 2026-04-18
+
+### Changed
+
+- Renamed `scripts/changelog-to-rpm.py` to `scripts/update-rpm-metadata.py` to
+  reflect expanded functionality.
+- Implemented automated synchronization of the RPM spec file's `Version` field
+  from `Makefile`'s `VERSION` variable using `scripts/update-rpm-metadata.py`.
+- Updated `Makefile` to utilize `scripts/update-rpm-metadata.py` for both RPM
+  changelog generation and spec file version synchronization.
+- Updated `GEMINI.md`, `CONTRIBUTING.md`, `DEVELOPMENT.md`, and `README.md` to
+  reflect the automated spec file versioning and to clarify version
+  synchronization guidelines.
+- Enhanced `scripts/gitops-pr-cli-tool.sh` to include validation for the
+  `Makefile`'s `VERSION` variable.
+
 ## [0.4.3] - 2026-04-18
 
 ### Added

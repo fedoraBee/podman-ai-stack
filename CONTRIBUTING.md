@@ -70,7 +70,8 @@ provided `make` targets:
 - **Version Synchronization**: When bumping the version, ensure the new version
   is updated in:
   - `Makefile` (`VERSION` variable)
-  - `rpm/podman-ai-stack.spec` (`Version` field)
+  - `rpm/podman-ai-stack.spec` (`Version` field - automatically updated by
+    `scripts/update-rpm-metadata.py` from `Makefile`)
   - `CHANGELOG.md` (New version heading)
 - **CHANGELOG.md**: Add a brief note under the current version. This file is the
   single source of truth for release notes. The RPM changelog is automatically

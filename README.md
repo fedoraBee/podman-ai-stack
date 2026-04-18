@@ -248,8 +248,11 @@ the Pull Request workflow. It performs the following checks:
 - Branch naming validation.
 - Version extraction from branch name.
 - Verification that `CHANGELOG.md` contains the version.
-- Verification that the RPM spec file matches the version.
-- Ensure the `Makefile` version is synchronized with the RPM spec and `CHANGELOG.md`.
+- Verification that the RPM spec file's `Version` field is automatically updated
+  by `scripts/update-rpm-metadata.py` from the `Makefile`'s `VERSION` variable,
+  and this value is validated.
+- Ensure the `Makefile` version is synchronized with the RPM spec and
+  `CHANGELOG.md`.
 - Automatic PR body generation from commit messages.
 
 ### Prerequisites

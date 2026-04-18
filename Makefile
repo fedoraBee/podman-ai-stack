@@ -1,7 +1,7 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.4.3
+VERSION := 0.4.4
 RPM_DIR := rpmbuild/RPMS/noarch
 PREFIX ?= /usr
 SYSCONFDIR ?= /etc
@@ -68,7 +68,7 @@ rpm:
 	@echo "Building RPM packages..."
 	rm -rf $(RPM_DIR)/*.rpm
 	mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-	./scripts/changelog-to-rpm.py CHANGELOG.md > rpm/changelog
+	./scripts/update-rpm-metadata.py
 	tar -czf rpmbuild/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --exclude=rpmbuild --transform 's|^|$(NAME)-$(VERSION)/|' *
 	rpmbuild -ba rpm/$(NAME).spec --define "_topdir $(PWD)/rpmbuild"
 	@echo "RPMs built in $(RPM_DIR)"

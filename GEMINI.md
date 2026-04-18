@@ -193,13 +193,15 @@ To deploy changes locally for testing:
 
   - Update `CHANGELOG.md` using the "Keep a Changelog" format.
   - The `CHANGELOG.md` is the **single source of truth** for release notes.
-  - The RPM changelog is automatically generated from `CHANGELOG.md` during the build process.
+  - The RPM changelog is automatically generated from `CHANGELOG.md` during the
+    build process.
 
 - **Versioning Discipline**  
   Any version bump (including patch releases) must be synchronized across:
 
   - `Makefile` (`VERSION` variable)
-  - `rpm/podman-ai-stack.spec` (`Version` field)
+  - `rpm/podman-ai-stack.spec` (`Version` field - automatically updated by
+    `scripts/update-rpm-metadata.py` from `Makefile`)
   - `CHANGELOG.md` (New version heading)
 
 - **Script Requirements**  
@@ -216,7 +218,8 @@ To deploy changes locally for testing:
   - CI passes successfully
   - Documentation is updated
   - `CHANGELOG.md` entries are added
-  - Version numbers are synchronized across `Makefile`, `spec`, and `CHANGELOG.md`
+  - Version numbers are synchronized across `Makefile`, `spec`, and
+    `CHANGELOG.md`
   - A Pull Request is reviewed and merged
 
 - **Best Practices**  
