@@ -185,6 +185,21 @@ fi
 echo "✅ RPM spec version matches"
 
 # -----------------------------
+# Validate Makefile version
+# -----------------------------
+if [[ ! -f "Makefile" ]]; then
+    echo "❌ Makefile missing"
+    exit 1
+fi
+
+if ! grep -q "^VERSION := $VERSION" Makefile; then
+    echo "❌ Makefile does not contain version $VERSION"
+    exit 1
+fi
+
+echo "✅ Makefile version matches"
+
+# -----------------------------
 # Commit analysis for PR body
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then

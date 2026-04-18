@@ -114,6 +114,7 @@ the Pull Request workflow. It performs the following checks:
 - Version extraction from branch name.
 - Verification that `CHANGELOG.md` contains the version.
 - Verification that the RPM spec file matches the version.
+- Ensure the `Makefile` version is synchronized with the RPM spec and `CHANGELOG.md`.
 - Automatic PR body generation from commit messages.
 
 ### Prerequisites
