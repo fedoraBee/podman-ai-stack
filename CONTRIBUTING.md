@@ -52,7 +52,7 @@ provided `make` targets:
 2. **Build and Verify RPMs**:
 
    ```bash
-   make verify-rpm
+   make lint-rpm
    ```
 
    This builds the RPMs and runs `rpmlint` against the resulting packages.

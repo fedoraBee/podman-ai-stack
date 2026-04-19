@@ -20,13 +20,13 @@ To sign the built RPMs, you need a GPG key. If you have configured your
 `~/.rpmmacros` (as shown below), you can simply run:
 
 ```bash
-make sign
+make rpm-sign
 ```
 
 Alternatively, you can provide the key ID directly:
 
 ```bash
-make sign GPG_KEY_ID=YOUR_KEY_ID
+make rpm-sign GPG_KEY_ID=YOUR_KEY_ID
 ```
 
 ### RPM GPG Configuration
@@ -47,7 +47,7 @@ versioned channels (e.g., `v0.1/stable`, `latest/testing`).
 To update the repository metadata:
 
 ```bash
-make repo CHANNEL=testing GPG_KEY_ID=YOUR_KEY_ID
+make rpm-repo CHANNEL=testing GPG_KEY_ID=YOUR_KEY_ID
 ```
 
 This will:

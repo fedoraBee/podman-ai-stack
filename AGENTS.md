@@ -51,25 +51,25 @@ subpackages:
   units (e.g. `open-webui.service`, `ollama.service`, or
   `podman-ai-stack-pod.service` depending on setup).
 - **Automated Changelog**: The RPM changelog is generated from `CHANGELOG.md`
-  using `scripts/changelog-to-rpm.py` and included in the spec file via
-  `%include rpm/changelog`.
+  using `scripts/update-rpm-metadata.py` and included in the spec file via
+  `%include %{_topdir}/changelog`.
 
 ## 🚀 Deployment Workflow
 
 To deploy changes locally for testing:
 
 1. **Build the RPM:** `make rpm`
-2. **Generate Repo:** `make repo CHANNEL=testing`
+2. **Generate Repo:** `make rpm-repo CHANNEL=testing`
 3. **Update Local Repo:** `cp -r rpmbuild/repo/ ../dnf-repos/podman-ai-stack/`
 4. **Install/Reinstall:**
    `sudo dnf reinstall -Cy ../dnf-repos/podman-ai-stack/latest/testing/*.rpm`
 5. **Reload Systemd:** `systemctl daemon-reload --user`
 6. **Restart Service:** `systemctl --user restart podman-ai-stack-pod`
 
-## 🤖 Gemini CLI Guidelines
+## 🤖 CLI Guidelines
 
 - **Self-Correction**  
-  After modifying `GEMINI.md`, immediately re-read it to ensure the active
+  After modifying `AGENTS.md`, immediately re-read it to ensure the active
   context reflects the latest project guidelines.
 
 - **Professionalism**  
@@ -195,6 +195,7 @@ To deploy changes locally for testing:
   - The `CHANGELOG.md` is the **single source of truth** for release notes.
   - The RPM changelog is automatically generated from `CHANGELOG.md` during the
     build process.
+  - Updates to files AGENTS.md should never be reflected in the changelog.
 
 - **Versioning Discipline**  
   Any version bump (including patch releases) must be synchronized across:

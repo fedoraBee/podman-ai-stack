@@ -1,0 +1,2 @@
+#addFilter(r"W: specfile-warning warning: line [0-9]*: Possible unexpanded macro in: (Version|Requires|Provides): .* %\{_version\}.*")
+addFilter(r"W: macro-in-%changelog %(include|\{_topdir\})")

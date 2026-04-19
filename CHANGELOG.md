@@ -6,6 +6,38 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.5] - 2026-04-19
+
+### Added
+
+- New `prep` target in `Makefile` to automate build environment setup and
+  changelog generation.
+- Integrated `scripts/changelog-to-rpm.py` logic into
+  `scripts/update-rpm-metadata.py` with full `argparse` support.
+- Added `rpm/podman-ai-stack.spec.rpmlintrc` and
+  `rpm/podman-ai-stack.rpm.rpmlintrc` for more precise linter control.
+- `AGENTS.md` is now tracked in git (removed from `.gitignore`).
+
+### Changed
+
+- Refactored `Makefile` with improved variable definitions (`BUILD_DIR`,
+  `RPM_DIR`) and renamed targets (`rpm-sign`, `rpm-repo`).
+- Updated `rpm/podman-ai-stack.spec` to use `%{_version}` macro and dynamic
+  changelog inclusion from `%{_topdir}`.
+- Relocated and consolidated markdownlint configuration to
+  `rpm/.markdownlint.jsonc`.
+- Synchronized all documentation (`README.md`, `DEVELOPMENT.md`,
+  `CONTRIBUTING.md`, `AGENTS.md`) with the new build system structure.
+- Updated `.gitignore` to ignore `.gemini/` directory.
+- Justified gitops pr cli tool handling version checks of the spec file.
+
+### Removed
+
+- Deleted legacy `GEMINI.md` in favor of `AGENTS.md`.
+- Removed `scripts/changelog-to-rpm.py` as it was merged into
+  `update-rpm-metadata.py`.
+- Deleted top-level and `.github/` markdownlint config files.
+
 ## [0.4.4] - 2026-04-18
 
 ### Changed

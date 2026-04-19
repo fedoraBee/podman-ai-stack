@@ -3,6 +3,7 @@ import sys
 import re
 from datetime import datetime
 import subprocess
+import argparse
 
 def get_git_info():
     try:
@@ -18,27 +19,27 @@ def format_date(date_str):
     # RPM uses Day Mon DD YYYY (e.g., Fri Apr 17 2026)
     return dt.strftime('%a %b %d %Y')
 
-def get_version_from_makefile(makefile_path='Makefile'):
-    with open(makefile_path, 'r') as f:
+def get_version_from_makefile(makefile='Makefile'):
+    with open(makefile, 'r') as f:
         for line in f:
             match = re.match(r'^VERSION := (\d+\.\d+\.\d+)', line)
             if match:
                 return match.group(1)
     return None
 
-def update_spec_file_version(spec_file_path, version):
-    with open(spec_file_path, 'r') as f:
+def update_spec_version(spec, version):
+    with open(spec, 'r') as f:
         lines = f.readlines()
 
-    with open(spec_file_path, 'w') as f:
+    with open(spec, 'w') as f:
         for line in lines:
             if line.startswith('Version:'):
                 f.write(f"Version:        {version}\n")
             else:
                 f.write(line)
 
-def generate_rpm_changelog(changelog_path='CHANGELOG.md'):
-    with open(changelog_path, 'r') as f:
+def generate_rpm_changelog(changelog='CHANGELOG.md'):
+    with open(changelog, 'r') as f:
         content = f.read()
 
     version_pattern = re.compile(r'## \[([\d\.]+)\] - (\d{4}-\d{2}-\d{2})')
@@ -80,21 +81,36 @@ def generate_rpm_changelog(changelog_path='CHANGELOG.md'):
     
     return '\n'.join(rpm_changelog)
 
-def main():
-    spec_file_path = 'rpm/podman-ai-stack.spec'
-    changelog_path = 'CHANGELOG.md'
-    makefile_path = 'Makefile'
-
-    version = get_version_from_makefile(makefile_path)
+def main(version=None,
+         spec='default-app.spec',
+         changelog_in='CHANGELOG.md',
+         makefile='Makefile',
+         changelog_out='changelog'
+         ):
+   
     if not version:
-        print("Error: Could not find VERSION in Makefile.", file=sys.stderr)
-        sys.exit(1)
+        version = get_version_from_makefile(makefile)
+        if not version:
+            print("Error: Could not find VERSION in Makefile.", file=sys.stderr)
+            sys.exit(1)
+        update_spec_version(spec, version)
 
-    update_spec_file_version(spec_file_path, version)
-    
-    rpm_changelog_content = generate_rpm_changelog(changelog_path)
-    with open('rpm/changelog', 'w') as f:
+    rpm_changelog_content = generate_rpm_changelog(changelog_in)
+    with open(changelog_out, 'w') as f:
         f.write(rpm_changelog_content)
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Update RPM version and generate changelog')
+    parser.add_argument('--version', dest='version', help='Update RPM version in spec file')
+    parser.add_argument('--spec', default='rpm/podman-ai-stack.spec', help='Path to spec file')
+    parser.add_argument('--changelog-in', default='CHANGELOG.md', help='Path to changelog file')
+    parser.add_argument('--makefile', default='Makefile', help='Path to Makefile')
+    parser.add_argument('--changelog-out', default='rpmbuild/changelog', help='Path to output changelog file')
+
+    args = parser.parse_args()
+
+    main(version=args.version,
+         spec=args.spec,
+         changelog_in=args.changelog_in,
+         makefile=args.makefile,
+         changelog_out=args.changelog_out)
