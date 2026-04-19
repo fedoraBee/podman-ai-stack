@@ -46,6 +46,14 @@ jobs:
       - name: Run Actionlint
         run: actionlint -color
 
+  prep:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Prepare Build Environment
+        run: make prep
   lint-spec:
     runs-on: ubuntu-latest
     container: fedora:latest
@@ -89,10 +97,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        run: dnf install -y rpmlint make python3
-
-      - name: Prepare build environment
-        run: make prep
+        run: dnf install -y rpmlint make
 
       - name: Lint RPM Artifacts
         run: make lint-rpm

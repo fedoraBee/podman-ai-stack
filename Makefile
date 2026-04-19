@@ -72,8 +72,6 @@ install-root:
 	mkdir -p $(DESTDIR)$(SYSTEM_QUADLET_DIR)
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
-rpm: prep rpm-build
-
 rpm-build:
 	@echo "Building RPM packages..."
 	tar -czf $(BUILD_DIR)/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --exclude=rpmbuild --transform 's|^|$(NAME)-$(VERSION)/|' .
