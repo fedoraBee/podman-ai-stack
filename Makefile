@@ -74,7 +74,7 @@ install-root:
 
 rpm: rpm-build rpm-sign rpm-repo
 
-rpm-build: prep
+rpm-build:
 	@echo "Building RPM packages..."
 	tar -czf $(BUILD_DIR)/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --exclude=rpmbuild --transform 's|^|$(NAME)-$(VERSION)/|' .
 	rpmbuild -ba $(CURDIR)/rpm/$(NAME).spec --define "_version $(VERSION)" --define "_topdir $(BUILD_DIR)"
