@@ -37,7 +37,7 @@ prep:
 	@echo "Generating RPM changelog..."
 	$(CURDIR)/scripts/update-rpm-metadata.py --version $(VERSION) --spec $(CURDIR)/rpm/$(NAME).spec --changelog-in $(CURDIR)/CHANGELOG.md --changelog-out $(BUILD_DIR)/changelog
 
-lint: lint-shell lint-md lint-spec lint-rpm
+lint: lint-shell lint-md lint-spec
 
 lint-shell:
 	shellcheck $(CURDIR)/scripts/*.sh
@@ -49,10 +49,10 @@ lint-md:
 		echo "Warning: markdownlint not found. Skipping markdown lint."; \
 	fi
 
-lint-spec: prep
+lint-spec:
 	rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.spec.rpmlintrc --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
 
-lint-rpm: rpm-build
+lint-rpm:
 	rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.rpm.rpmlintrc --ignore-unused-rpmlintrc $(RPM_DIR)/*.rpm
 
 install: install-base install-user
@@ -111,4 +111,4 @@ rpm-repo:
 	$(CURDIR)/scripts/update-repo.sh $(RPM_DIR) $(VERSION) $(CHANNEL) "$(GPG_KEY_ID)"
 
 clean:
-	#rm -rf $(BUILD_DIR)
+	rm -r $(BUILD_DIR)
