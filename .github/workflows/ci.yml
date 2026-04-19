@@ -52,6 +52,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+      - name: Install dependencies
+        run: dnf install -y python3 make
       - name: Prepare Build Environment
         run: make prep
   lint-spec:
