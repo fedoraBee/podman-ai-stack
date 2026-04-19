@@ -18,7 +18,8 @@ jobs:
     container: fedora:latest
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout code
+        uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
@@ -32,7 +33,7 @@ jobs:
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
 
-      - name: Setup GPG (CI-safe)
+      - name: Setup GPG
         run: |
           mkdir -p ~/.gnupg
           chmod 700 ~/.gnupg
@@ -45,18 +46,20 @@ jobs:
           preset_passphrase_bin="$(find /usr/lib* -name gpg-preset-passphrase 2>/dev/null | head -n 1)"
           keygrip="$(gpg --with-keygrip -K | awk '/Keygrip =/ {print $3; exit}')"
           "$preset_passphrase_bin" --passphrase "${{ secrets.GPG_PASSPHRASE }}" --preset "$keygrip"
-      - name: Configure RPM signing
+
+      - name: Configure RPM Signing
         run: |
           echo "%_signature gpg" > ~/.rpmmacros
           echo "%_gpg_name ${{ vars.GPG_KEY_ID }}" >> ~/.rpmmacros
           echo "%__gpg $(which gpg)" >> ~/.rpmmacros
+
       - name: Sign RPMs
         run: |
           GPG_TTY="$(tty || echo /dev/null)"
           export GPG_TTY
           make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
 
-      - name: Update Repository
+      - name: Update RPM Repository
         run: |
           CHANNEL=stable
           ref_name="${{ github.ref_name }}"
@@ -69,7 +72,7 @@ jobs:
           echo "Deploying to channel: $CHANNEL"
           make repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} CHANNEL=$CHANNEL
 
-      - name: Prepare git environment
+      - name: Prepare Git Environment
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
@@ -79,7 +82,8 @@ jobs:
         run: |
           chmod +x .github/scripts/generate-index.sh
           .github/scripts/generate-index.sh
-      - name: Debug repo contents
+
+      - name: Debug Repository Contents
         run: ls -R rpmbuild/repo
 
       - name: Deploy to GitHub Pages

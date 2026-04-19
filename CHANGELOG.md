@@ -6,6 +6,21 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.6] - 2026-04-19
+
+### Changed
+
+- Harmonized workflow job and step naming across `ci.yml` and `release.yml` for
+  better consistency.
+- Fixed a reference error in the `smoke-test` job in `ci.yml` where it was
+  referencing a non-existent `build` job.
+- Enforced English as the mandatory language for all project file edits,
+  including code, comments, and documentation.
+- Updated `AGENTS.md` and internal instructions to include Markdown linting
+  rules (specifically MD013 for line length).
+- Added a synchronization requirement between the primary instruction file and
+  `AGENTS.md` to ensure they remain identical.
+
 ## [0.4.5] - 2026-04-19
 
 ### Added

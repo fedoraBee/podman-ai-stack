@@ -53,6 +53,11 @@ subpackages:
 - **Automated Changelog**: The RPM changelog is generated from `CHANGELOG.md`
   using `scripts/update-rpm-metadata.py` and included in the spec file via
   `%include %{_topdir}/changelog`.
+- **Markdown Linting**: All changes to Markdown files (`.md`) must adhere to the
+  project's Markdown linting rules, especially MD013 to prevent line length
+  overflows.
+- **Language Standard**: Always use English when editing any project files,
+  including code, comments, and documentation.
 
 ## 🚀 Deployment Workflow
 
@@ -237,3 +242,6 @@ To deploy changes locally for testing:
 - [DEVELOPMENT.md](DEVELOPMENT.md): Build instructions and technical notes.
 - [CHANGELOG.md](CHANGELOG.md): Record of notable changes and versions.
 - [LICENSE](LICENSE): MIT License.
+
+**Note:** All changes made to this instruction file must also be reflected in
+`AGENTS.md`.

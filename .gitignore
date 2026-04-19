@@ -3,3 +3,4 @@ rpmbuild/
 .vscode/
 .gemini/
 .geminiignore
+GEMINI.md
