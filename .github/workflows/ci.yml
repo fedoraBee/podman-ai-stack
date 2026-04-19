@@ -53,7 +53,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Install dependencies
-        run: dnf install -y python3 rpm-build systemd-rpm-macros make
+        run: dnf install -y python3 make
+      - name: Configure RPM Signing
+        run: echo "%_topdir /__w/podman-ai-stack/podman-ai-stack/rpmbuild" > ~/.rpmmacros
       - name: Prepare Build Environment
         run: make prep
   lint-spec:
