@@ -72,7 +72,7 @@ install-root:
 	mkdir -p $(DESTDIR)$(SYSTEM_QUADLET_DIR)
 	$(foreach f,$(wildcard quadlets/*.in),sed $(SED_ARGS) $(f) > $(DESTDIR)$(SYSTEM_QUADLET_DIR)/$(notdir $(basename $(f)));)
 
-rpm: rpm-build rpm-sign rpm-repo
+rpm: prep rpm-build rpm-sign rpm-repo
 
 rpm-build:
 	@echo "Building RPM packages..."
