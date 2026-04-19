@@ -1,5 +1,7 @@
+%{!?_version: %define _version X.Y.Z}
+
 Name:           podman-ai-stack
-Version:        0.4.3
+Version:        %{_version}
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 
@@ -23,8 +25,7 @@ control command (user mode). Configuration is managed via
 Summary:        Dedicated service user for Podman AI Stack
 Requires:       %{name} = %{version}-%{release}
 Requires(pre):  shadow-utils
-#Provides:       user(podman-ai)
-Provides:       group(podman-ai)
+Provides:       user(podman-ai) = %{version}-%{release}
 
 %description user
 Creates a dedicated 'podman-ai' user and enables lingering. This allows
@@ -155,4 +156,4 @@ fi
 %config(noreplace) %{_sysconfdir}/containers/systemd/*.pod
 
 %changelog
-%include rpm/changelog
+%include %{_topdir}/changelog

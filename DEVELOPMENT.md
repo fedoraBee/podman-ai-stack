@@ -20,13 +20,13 @@ To sign the built RPMs, you need a GPG key. If you have configured your
 `~/.rpmmacros` (as shown below), you can simply run:
 
 ```bash
-make sign
+make rpm-sign
 ```
 
 Alternatively, you can provide the key ID directly:
 
 ```bash
-make sign GPG_KEY_ID=YOUR_KEY_ID
+make rpm-sign GPG_KEY_ID=YOUR_KEY_ID
 ```
 
 ### RPM GPG Configuration
@@ -47,7 +47,7 @@ versioned channels (e.g., `v0.1/stable`, `latest/testing`).
 To update the repository metadata:
 
 ```bash
-make repo CHANNEL=testing GPG_KEY_ID=YOUR_KEY_ID
+make rpm-repo CHANNEL=testing GPG_KEY_ID=YOUR_KEY_ID
 ```
 
 This will:
@@ -113,7 +113,11 @@ the Pull Request workflow. It performs the following checks:
 - Branch naming validation.
 - Version extraction from branch name.
 - Verification that `CHANGELOG.md` contains the version.
-- Verification that the RPM spec file matches the version.
+- Verification that the RPM spec file's `Version` field is automatically updated
+  by `scripts/update-rpm-metadata.py` from the `Makefile`'s `VERSION` variable,
+  and this value is validated.
+- Ensure the `Makefile` version is synchronized with the RPM spec and
+  `CHANGELOG.md`.
 - Automatic PR body generation from commit messages.
 
 ### Prerequisites

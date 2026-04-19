@@ -165,7 +165,7 @@ if ! grep -q "$VERSION" CHANGELOG.md; then
     exit 1
 fi
 
-echo "✅ CHANGELOG contains version"
+echo "✅ CHANGELOG contains version v$VERSION"
 
 # -----------------------------
 # Validate RPM spec version
@@ -177,19 +177,34 @@ if [[ -z "$SPEC_FILE" ]]; then
     exit 1
 fi
 
-if ! grep -q "$VERSION" "$SPEC_FILE"; then
-    echo "❌ RPM spec does not contain version v$VERSION"
+if ! grep -q "Version:        %{_version}" "$SPEC_FILE"; then
+    echo "❌ RPM spec does not contain version macro '%{_version}'"
     exit 1
 fi
 
-echo "✅ RPM spec version matches"
+echo "✅ RPM spec version macro matches"
+
+# -----------------------------
+# Validate Makefile version
+# -----------------------------
+if [[ ! -f "Makefile" ]]; then
+    echo "❌ Makefile missing"
+    exit 1
+fi
+
+if ! grep -q "^VERSION := $VERSION" Makefile; then
+    echo "❌ Makefile does not contain version $VERSION"
+    exit 1
+fi
+
+echo "✅ Makefile version matches"
 
 # -----------------------------
 # Commit analysis for PR body
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then
     echo "📝 Generating PR title from commits..."
-    PR_TITLE=$(git log --pretty=format:"%s" "$REMOTE/$BASE_BRANCH"..HEAD | head -n 1)
+    PR_TITLE=$(git log --pretty=format:"%s" "$REMOTE/$BASE_BRANCH"..HEAD | head -n 1 | awk -F '\\\\n' '{print $1}')
 fi
 
 if [[ -z "$PR_BODY" ]]; then

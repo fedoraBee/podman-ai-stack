@@ -52,7 +52,7 @@ provided `make` targets:
 2. **Build and Verify RPMs**:
 
    ```bash
-   make verify-rpm
+   make lint-rpm
    ```
 
    This builds the RPMs and runs `rpmlint` against the resulting packages.
@@ -67,10 +67,15 @@ provided `make` targets:
 
 ### 5. Version Management & Changelog
 
-- **RPM Spec**: Increment the `Release` number in `rpm/podman-ai-stack.spec`.
-- **CHANGELOG.md**: Add a brief note under the current version.
-- **RPM Changelog**: Add a matching entry to the `%changelog` section in the
-  Spec file.
+- **Version Synchronization**: When bumping the version, ensure the new version
+  is updated in:
+  - `Makefile` (`VERSION` variable)
+  - `rpm/podman-ai-stack.spec` (`Version` field - automatically updated by
+    `scripts/update-rpm-metadata.py` from `Makefile`)
+  - `CHANGELOG.md` (New version heading)
+- **CHANGELOG.md**: Add a brief note under the current version. This file is the
+  single source of truth for release notes. The RPM changelog is automatically
+  generated from it.
 
 ## 📬 Submitting a Pull Request
 
