@@ -29,7 +29,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Synchronized all documentation (`README.md`, `DEVELOPMENT.md`,
   `CONTRIBUTING.md`, `AGENTS.md`) with the new build system structure.
 - Updated `.gitignore` to ignore `.gemini/` directory.
-- Justified gitops pr cli tool handling version checks of the spec file.
+- Justified how gitops pr cli tool handles the spec file version check and
+  improved pr title extraction from commit messages.
 
 ### Removed
 

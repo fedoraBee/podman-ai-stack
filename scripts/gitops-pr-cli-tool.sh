@@ -204,7 +204,7 @@ echo "✅ Makefile version matches"
 # -----------------------------
 if [[ -z "$PR_TITLE" ]]; then
     echo "📝 Generating PR title from commits..."
-    PR_TITLE=$(git log --pretty=format:"%s" "$REMOTE/$BASE_BRANCH"..HEAD | head -n 1)
+    PR_TITLE=$(git log --pretty=format:"%s" "$REMOTE/$BASE_BRANCH"..HEAD | head -n 1 | awk -F '\\\\n' '{print $1}')
 fi
 
 if [[ -z "$PR_BODY" ]]; then
