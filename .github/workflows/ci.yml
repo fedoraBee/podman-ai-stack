@@ -53,7 +53,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Install dependencies
-        run: dnf install -y python3 make
+        run: dnf install -y python3 rpm-build systemd-rpm-macros make
       - name: Prepare Build Environment
         run: make prep
   lint-spec:
