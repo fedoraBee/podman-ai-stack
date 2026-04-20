@@ -25,7 +25,7 @@ SED_ARGS := -e 's|@OPEN_WEBUI_PORT@|$(OPEN_WEBUI_PORT)|g' \
            -e 's|@OLLAMA_MEMORY@|$(OLLAMA_MEMORY)|g' \
            -e 's|@OLLAMA_CPUS@|$(OLLAMA_CPUS)|g'
 
-.PHONY: all install install-base install-user install-root prep rpm rpm-sign rpm-repo lint lint-shell lint-md lint-rpm verify-rpm clean
+.PHONY: all install install-base install-user install-root prep rpm rpm-build rpm-sign rpm-repo lint lint-shell lint-md lint-spec lint-rpm verify-rpm clean
 
 all:
 	@echo "Nothing to build. Use 'make install' or 'make rpm'."
@@ -36,6 +36,8 @@ prep:
 	mkdir -p $(BUILD_DIR)/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 	@echo "Generating RPM changelog..."
 	$(CURDIR)/scripts/update-rpm-metadata.py --version $(VERSION) --spec $(CURDIR)/rpm/$(NAME).spec --changelog-in $(CURDIR)/CHANGELOG.md --changelog-out $(BUILD_DIR)/changelog
+
+rpm: prep rpm-build
 
 lint: lint-shell lint-md lint-spec
 
@@ -49,8 +51,9 @@ lint-md:
 		echo "Warning: markdownlint not found. Skipping markdown lint."; \
 	fi
 
-lint-spec:
+lint-spec: prep
 	rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.spec.rpmlintrc --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
+
 
 lint-rpm:
 	rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.rpm.rpmlintrc --ignore-unused-rpmlintrc $(RPM_DIR)/*.rpm

@@ -54,8 +54,8 @@ jobs:
         uses: actions/checkout@v5
       - name: Install dependencies
         run: dnf install -y python3 make
-      - name: Configure RPM Signing
-        run: echo "%_topdir /__w/podman-ai-stack/podman-ai-stack/rpmbuild" > ~/.rpmmacros
+      - name: Configure RPM _topdir
+        run: echo "%_topdir ${{ github.workspace }}/rpmbuild" > ~/.rpmmacros
       - name: Prepare Build Environment
         run: make prep
   lint-spec:
@@ -66,7 +66,10 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        run: dnf install -y rpmlint make
+        run: dnf install -y rpmlint make python3
+
+      - name: Configure RPM _topdir
+        run: echo "%_topdir ${{ github.workspace }}/rpmbuild" > ~/.rpmmacros
 
       - name: Lint RPM Spec
         run: make lint-spec
@@ -94,11 +97,18 @@ jobs:
           path: rpmbuild/RPMS/noarch/*.rpm
 
   lint-rpm:
+    needs: build-rpm
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
+      - name: Download RPM Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: rpms
+          path: rpmbuild/RPMS/noarch
 
       - name: Install dependencies
         run: dnf install -y rpmlint make
