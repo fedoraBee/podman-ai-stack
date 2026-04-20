@@ -33,21 +33,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Updated `smoke-test` job in `ci.yml` to correctly reference the artifact ID
   from the renamed `build` job.
 
-### Fixed
-
-- Resolved `rpmlint` spec file parsing error by updating the `lint-spec`
-  Makefile target to properly define `_topdir` and `_version` macros for
-  `rpmlint` in CI environments, ensuring the `%include` directive for the
-  changelog is correctly resolved.
-
-### Changed
-
-- Renamed CI workflow jobs `build-rpm` to `build` and `lint-rpm` to `rpm-lint`
-  in `.github/workflows/ci.yml` to align with expected status check names in
-  pull requests.
-- Updated `smoke-test` job in `ci.yml` to correctly reference the artifact ID
-  from the renamed `build` job.
-
 ## [0.4.5] - 2026-04-19
 
 ### Added
