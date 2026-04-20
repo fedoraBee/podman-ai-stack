@@ -57,7 +57,7 @@ jobs:
         run: |
           GPG_TTY="$(tty || echo /dev/null)"
           export GPG_TTY
-          make sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
+          make rpm-sign GPG_KEY_ID=${{ vars.GPG_KEY_ID }}
 
       - name: Update RPM Repository
         run: |
@@ -70,7 +70,7 @@ jobs:
           esac
 
           echo "Deploying to channel: $CHANNEL"
-          make repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} CHANNEL=$CHANNEL
+          make rpm-repo GPG_KEY_ID=${{ vars.GPG_KEY_ID }} CHANNEL=$CHANNEL
 
       - name: Prepare Git Environment
         run: |
