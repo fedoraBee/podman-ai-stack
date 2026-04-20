@@ -6,6 +6,33 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.6] - 2026-04-19
+
+### Fixed
+
+- Resolved `rpmlint` spec file parsing error by updating the `lint-spec`
+  Makefile target to properly define `_topdir` and `_version` macros for
+  `rpmlint` in CI environments, ensuring the `%include` directive for the
+  changelog is correctly resolved.
+
+### Changed
+
+- Harmonized workflow job and step naming across `ci.yml` and `release.yml` for
+  better consistency.
+- Fixed a reference error in the `smoke-test` job in `ci.yml` where it was
+  referencing a non-existent `build` job.
+- Enforced English as the mandatory language for all project file edits,
+  including code, comments, and documentation.
+- Updated `AGENTS.md` and internal instructions to include Markdown linting
+  rules (specifically MD013 for line length).
+- Added a synchronization requirement between the primary instruction file and
+  `AGENTS.md` to ensure they remain identical.
+- Renamed CI workflow jobs `build-rpm` to `build` and `lint-rpm` to `rpm-lint`
+  in `.github/workflows/ci.yml` to align with expected status check names in
+  pull requests.
+- Updated `smoke-test` job in `ci.yml` to correctly reference the artifact ID
+  from the renamed `build` job.
+
 ## [0.4.5] - 2026-04-19
 
 ### Added
