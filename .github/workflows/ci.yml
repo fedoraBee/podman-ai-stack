@@ -74,7 +74,7 @@ jobs:
       - name: Lint RPM Spec
         run: make lint-spec
 
-  build-rpm:
+  build:
     runs-on: ubuntu-latest
     container: fedora:latest
     outputs:
@@ -96,8 +96,8 @@ jobs:
           name: rpms
           path: rpmbuild/RPMS/noarch/*.rpm
 
-  lint-rpm:
-    needs: build-rpm
+  rpm-lint:
+    needs: build
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
@@ -117,7 +117,7 @@ jobs:
         run: make lint-rpm
 
   smoke-test:
-    needs: build-rpm
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -144,7 +144,7 @@ jobs:
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -o rpms/rpms.zip \
-            "${{ github.api_url }}/repos/${{ github.repository }}/actions/artifacts/${{ needs.build-rpm.outputs.rpm_artifact_id }}/zip"
+            "${{ github.api_url }}/repos/${{ github.repository }}/actions/artifacts/${{ needs.build.outputs.rpm_artifact_id }}/zip"
           unzip -o rpms/rpms.zip -d rpms
 
       - name: Install Rootless RPMs
