@@ -22,6 +22,7 @@ HealthStartPeriod=90s
 
 [Service]
 Restart=on-failure
+ExecStartPre=/usr/bin/podman pull @OLLAMA_IMAGE@
 
 [Install]
 WantedBy=default.target

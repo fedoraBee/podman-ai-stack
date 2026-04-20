@@ -12,6 +12,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - New `PublishPort` directive to `podman-ai-stack.pod.in` to expose the Ollama
   API port (default: 11434).
+- Added `ExecStartPre` directives to container templates to ensure images are
+  pre-pulled before service startup.
 
 ### Changed
 
