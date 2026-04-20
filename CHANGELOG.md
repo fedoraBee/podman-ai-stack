@@ -17,8 +17,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Harmonized workflow job and step naming across `ci.yml` and `release.yml` for
-  better consistency.
+- Harmonized workflow job and naming across `ci.yml` and `release.yml` for
+  better consistency. Used `ci-` prefix for all CI jobs and `release-` prefix
+  for release workflow jobs.
 - Fixed a reference error in the `smoke-test` job in `ci.yml` where it was
   referencing a non-existent `build` job.
 - Enforced English as the mandatory language for all project file edits,
@@ -27,9 +28,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   rules (specifically MD013 for line length).
 - Added a synchronization requirement between the primary instruction file and
   `AGENTS.md` to ensure they remain identical.
-- Renamed CI workflow jobs `build-rpm` to `build` and `lint-rpm` to `rpm-lint`
-  in `.github/workflows/ci.yml` to align with expected status check names in
-  pull requests.
 - Updated `smoke-test` job in `ci.yml` to correctly reference the artifact ID
   from the renamed `build` job.
 

@@ -12,7 +12,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
-  build-rpm:
+  release-build:
     runs-on: ubuntu-latest
     environment: gh-pages
     container: fedora:latest

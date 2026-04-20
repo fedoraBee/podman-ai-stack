@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 jobs:
-  lint:
+  ci-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,7 +29,7 @@ jobs:
           config: rpm/.markdownlint.jsonc
           globs: "**/*.md"
 
-  actionlint:
+  ci-actionlint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -46,7 +46,7 @@ jobs:
       - name: Run Actionlint
         run: actionlint -color
 
-  prep:
+  ci-prep:
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
@@ -58,7 +58,7 @@ jobs:
         run: echo "%_topdir ${{ github.workspace }}/rpmbuild" > ~/.rpmmacros
       - name: Prepare Build Environment
         run: make prep
-  lint-spec:
+  ci-lint-spec:
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
@@ -74,7 +74,7 @@ jobs:
       - name: Lint RPM Spec
         run: make lint-spec
 
-  build:
+  ci-build:
     runs-on: ubuntu-latest
     container: fedora:latest
     outputs:
@@ -96,8 +96,8 @@ jobs:
           name: rpms
           path: rpmbuild/RPMS/noarch/*.rpm
 
-  rpm-lint:
-    needs: build
+  ci-lint-rpm:
+    needs: ci-build
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
@@ -116,8 +116,8 @@ jobs:
       - name: Lint RPM Artifacts
         run: make lint-rpm
 
-  smoke-test:
-    needs: build
+  ci-smoke-test:
+    needs: ci-build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -144,7 +144,7 @@ jobs:
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -o rpms/rpms.zip \
-            "${{ github.api_url }}/repos/${{ github.repository }}/actions/artifacts/${{ needs.build.outputs.rpm_artifact_id }}/zip"
+            "${{ github.api_url }}/repos/${{ github.repository }}/actions/artifacts/${{ needs.ci-build.outputs.rpm_artifact_id }}/zip"
           unzip -o rpms/rpms.zip -d rpms
 
       - name: Install Rootless RPMs
