@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          dnf install -y make rpm-build systemd-rpm-macros createrepo_c gnupg2 rpm-sign git rsync which
+          dnf install -y python3 make rpm-build systemd-rpm-macros createrepo_c gnupg2 rpm-sign git rsync which
 
       - name: Build RPM
         run: make rpm
