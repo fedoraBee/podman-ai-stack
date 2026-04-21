@@ -6,6 +6,14 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.9] - 2026-04-21
+
+### Added
+
+- **Auto-Updates**: Operationalized `podman-auto-update.timer` for container
+  auto-updates. The root package now enables the timer automatically during
+  installation, and the README provides instructions for rootless setups.
+
 ## [0.4.8] - 2026-04-21
 
 ### Security
