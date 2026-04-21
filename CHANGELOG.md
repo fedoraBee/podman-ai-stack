@@ -6,6 +6,14 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0-rc5] - 2026-04-21
+
+### Added
+
+- **Documentation**: Added `MIGRATION.md` to clarify the non-breaking upgrade
+  path from `v0.4.x` to `v0.5.x` and document the opt-in SQLite to PostgreSQL
+  migration workflow.
+
 ## [0.5.0-rc4] - 2026-04-21
 
 ### Added
