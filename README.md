@@ -233,6 +233,41 @@ sudo systemctl enable --now podman-auto-update.timer
 > ℹ️ For Rootfull deployments, the RPM package automatically enables this timer
 > during installation.
 
+## 💾 Backup & Restore
+
+Open WebUI and Ollama store important state (chats, configurations, and models)
+in Podman volumes. We provide a script to safely export these volumes without
+corrupting active database writes by temporarily pausing the container
+processes.
+
+### Backup
+
+Run the included backup script to pause the containers and export their volumes
+safely:
+
+```bash
+./scripts/backup-ai-stack.sh /path/to/backup/dir
+```
+
+*(Note: If using the dedicated service user deployment, prefix with
+`sudo -u podman-ai`)*
+
+### Restore
+
+To restore from a backup archive:
+
+```bash
+# 1. Stop the pod
+systemctl --user stop podman-ai-stack-pod
+
+# 2. Import the volume data
+podman volume import open-webui /path/to/backup/dir/open-webui-backup.tar
+podman volume import ollama /path/to/backup/dir/ollama-backup.tar
+
+# 3. Restart the pod
+systemctl --user start podman-ai-stack-pod
+```
+
 ## 🔄 Restart Services
 
 ```bash
