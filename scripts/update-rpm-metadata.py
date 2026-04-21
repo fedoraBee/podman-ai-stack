@@ -42,7 +42,7 @@ def generate_rpm_changelog(changelog='CHANGELOG.md'):
     with open(changelog, 'r') as f:
         content = f.read()
 
-    version_pattern = re.compile(r'## \[([\d\.]+)\] - (\d{4}-\d{2}-\d{2})')
+    version_pattern = re.compile(r'## \[([\w\.\-]+)\] - (\d{4}-\d{2}-\d{2})')
     author = get_git_info()
     sections = version_pattern.split(content)
     
@@ -74,7 +74,7 @@ def generate_rpm_changelog(changelog='CHANGELOG.md'):
             entry = entry.replace('`', '')
             formatted_entries.append(entry)
 
-        rpm_changelog.append(f"* {rpm_date} {author} - {version}-1")
+        rpm_changelog.append(f"* {rpm_date} {author} - %{{_version}}-%{{mkrel}}")
         for entry in formatted_entries:
             rpm_changelog.append(entry)
         rpm_changelog.append("")
@@ -93,7 +93,7 @@ def main(version=None,
         if not version:
             print("Error: Could not find VERSION in Makefile.", file=sys.stderr)
             sys.exit(1)
-        update_spec_version(spec, version)
+    # update_spec_version(spec, version) disabled to keep placeholder
 
     rpm_changelog_content = generate_rpm_changelog(changelog_in)
     with open(changelog_out, 'w') as f:
@@ -108,6 +108,8 @@ if __name__ == '__main__':
     parser.add_argument('--changelog-out', default='rpmbuild/changelog', help='Path to output changelog file')
 
     args = parser.parse_args()
+    if hasattr(args, "version") and args.version:
+        args.version = args.version.replace("-", "~")
 
     main(version=args.version,
          spec=args.spec,
