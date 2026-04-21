@@ -58,8 +58,8 @@ lint-md:
 
 lint-spec: prep
 	@echo "%_topdir $(BUILD_DIR)" > $(BUILD_DIR)/.rpmmacros
-	@echo "%_version $(VERSION)" >> $(BUILD_DIR)/.rpmmacros
-	echo "%_version $(RPM_VERSION)" > $(BUILD_DIR)/.rpmmacros && echo "%_topdir $(BUILD_DIR)" >> $(BUILD_DIR)/.rpmmacros && HOME=$(BUILD_DIR) rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.spec.rpmlintrc --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
+	@echo "%_version $(RPM_VERSION)" >> $(BUILD_DIR)/.rpmmacros
+	HOME=$(BUILD_DIR) rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.spec.rpmlintrc --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
 
 
 lint-rpm:
