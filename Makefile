@@ -1,7 +1,7 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.4.7
+VERSION := 0.4.8
 BUILD_DIR := $(CURDIR)/rpmbuild
 RPM_DIR := $(BUILD_DIR)/RPMS/noarch
 PREFIX ?= /usr
