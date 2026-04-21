@@ -4,3 +4,4 @@ rpmbuild/
 .gemini/
 .geminiignore
 GEMINI.md
+SUGGESTIONS.md
