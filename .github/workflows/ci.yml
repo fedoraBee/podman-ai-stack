@@ -225,9 +225,7 @@ jobs:
             fi
           else
             echo "Systemd not running as PID 1. Falling back to direct Podman execution for functional testing..."
-            podman network create --ignore --driver bridge --subnet 10.89.0.0/24 podman-ai-stack || true
-            podman pod create --name podman-ai-stack -p 3000:8080 -p 11434:11434 --network podman-ai-stack || true
-            podman run -d --pod podman-ai-stack --name open-webui ghcr.io/open-webui/open-webui:main
+            podman run -d --name open-webui -p 3000:8080 --cgroups=disabled ghcr.io/open-webui/open-webui:main
           fi
           
           echo "Waiting for Open WebUI to initialize and serve HTTP..."
