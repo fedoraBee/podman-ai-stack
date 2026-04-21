@@ -358,6 +358,12 @@ sudo systemctl enable --now podman-auto-update.timer
 > ℹ️ For Rootfull deployments, the RPM package automatically enables this timer
 > during installation.
 
+## ⬆️ Upgrading & Migration
+
+Are you upgrading from a previous version (e.g., v0.4.x to v0.5.x)? Check out
+our [Migration Guide](MIGRATION.md) for information on database transitions and
+backwards compatibility.
+
 ## 💾 Backup & Restore
 
 Open WebUI and Ollama store important state (chats, configurations, and models)
