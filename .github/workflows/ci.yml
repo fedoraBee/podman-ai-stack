@@ -232,3 +232,14 @@ jobs:
           timeout 180 bash -c 'while ! curl -s -f http://localhost:3000/health > /dev/null; do echo "Waiting..."; sleep 5; done'
           echo "Functional test passed successfully!"
 
+      - name: Test Backup Script
+        run: |
+          echo "Executing backup script..."
+          ./scripts/backup-ai-stack.sh /tmp/test-backups
+          
+          echo "Verifying backup archives..."
+          if ! ls /tmp/test-backups/*/*.tar > /dev/null 2>&1; then
+            echo "❌ Backup archives not found!"
+            exit 1
+          fi
+          echo "✅ Backup archives successfully verified."
