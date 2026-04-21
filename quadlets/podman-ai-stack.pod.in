@@ -6,8 +6,8 @@ After=podman-ai-stack-network.service
 [Pod]
 Label=app=podman-ai-stack
 PodName=podman-ai-stack
-PublishPort=@OPEN_WEBUI_PORT@:8080
-PublishPort=@OLLAMA_PORT@:11434
+PublishPort=@BIND_IP@:@OPEN_WEBUI_PORT@:8080
+PublishPort=@BIND_IP@:@OLLAMA_PORT@:11434
 # Uses the Quadlet network configuration `podman-ai-stack.network`
 Network=podman-ai-stack.network
 

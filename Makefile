@@ -1,7 +1,7 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.5.0-rc2
+VERSION := 0.5.0-rc3
 RPM_VERSION := $(subst -,~,$(VERSION))
 BUILD_DIR := $(CURDIR)/rpmbuild
 RPM_DIR := $(BUILD_DIR)/RPMS/noarch
@@ -15,6 +15,7 @@ USER_QUADLET_DIR ?= $(SYSTEM_QUADLET_DIR)/users
 
 # Default configuration for substitution
 OPEN_WEBUI_PORT ?= 3000
+BIND_IP ?= 127.0.0.1
 OPEN_WEBUI_IMAGE ?= ghcr.io/open-webui/open-webui:main
 OLLAMA_PORT ?= 11434
 OLLAMA_IMAGE ?= docker.io/ollama/ollama:latest
@@ -23,6 +24,7 @@ OLLAMA_CPUS ?= 4
 POSTGRES_IMAGE ?= docker.io/postgres:16-alpine
 
 SED_ARGS := -e 's|@OPEN_WEBUI_PORT@|$(OPEN_WEBUI_PORT)|g' \
+		   -e 's|@BIND_IP@|$(BIND_IP)|g' \
            -e 's|@OPEN_WEBUI_IMAGE@|$(OPEN_WEBUI_IMAGE)|g' \
            -e 's|@OLLAMA_PORT@|$(OLLAMA_PORT)|g' \
            -e 's|@OLLAMA_IMAGE@|$(OLLAMA_IMAGE)|g' \
