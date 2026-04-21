@@ -198,6 +198,25 @@ systemctl --user daemon-reload
 systemctl --user restart open-webui
 ```
 
+### External Database (PostgreSQL)
+
+For larger deployments, you can decouple Open WebUI's state from SQLite to PostgreSQL.
+Uncomment and configure `DATABASE_URL` in `/etc/sysconfig/podman-ai-stack`:
+
+```ini
+DATABASE_URL=postgresql://openwebui:openwebui_secret@localhost:5432/openwebui
+```
+
+We ship an optional Postgres Quadlet template if you wish to run it within the stack:
+
+```bash
+# Start the postgres database
+systemctl --user start postgres
+
+# Restart open-webui to pick up the new database connection
+systemctl --user restart open-webui
+```
+
 ### Disable Dedicated Network
 
 Edit:

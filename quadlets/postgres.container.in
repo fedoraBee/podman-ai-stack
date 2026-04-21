@@ -1,0 +1,33 @@
+[Unit]
+Description=PostgreSQL Database for Open WebUI
+# This is an OPTIONAL component for scalability.
+
+[Container]
+Image=@POSTGRES_IMAGE@
+AutoUpdate=registry
+ContainerName=postgres
+Pod=podman-ai-stack.pod
+Label=app=podman-ai-stack
+Environment=POSTGRES_USER=openwebui
+Environment=POSTGRES_PASSWORD=openwebui_secret
+Environment=POSTGRES_DB=openwebui
+Volume=postgres:/var/lib/postgresql/data:Z
+# Drop most capabilities but keep what postgres needs to initialize its volume securely
+DropCapability=all
+AddCapability=CHOWN
+AddCapability=DAC_OVERRIDE
+AddCapability=FOWNER
+AddCapability=SETGID
+AddCapability=SETUID
+HealthCmd=pg_isready -U openwebui -d openwebui || exit 1
+HealthStartPeriod=30s
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=3
+
+[Service]
+Restart=on-failure
+ExecStartPre=/usr/bin/podman pull @POSTGRES_IMAGE@
+
+[Install]
+WantedBy=default.target

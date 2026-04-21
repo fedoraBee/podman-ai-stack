@@ -1,0 +1,8 @@
+[Unit]
+Description=PostgreSQL Data Volume
+After=local-fs.target
+
+[Volume]
+VolumeName=postgres
+Label=app=podman-ai-stack
+Driver=local
