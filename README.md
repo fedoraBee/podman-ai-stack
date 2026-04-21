@@ -216,6 +216,23 @@ systemctl --user daemon-reload
 systemctl --user restart podman-ai-stack-pod
 ```
 
+## 🔄 Auto-Updates
+
+The Quadlet containers are configured to automatically pull new image versions
+(`AutoUpdate=registry`). To operationalize this, enable the Podman auto-update
+timer:
+
+```bash
+# Rootless (current user or dedicated user)
+systemctl --user enable --now podman-auto-update.timer
+
+# Rootfull
+sudo systemctl enable --now podman-auto-update.timer
+```
+
+> ℹ️ For Rootfull deployments, the RPM package automatically enables this timer
+> during installation.
+
 ## 🔄 Restart Services
 
 ```bash

@@ -119,6 +119,7 @@ fi
 if %{systemd_runtime_check}; then
     systemctl daemon-reload >/dev/null 2>&1 || :
     %systemd_post podman-ai-stack-pod
+    systemctl enable --now podman-auto-update.timer >/dev/null 2>&1 || :
 fi
 
 %preun root
