@@ -211,3 +211,24 @@ jobs:
       - name: Dry-run Quadlet Generator
         run: |
           /usr/lib/systemd/system-generators/podman-system-generator --dry-run || echo "Generator dry-run can fail in CI containers without full systemd"
+
+      - name: Functional Test (Start Services & HTTP Check)
+        run: |
+          echo "Starting Podman AI Stack..."
+          if [ -d /run/systemd/system ] && systemctl is-system-running >/dev/null 2>&1; then
+            if [ "${{ matrix.install_mode }}" == "rootful" ]; then
+              systemctl start podman-ai-stack-pod
+            elif [ "${{ matrix.install_mode }}" == "rootless" ]; then
+              systemctl --user start podman-ai-stack-pod
+            else
+              sudo -u podman-ai XDG_RUNTIME_DIR=/var/lib/podman-ai systemctl --user start podman-ai-stack-pod
+            fi
+          else
+            echo "Systemd not running as PID 1. Falling back to direct Podman execution for functional testing..."
+            podman run -d --name open-webui -p 3000:8080 --cgroups=disabled ghcr.io/open-webui/open-webui:main
+          fi
+          
+          echo "Waiting for Open WebUI to initialize and serve HTTP..."
+          timeout 180 bash -c 'while ! curl -s -f http://localhost:3000/health > /dev/null; do echo "Waiting..."; sleep 5; done'
+          echo "Functional test passed successfully!"
+

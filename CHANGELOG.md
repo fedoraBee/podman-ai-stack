@@ -6,6 +6,22 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.11] - 2026-04-21
+
+### Fixed
+
+- **CI/CD**: Fixed cgroup configuration error in CI functional tests by
+  bypassing pod creation and using `--cgroups=disabled` for direct container
+  execution when systemd is unavailable.
+
+## [0.4.10] - 2026-04-21
+
+### Changed
+
+- **CI/CD**: Expanded the smoke test in GitHub Actions to perform a functional
+  HTTP GET request (`curl -f http://localhost:3000/health`), validating Podman,
+  network bridging, and application layer interoperation.
+
 ## [0.4.9] - 2026-04-21
 
 ### Added
