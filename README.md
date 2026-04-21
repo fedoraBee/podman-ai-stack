@@ -19,7 +19,8 @@ current-user rootless, service-user rootless, and rootfull package paths.
 
 - **Rootless-first** – Run entirely without root privileges
 - **Systemd-native** – Managed via Podman Quadlets
-- **Secure by default** – Isolated networking and minimal privileges
+- **Secure by default** – Isolated networking, read-only root filesystems,
+  dropped capabilities, and strict SELinux boundaries
 - **Flexible configuration** – Environment-based configuration via
   `/etc/sysconfig/podman-ai-stack`
 - **Multiple deployment modes** – User, dedicated service user, or system-wide

@@ -6,6 +6,17 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.8] - 2026-04-21
+
+### Security
+
+- **Containers**: Enforced `ReadOnly=true` for both Open WebUI and Ollama to
+  prevent malicious persistence.
+- **Containers**: Added `DropCapability=all` to drop unnecessary default root
+  capabilities.
+- **Ollama**: Replaced `SecurityLabelDisable=true` with strict SELinux volume
+  labeling (`:Z`) to maintain container boundaries.
+
 ## [0.4.7] - 2026-04-20
 
 ### Added
