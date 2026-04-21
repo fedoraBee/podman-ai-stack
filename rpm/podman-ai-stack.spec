@@ -1,7 +1,7 @@
 %{!?_version: %define _version X.Y.Z}
 
 Name:           podman-ai-stack
-Version:        0.5.0~rc2
+Version:        %{_version}
 Release:        1%{?dist}
 Summary:        Rootless Podman AI Stack (Open WebUI & Ollama)
 

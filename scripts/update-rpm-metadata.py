@@ -74,7 +74,7 @@ def generate_rpm_changelog(changelog='CHANGELOG.md'):
             entry = entry.replace('`', '')
             formatted_entries.append(entry)
 
-        rpm_changelog.append(f"* {rpm_date} {author} - {version.replace('-', '~')}-1")
+        rpm_changelog.append(f"* {rpm_date} {author} - %{{_version}}-%{{mkrel}}")
         for entry in formatted_entries:
             rpm_changelog.append(entry)
         rpm_changelog.append("")
@@ -93,7 +93,7 @@ def main(version=None,
         if not version:
             print("Error: Could not find VERSION in Makefile.", file=sys.stderr)
             sys.exit(1)
-    update_spec_version(spec, version)
+    # update_spec_version(spec, version) disabled to keep placeholder
 
     rpm_changelog_content = generate_rpm_changelog(changelog_in)
     with open(changelog_out, 'w') as f:

@@ -10,6 +10,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -64,6 +67,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -115,6 +121,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -203,6 +212,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -218,6 +230,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -314,6 +329,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -341,6 +359,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -366,6 +387,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -429,6 +453,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -443,6 +470,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -456,6 +486,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -494,6 +527,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -537,6 +573,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
