@@ -6,6 +6,16 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.15] - 2026-04-21
+
+### Added
+
+- **Documentation**: Added `HARDWARE.md` containing hardware sizing guidelines
+  (VRAM/RAM) for various LLM models.
+- **Resource Management**: Documented instructions in `HARDWARE.md` for
+  dynamically overriding container CPU and Memory limits using systemd drop-in
+  files without modifying managed Quadlets.
+
 ## [0.4.14] - 2026-04-21
 
 ### Added
