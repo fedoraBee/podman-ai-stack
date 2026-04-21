@@ -151,6 +151,64 @@ Set:
 OLLAMA_BASE_URL=<your-server>
 ```
 
+## 🛡️ Network Hardening & Reverse Proxy
+
+By default, the Podman AI Stack binds its ports strictly to `127.0.0.1`
+(localhost). This "safe-by-default" approach ensures that if you install the
+stack on a cloud VPS without a firewall, your LLM models and chat interface are
+not instantly exposed to the public internet.
+
+### Exposing to the Network (Reverse Proxy - Recommended)
+
+The most secure way to expose Open WebUI is by placing a reverse proxy (like
+Nginx or Caddy) in front of it to handle TLS/SSL encryption and authentication.
+
+**Example Caddyfile:**
+
+```caddyfile
+ai.yourdomain.com {
+    reverse_proxy 127.0.0.1:3000
+}
+```
+
+### Overriding the Default Bind (Opt-in)
+
+If you are deploying on a trusted local network (LAN) and want the services
+reachable by other devices without a proxy, you can override the bind address.
+
+#### Option A: Build-time Override
+
+If building from source, set the `BIND_IP` variable:
+
+```bash
+make BIND_IP=0.0.0.0 rpm
+```
+
+#### Option B: Systemd Drop-in
+
+If installed via RPM, override the pod definition via a systemd drop-in:
+
+```bash
+systemctl --user edit podman-ai-stack-pod.pod
+```
+
+Add the following to bind to all interfaces (`0.0.0.0`):
+
+```ini
+[Pod]
+# Clear existing ports first
+PublishPort=
+PublishPort=0.0.0.0:3000:8080
+PublishPort=0.0.0.0:11434:11434
+```
+
+Then reload and restart:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user restart podman-ai-stack-pod
+```
+
 ## 🖥️ Hardware Requirements & Sizing
 
 AI workloads require specific hardware considerations, particularly GPU VRAM.
