@@ -13,3 +13,8 @@
 
 # Host address Ollama binds to (default: 0.0.0.0)
 # OLLAMA_HOST=0.0.0.0
+
+# --- Database Configuration (Optional) ---
+# Open WebUI uses SQLite by default. To use PostgreSQL for better scalability,
+# set the DATABASE_URL. If using the optional postgres container provided in the stack:
+# DATABASE_URL=postgresql://openwebui:openwebui_secret@localhost:5432/openwebui

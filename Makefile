@@ -1,7 +1,7 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.4.12
+VERSION := 0.4.13
 BUILD_DIR := $(CURDIR)/rpmbuild
 RPM_DIR := $(BUILD_DIR)/RPMS/noarch
 PREFIX ?= /usr
@@ -19,13 +19,15 @@ OLLAMA_PORT ?= 11434
 OLLAMA_IMAGE ?= docker.io/ollama/ollama:latest
 OLLAMA_MEMORY ?= 16G
 OLLAMA_CPUS ?= 4
+POSTGRES_IMAGE ?= docker.io/postgres:16-alpine
 
 SED_ARGS := -e 's|@OPEN_WEBUI_PORT@|$(OPEN_WEBUI_PORT)|g' \
            -e 's|@OPEN_WEBUI_IMAGE@|$(OPEN_WEBUI_IMAGE)|g' \
            -e 's|@OLLAMA_PORT@|$(OLLAMA_PORT)|g' \
            -e 's|@OLLAMA_IMAGE@|$(OLLAMA_IMAGE)|g' \
            -e 's|@OLLAMA_MEMORY@|$(OLLAMA_MEMORY)|g' \
-           -e 's|@OLLAMA_CPUS@|$(OLLAMA_CPUS)|g'
+           -e 's|@OLLAMA_CPUS@|$(OLLAMA_CPUS)|g' \
+           -e 's|@POSTGRES_IMAGE@|$(POSTGRES_IMAGE)|g'
 
 .PHONY: all install install-base install-user install-root prep rpm rpm-build rpm-sign rpm-repo lint lint-shell lint-md lint-spec lint-rpm verify-rpm clean
 
