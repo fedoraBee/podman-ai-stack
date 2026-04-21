@@ -151,6 +151,13 @@ Set:
 OLLAMA_BASE_URL=<your-server>
 ```
 
+## 🖥️ Hardware Requirements & Sizing
+
+AI workloads require specific hardware considerations, particularly GPU VRAM.
+For a detailed breakdown of model sizes (e.g., Llama 3 8B vs 70B) and
+instructions on how to dynamically tweak CPU and Memory constraints safely via
+systemd drop-ins, please read the [Hardware Guide](HARDWARE.md).
+
 ## ⚙️ Configuration
 
 ### Runtime Configuration (Environment)
@@ -200,14 +207,16 @@ systemctl --user restart open-webui
 
 ### External Database (PostgreSQL)
 
-For larger deployments, you can decouple Open WebUI's state from SQLite to PostgreSQL.
-Uncomment and configure `DATABASE_URL` in `/etc/sysconfig/podman-ai-stack`:
+For larger deployments, you can decouple Open WebUI's state from SQLite to
+PostgreSQL. Uncomment and configure `DATABASE_URL` in
+`/etc/sysconfig/podman-ai-stack`:
 
 ```ini
 DATABASE_URL=postgresql://openwebui:openwebui_secret@localhost:5432/openwebui
 ```
 
-We ship an optional Postgres Quadlet template if you wish to run it within the stack:
+We ship an optional Postgres Quadlet template if you wish to run it within the
+stack:
 
 ```bash
 # Start the postgres database
