@@ -21,9 +21,17 @@ RPM-based distribution is recommended).
 Ensure you have the necessary development tools installed:
 
 ```bash
-sudo dnf install make rpm-build podman systemd-devel rpmlint shellcheck
+sudo dnf install make rpm-build podman systemd-devel rpmlint shellcheck pre-commit
 # Install markdownlint-cli or markdownlint-cli2 globally via npm
 sudo npm install -g markdownlint-cli # or markdownlint-cli2
+
+### 3. Initialize Pre-Commit Hooks
+To catch linting errors before pushing to GitHub, install the pre-commit hooks:
+
+```bash
+pre-commit install
+# (Optional) Run against all files immediately
+pre-commit run --all-files
 ```
 
 ### 3. Project Structure & Standards
@@ -49,7 +57,7 @@ provided `make` targets:
    This includes `shellcheck` for scripts, `rpmlint` for the spec file, and
    `markdownlint` for documentation.
 
-2. **Build and Verify RPMs**:
+1. **Build and Verify RPMs**:
 
    ```bash
    make lint-rpm
@@ -57,7 +65,7 @@ provided `make` targets:
 
    This builds the RPMs and runs `rpmlint` against the resulting packages.
 
-3. **Local Install Test**: Test both rootless and rootfull installations if
+1. **Local Install Test**: Test both rootless and rootfull installations if
    possible.
 
    ```bash
