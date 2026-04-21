@@ -244,6 +244,45 @@ systemctl --user daemon-reload
 systemctl --user restart podman-ai-stack-pod
 ```
 
+## 🔐 Secrets Management (Postgres & API Keys)
+
+For enhanced security, avoid storing database passwords or external API keys
+(like OpenAI keys) in plain-text configuration files. Podman Quadlets support
+native secrets.
+
+### 1. Create the Secrets
+
+Initialize your secrets using the `podman secret create` command:
+
+```bash
+# Set a PostgreSQL password
+echo "my-secret-db-pass" | podman secret create postgres_password -
+
+# (Optional) Set an external database URL for Open WebUI
+echo "postgresql://openwebui:my-secret-db-pass@localhost:5432/openwebui" | \
+podman secret create openwebui_database_url -
+# (Optional) Set an OpenAI API Key
+echo "sk-your-api-key" | podman secret create openai_api_key -
+```
+
+*(Note: If using the dedicated service user deployment, prefix with
+`sudo -u podman-ai`)*
+
+### 2. Enable Secrets in Quadlets
+
+Override your Quadlets to use the created secrets via systemd drop-ins
+(`systemctl --user edit open-webui` or `postgres`):
+
+```ini
+[Container]
+Secret=postgres_password,type=env,target=POSTGRES_PASSWORD
+# Secret=openwebui_database_url,type=env,target=DATABASE_URL
+# Secret=openai_api_key,type=env,target=OPENAI_API_KEY
+```
+
+Or uncomment the `Secret=` directives directly if you manage the `.container`
+templates manually.
+
 ## 🔄 Auto-Updates
 
 The Quadlet containers are configured to automatically pull new image versions

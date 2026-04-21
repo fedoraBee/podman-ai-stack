@@ -1,7 +1,8 @@
 # Makefile for podman-ai-stack
 
 NAME := podman-ai-stack
-VERSION := 0.4.15
+VERSION := 0.5.0-rc2
+RPM_VERSION := $(subst -,~,$(VERSION))
 BUILD_DIR := $(CURDIR)/rpmbuild
 RPM_DIR := $(BUILD_DIR)/RPMS/noarch
 PREFIX ?= /usr
@@ -39,7 +40,7 @@ prep:
 	rm -rf $(RPM_DIR)/*.rpm
 	mkdir -p $(BUILD_DIR)/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 	@echo "Generating RPM changelog..."
-	$(CURDIR)/scripts/update-rpm-metadata.py --version $(VERSION) --spec $(CURDIR)/rpm/$(NAME).spec --changelog-in $(CURDIR)/CHANGELOG.md --changelog-out $(BUILD_DIR)/changelog
+	$(CURDIR)/scripts/update-rpm-metadata.py --version $(RPM_VERSION) --spec $(CURDIR)/rpm/$(NAME).spec --changelog-in $(CURDIR)/CHANGELOG.md --changelog-out $(BUILD_DIR)/changelog
 
 rpm: prep rpm-build
 

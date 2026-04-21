@@ -6,6 +6,25 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0-rc2] - 2026-04-21
+
+### Fixed
+
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
+- **Packaging**: Fixed RPM linting and build errors for pre-releases by
+  automatically translating hyphens to tildes (`-` to `~`) in the RPM `Version`
+  spec tag.
+
+### Security
+
+- **Secrets Management**: Added native Podman Secrets support to
+  `postgres.container.in` and `open-webui.container.in` for handling database
+  passwords and API keys securely.
+- **Documentation**: Added a Secrets Management runbook to `README.md` detailing
+  how to initialize and consume Podman secrets.
+
 ## [0.4.15] - 2026-04-21
 
 ### Added
@@ -45,6 +64,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - **CI/CD**: Fixed cgroup configuration error in CI functional tests by
   bypassing pod creation and using `--cgroups=disabled` for direct container
   execution when systemd is unavailable.
@@ -93,6 +115,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Resolved `rpmlint` spec file parsing error by updating the `lint-spec`
   Makefile target to properly define `_topdir` and `_version` macros for
   `rpmlint` in CI environments, ensuring the `%include` directive for the
@@ -178,6 +203,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Ensured the backup in `scripts/git-clean-switch-tool.sh` is consistently made
   from the base branch before reset.
 
@@ -190,6 +218,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Corrected `--dry-run` parsing in `scripts/gitops-pr-cli-tool.sh` to properly
   simulate actions without making changes.
 
@@ -283,6 +314,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Updated the CI workflow scripts to satisfy `actionlint` and ShellCheck by
   replacing unsafe negation patterns with explicit conditionals.
 - Hardened the release workflow shell scripts by quoting command substitutions,
@@ -307,6 +341,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Corrected the CI smoke-test file assertions to check for
   `podman-ai-stack.pod`, matching the actual installed Quadlet filename.
 - Aligned project version references to `0.2.13` across the `Makefile`, RPM spec
@@ -329,6 +366,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Configured GitHub Pages deployment to keep existing `gh-pages` branch contents
   so prerelease publishes do not remove previously published repository channels
   such as `latest/stable`.
@@ -389,6 +429,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Guarded `systemctl` and `loginctl` RPM scriptlets so package installation
   succeeds in CI containers that do not run `systemd` as PID 1.
 - Wrapped the root subpackage systemd macros with the same runtime checks to
@@ -400,6 +443,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Added `user(podman-ai)` and `group(podman-ai)` virtual provides to the
   `podman-ai-stack-user` RPM so DNF can resolve the dedicated service account
   during smoke-test installs.
@@ -410,6 +456,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Fixed dnf install command in CI workflow to avoid broken dependency CI issue.
 - Aligned project version references to `0.2.4` across the `Makefile`, RPM spec
   metadata, and changelog entries.
@@ -445,6 +494,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Resolved `shellcheck` SC2115 warning in `scripts/update-repo.sh` by ensuring
   safe expansion of variables in `rm -rf`.
 - Corrected Markdown formatting issues in GitHub issue and pull request
@@ -485,6 +537,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
+  spec version when `--version` argument is explicitly passed, and improved
+  regex to support pre-release tags in changelog parsing.
 - Resolved `tar` concurrency issues during RPM building by excluding the
   `rpmbuild` directory.
 - Fixed missing directory creation in the build root for the `podman-ai` user.

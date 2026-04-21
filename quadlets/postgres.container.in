@@ -10,6 +10,8 @@ Pod=podman-ai-stack.pod
 Label=app=podman-ai-stack
 Environment=POSTGRES_USER=openwebui
 Environment=POSTGRES_PASSWORD=openwebui_secret
+# To use Podman Secrets instead of plaintext, comment out the Environment line above and uncomment below:
+# Secret=postgres_password,type=env,target=POSTGRES_PASSWORD
 Environment=POSTGRES_DB=openwebui
 Volume=postgres:/var/lib/postgresql/data:Z
 # Drop most capabilities but keep what postgres needs to initialize its volume securely
