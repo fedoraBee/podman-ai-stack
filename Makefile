@@ -59,7 +59,7 @@ lint-md:
 lint-spec: prep
 	@echo "%_topdir $(BUILD_DIR)" > $(BUILD_DIR)/.rpmmacros
 	@echo "%_version $(VERSION)" >> $(BUILD_DIR)/.rpmmacros
-	HOME=$(BUILD_DIR) rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.spec.rpmlintrc --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
+	echo "%_version $(RPM_VERSION)" > $(BUILD_DIR)/.rpmmacros && echo "%_topdir $(BUILD_DIR)" >> $(BUILD_DIR)/.rpmmacros && HOME=$(BUILD_DIR) rpmlint -v -r $(CURDIR)/rpm/podman-ai-stack.spec.rpmlintrc --ignore-unused-rpmlintrc $(CURDIR)/rpm/$(NAME).spec
 
 
 lint-rpm:
@@ -84,8 +84,8 @@ install-root:
 
 rpm-build:
 	@echo "Building RPM packages..."
-	tar -czf $(BUILD_DIR)/SOURCES/$(NAME)-$(VERSION).tar.gz --exclude=.git --exclude=rpmbuild --transform 's|^|$(NAME)-$(VERSION)/|' .
-	rpmbuild -ba $(CURDIR)/rpm/$(NAME).spec --define "_version $(VERSION)" --define "_topdir $(BUILD_DIR)"
+	tar -czf $(BUILD_DIR)/SOURCES/$(NAME)-$(RPM_VERSION).tar.gz --exclude=.git --exclude=rpmbuild --transform 's|^|$(NAME)-$(RPM_VERSION)/|' .
+	rpmbuild -ba $(CURDIR)/rpm/$(NAME).spec --define "_version $(RPM_VERSION)" --define "_topdir $(BUILD_DIR)"
 	@echo "RPMs built in $(RPM_DIR)"
 
 rpm-sign:

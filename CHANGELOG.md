@@ -13,9 +13,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
-- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
-  spec version when `--version` argument is explicitly passed, and improved
-  regex to support pre-release tags in changelog parsing.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed RPM linting and build errors for pre-releases by
   automatically translating hyphens to tildes (`-` to `~`) in the RPM `Version`
   spec tag.
@@ -70,30 +69,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
-- **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
-  spec version when `--version` argument is explicitly passed, and improved
-  regex to support pre-release tags in changelog parsing.
-- **CI/CD**: Fixed cgroup configuration error in CI functional tests by
-  bypassing pod creation and using `--cgroups=disabled` for direct container
-  execution when systemd is unavailable.
-
-## [0.4.10] - 2026-04-21
-
-### Changed
-
-- **CI/CD**: Expanded the smoke test in GitHub Actions to perform a functional
-  HTTP GET request (`curl -f http://localhost:3000/health`), validating Podman,
-  network bridging, and application layer interoperation.
-
-## [0.4.9] - 2026-04-21
-
-### Added
-
-- **Auto-Updates**: Operationalized `podman-auto-update.timer` for container
-  auto-updates. The root package now enables the timer automatically during
-  installation, and the README provides instructions for rootless setups.
-
-## [0.4.8] - 2026-04-21
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed RPM linting and build errors for pre-releases by
+  automatically translating hyphens to tildes (`-` to `~`) in the RPM `Version`
+  spec tag.
 
 ### Security
 
@@ -121,6 +101,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
@@ -215,6 +210,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -230,6 +240,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
@@ -332,6 +357,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -362,6 +402,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -387,6 +442,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
@@ -456,6 +526,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -473,6 +558,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
 - **Packaging**: Fixed `update-rpm-metadata.py` script failing to update the
   spec version when `--version` argument is explicitly passed, and improved
   regex to support pre-release tags in changelog parsing.
@@ -486,6 +586,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
@@ -527,6 +642,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
@@ -573,6 +703,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
+- **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
+  `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
+  release string generation.
+- **Packaging**: Used sanitized `RPM_VERSION` in Makefile during `rpmbuild`
+  execution and tarball creation to prevent hyphen validation errors.
 - **Packaging**: Fixed `update-rpm-metadata.py` script to preserve the
   `Version: %{_version}` placeholder and utilize `%mkrel` macro for automatic
   release string generation.
